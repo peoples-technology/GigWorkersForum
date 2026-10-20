@@ -86,45 +86,45 @@
 </svelte:head>
 
 <!-- Sticky Header -->
-<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-variant">
-	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-xs border-b border-surface-variant">
+	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
 		<!-- Union Logo & Header Title -->
-		<a href="/" class="flex items-center gap-3">
-			<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-lg shadow-sm shrink-0">
+		<a href="/" class="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
+			<div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-base sm:text-lg shadow-sm shrink-0">
 				★
 			</div>
-			<div class="flex flex-col">
-				<div class="flex items-center gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold">GigWorkers.Online</span>
+			<div class="flex flex-col min-w-0">
+				<div class="flex items-center gap-1.5 sm:gap-2">
+					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold truncate">GigWorkers.Online</span>
 					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] uppercase font-semibold">
 						Trade Union
 					</span>
 				</div>
-				<span class="text-xs text-secondary">
+				<span class="text-[10px] sm:text-xs text-secondary truncate">
 					{lang === 'ml' ? 'അംഗത്വ പരിശോധന / Public Verification' : 'Public Verification Protocol'}
 				</span>
 			</div>
 		</a>
 
 		<!-- Language Switcher & Official Gateway Badge -->
-		<div class="flex items-center gap-3">
+		<div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
 			<div class="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-secondary text-xs">
 				<span class="material-symbols-outlined text-primary text-[16px]">verified_user</span>
 				<span class="font-semibold text-on-surface">Official Gateway</span>
 			</div>
 
-			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5">
+			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5 sm:p-1">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold ${lang === 'ml' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold ${lang === 'en' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
 				>
 					EN
 				</button>

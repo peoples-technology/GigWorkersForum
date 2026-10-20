@@ -16,44 +16,44 @@
 </svelte:head>
 
 <!-- Sticky Header -->
-<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80">
-	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-		<a href="/" class="flex items-center gap-3">
-			<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-bold text-lg shadow-sm shrink-0">
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80">
+	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+		<a href="/" class="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
+			<div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-sm shrink-0">
 				★
 			</div>
-			<div class="flex flex-col">
-				<div class="flex items-center gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black">GigWorkers.Online</span>
+			<div class="flex flex-col min-w-0">
+				<div class="flex items-center gap-1.5 sm:gap-2">
+					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black truncate">GigWorkers.Online</span>
 					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] uppercase font-bold">
 						Trade Union
 					</span>
 				</div>
-				<span class="text-xs text-slate-500 font-medium">
+				<span class="text-[10px] sm:text-xs text-slate-500 font-medium truncate">
 					{lang === 'ml' ? 'അംഗത്വ പരിശോധന / Member Verification' : 'Public Member Verification'}
 				</span>
 			</div>
 		</a>
 
-		<div class="flex items-center gap-3">
-			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
+		<div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 sm:p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
 			</div>
 
-			<a href="/" class="text-xs font-bold text-slate-600 hover:text-primary transition">
+			<a href="/" class="hidden sm:inline-flex text-xs font-bold text-slate-600 hover:text-primary transition">
 				Home
 			</a>
 		</div>

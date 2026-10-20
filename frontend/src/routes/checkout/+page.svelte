@@ -64,16 +64,16 @@
 </svelte:head>
 
 <!-- Sticky Top Header -->
-<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
-	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
 		<!-- Union Logo -->
-		<a href="/" class="flex items-center gap-3.5 min-w-max hover:opacity-95 transition-opacity">
-			<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white shadow-md flex-shrink-0 font-bold text-xl">
+		<a href="/" class="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-shrink hover:opacity-95 transition-opacity">
+			<div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white shadow-md flex-shrink-0 font-bold text-lg sm:text-xl">
 				★
 			</div>
-			<div class="flex flex-col">
-				<span class="text-base sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight">GigWorkers<span class="text-primary">.Online</span></span>
-				<span class="text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium">Kerala Gig &amp; Platform Workers Union</span>
+			<div class="flex flex-col min-w-0">
+				<span class="text-sm sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight truncate">GigWorkers<span class="text-primary">.Online</span></span>
+				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium truncate">Kerala Gig &amp; Platform Workers Union</span>
 			</div>
 		</a>
 
@@ -95,24 +95,24 @@
 		</nav>
 
 		<!-- Security Pill & Language Switcher -->
-		<div class="flex items-center gap-2 sm:gap-3 min-w-max">
+		<div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
 			<div class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
 				<span class="material-symbols-outlined text-[16px] text-emerald-700">lock</span>
 				<span class="tracking-wide">256-Bit SSL</span>
 			</div>
 
-			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 sm:p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>

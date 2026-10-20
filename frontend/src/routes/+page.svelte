@@ -41,23 +41,23 @@
 </svelte:head>
 
 <!-- Frosted Glass Sticky Header -->
-<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
-	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
 		<!-- Union Logo & Title -->
-		<a href="/" class="flex items-center gap-3.5 min-w-max group">
-			<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-black text-2xl shadow-md shadow-red-700/20 group-hover:scale-105 group-hover:rotate-1 transition-transform">
+		<a href="/" class="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-shrink group">
+			<div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-md shadow-red-700/20 group-hover:scale-105 transition-transform flex-shrink-0">
 				★
 			</div>
-			<div class="flex flex-col">
-				<div class="flex items-center gap-2">
-					<span class="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight group-hover:text-primary transition-colors">
+			<div class="flex flex-col min-w-0">
+				<div class="flex items-center gap-1.5 sm:gap-2">
+					<span class="font-extrabold text-sm sm:text-lg text-slate-900 tracking-tight group-hover:text-primary transition-colors truncate">
 						GigWorkers<span class="text-primary">.Online</span>
 					</span>
-					<span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-200 uppercase tracking-wide">
+					<span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-200 uppercase tracking-wide">
 						Kerala
 					</span>
 				</div>
-				<span class="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider font-medium">
+				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider font-medium truncate">
 					{lang === 'ml' ? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
 				</span>
 			</div>
@@ -76,21 +76,21 @@
 			</a>
 		</nav>
 
-		<!-- Right Action Strip: Language Toggle + Register CTA -->
-		<div class="flex items-center gap-3 min-w-max">
+		<!-- Right Action Strip: Language Toggle + Register CTA + Hamburger -->
+		<div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
 			<!-- Language Toggle Pill -->
-			<div class="inline-flex items-center bg-slate-100/90 border border-slate-200 rounded-full p-1 shadow-inner">
+			<div class="inline-flex items-center bg-slate-100/90 border border-slate-200 rounded-full p-0.5 sm:p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => toggleLang('ml')}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => toggleLang('en')}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
@@ -99,7 +99,7 @@
 			<!-- Quick Register CTA Button -->
 			<a 
 				href="/register" 
-				class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl crimson-gradient-btn text-white text-xs font-bold tracking-wide shadow-md"
+				class="hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl crimson-gradient-btn text-white text-xs font-bold tracking-wide shadow-md"
 			>
 				<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
 				<span>{lang === 'ml' ? 'അംഗമാകുക (₹100)' : 'Join Union (₹100)'}</span>
@@ -109,7 +109,7 @@
 			<button 
 				type="button" 
 				onclick={() => mobileMenuOpen = !mobileMenuOpen}
-				class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+				class="lg:hidden p-1.5 sm:p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
 				aria-label="Toggle menu"
 			>
 				<span class="material-symbols-outlined text-2xl">{mobileMenuOpen ? 'close' : 'menu'}</span>
@@ -145,7 +145,7 @@
 	{/if}
 </header>
 
-<main class="w-full pt-20 min-h-[calc(100vh-80px)]">
+<main class="w-full pt-16 sm:pt-20 min-h-[calc(100vh-80px)] overflow-x-hidden">
 	<div class="flex flex-col w-full">
 		<!-- Top Statutory Notification Ticker -->
 		<aside aria-label="Statutory Notice" class="w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white border-b border-red-900/40">
@@ -175,21 +175,21 @@
 		</aside>
 
 		<!-- Hero Section -->
-		<section class="w-full bg-white py-12 lg:py-20 relative overflow-hidden">
+		<section class="w-full bg-white py-8 sm:py-12 lg:py-20 relative overflow-hidden">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
 					<!-- Left Column: Copy & Actions -->
-					<div class="flex flex-col items-start">
+					<div class="flex flex-col items-start w-full">
 
 						<!-- Union Affiliation Badge -->
-						<div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-sm bg-primary text-white mb-7 shadow-sm">
-							<div class="flex flex-col leading-tight">
-								<span class="text-[11px] font-black tracking-widest uppercase">Kerala Gig &amp; Platform Workers Union</span>
-								<span class="text-[10px] font-medium opacity-90">(Affiliated to CITU)</span>
+						<div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 rounded-sm bg-primary text-white mb-6 sm:mb-7 shadow-sm max-w-full">
+							<div class="flex flex-col leading-tight min-w-0">
+								<span class="text-[10px] sm:text-[11px] font-black tracking-wider sm:tracking-widest uppercase truncate">Kerala Gig &amp; Platform Workers Union</span>
+								<span class="text-[9px] sm:text-[10px] font-medium opacity-90">(Affiliated to CITU)</span>
 							</div>
 							<!-- Hammer & Sickle -->
-							<svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							<svg class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<!-- Hammer handle -->
 								<rect x="10" y="50" width="55" height="9" rx="3" transform="rotate(-45 37 54)"/>
 								<!-- Hammer head -->
@@ -202,33 +202,33 @@
 						</div>
 
 						<!-- Bilingual Headline -->
-						<h1 class="font-black text-slate-900 mb-4 leading-tight tracking-tight">
+						<h1 class="font-black text-slate-900 mb-4 leading-tight tracking-tight w-full break-words">
 							{#if lang === 'ml'}
-								<span class="block text-4xl sm:text-5xl lg:text-[3.5rem]" style="font-family: 'Noto Sans Malayalam', sans-serif; line-height: 1.25;">
+								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem]" style="font-family: 'Noto Sans Malayalam', sans-serif; line-height: 1.25;">
 									ശക്തമായ<br/>നാളെക്കായി ഒന്നിച്ച്
 								</span>
 							{:else}
-								<span class="block text-4xl sm:text-5xl lg:text-[3.5rem] leading-tight">
+								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem] leading-tight">
 									United for a
 								</span>
-								<span class="block text-4xl sm:text-5xl lg:text-[3.5rem] text-primary font-black italic leading-tight">
+								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem] text-primary font-black italic leading-tight">
 									stronger tomorrow
 								</span>
 							{/if}
 						</h1>
 
 						<!-- Subtitle -->
-						<p class="text-base sm:text-lg text-slate-500 leading-relaxed mb-9">
+						<p class="text-sm sm:text-base lg:text-lg text-slate-500 leading-relaxed mb-7 sm:mb-9 max-w-xl">
 							{lang === 'ml'
 								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളികളെ സംഘടിപ്പിക്കുന്നു'
 								: "Organising Kerala's Gig & Platform Workers"}
 						</p>
 
 						<!-- CTA Buttons -->
-						<div class="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+						<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
 							<a
 								href="/register"
-								class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-primary hover:bg-[#80000f] text-white text-sm font-bold tracking-wide shadow-md transition-colors"
+								class="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 rounded-md bg-primary hover:bg-[#80000f] text-white text-sm font-bold tracking-wide shadow-md transition-colors text-center"
 							>
 								<span style="font-family: 'Noto Sans Malayalam', sans-serif;">അംഗമാകുക</span>
 								<span class="opacity-50">|</span>
@@ -238,7 +238,7 @@
 
 							<a
 								href="#quick-access-banner"
-								class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-md bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-sm"
+								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-md bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-sm text-center"
 							>
 								<span style="font-family: 'Noto Sans Malayalam', sans-serif;">{lang === 'ml' ? 'തിരച്ചിൽ' : 'തിരച്ചിൽ'}</span>
 								<span class="opacity-40">|</span>
@@ -247,22 +247,22 @@
 						</div>
 
 						<!-- Stats strip -->
-						<div class="mt-10 pt-8 border-t border-slate-100 w-full grid grid-cols-3 gap-6">
+						<div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-100 w-full grid grid-cols-3 gap-2 sm:gap-6 text-center sm:text-left">
 							<div>
-								<p class="text-2xl sm:text-3xl font-black text-slate-900">14</p>
-								<p class="text-[11px] text-slate-400 font-semibold mt-1 uppercase tracking-widest">
+								<p class="text-xl sm:text-3xl font-black text-slate-900">14</p>
+								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
 									{lang === 'ml' ? 'ജില്ലകൾ' : 'Districts'}
 								</p>
 							</div>
 							<div>
-								<p class="text-2xl sm:text-3xl font-black text-primary">₹100</p>
-								<p class="text-[11px] text-slate-400 font-semibold mt-1 uppercase tracking-widest">
+								<p class="text-xl sm:text-3xl font-black text-primary">₹100</p>
+								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
 									{lang === 'ml' ? 'രജിസ്ട്രേഷൻ ഫീസ്' : 'Registration Fee'}
 								</p>
 							</div>
 							<div>
-								<p class="text-2xl sm:text-3xl font-black text-emerald-600">100%</p>
-								<p class="text-[11px] text-slate-400 font-semibold mt-1 uppercase tracking-widest">
+								<p class="text-xl sm:text-3xl font-black text-emerald-600">100%</p>
+								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
 									{lang === 'ml' ? 'നിയമ സുരക്ഷ' : 'Legal Cover'}
 								</p>
 							</div>
@@ -270,11 +270,11 @@
 					</div>
 
 					<!-- Right Column: Hero Illustration -->
-					<div class="relative flex items-center justify-center w-full lg:justify-end">
+					<div class="relative flex items-center justify-center w-full lg:justify-end overflow-hidden">
 						<img
 							src="/images/HomePage-HeroAsset.png"
 							alt="Kerala gig workers — delivery partners, cab drivers, and platform workers standing united with a CITU flag"
-							class="w-full max-w-lg lg:max-w-none object-contain select-none"
+							class="w-full max-w-md sm:max-w-lg lg:max-w-none h-auto object-contain select-none"
 							onerror={(e) => {
 								(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAWe4zboGWqHL3jwywJUeVISdlnK_rC41LVB4QtSYp9gdGbXwg3nD6fRYs5iOt8M-yBKUJvXlMGr2iil4ngfjS-RjAvAcZ2dfz1HkXoPrzPkgJvZpJvo1ALHS7H5co15GqKBUWOPR3EYM9MlvLYJy5bPjXcHY3Ju2yNNHqhtJpDN0ai7h5rEgRGssd7vmm5HU_EbhSFCHVgEGVItQFkp_krs51AhFOzKbDwiYmeFYXV1bUaKEZzDSVfVA";
 							}}
@@ -376,23 +376,23 @@
 		</section>
 
 		<!-- Member Quick Access Banner with Deep Gradient -->
-		<section class="w-full py-16 bg-white" id="quick-access-banner">
+		<section class="w-full py-12 sm:py-16 bg-white" id="quick-access-banner">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+				<div class="bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-10 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
 					<!-- Ambient Glow Inside Card -->
 					<div class="absolute -top-20 -right-20 w-80 h-80 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
 
-					<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center relative z-10">
 						<!-- Text Lockup -->
 						<div class="lg:col-span-6">
-							<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 text-red-300 border border-red-500/30 text-xs font-bold mb-4">
-								<span class="material-symbols-outlined text-[16px]">lock</span>
+							<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 text-red-300 border border-red-500/30 text-[11px] sm:text-xs font-bold mb-3 sm:mb-4">
+								<span class="material-symbols-outlined text-[15px] sm:text-[16px]">lock</span>
 								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
 							</div>
-							<h3 class="text-2xl sm:text-3xl font-black text-white">
+							<h3 class="text-xl sm:text-3xl font-black text-white">
 								{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം പരിശോധിക്കുക' : 'Access Your Membership'}
 							</h3>
-							<p class="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-lg leading-relaxed">
+							<p class="text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg leading-relaxed">
 								{lang === 'ml'
 									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
 									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or renew your membership.'}
@@ -401,14 +401,14 @@
 
 						<!-- Input Action Form -->
 						<div class="lg:col-span-6 w-full">
-							<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
-								<div class="relative flex-1 flex items-center bg-white/95 rounded-xl border border-slate-300 overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
-									<span class="bg-slate-100 px-3.5 py-3 text-sm text-slate-700 border-r border-slate-300 flex items-center select-none font-mono font-bold">
+							<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
+								<div class="relative flex-1 flex items-center bg-white/95 rounded-xl border border-slate-300 overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary focus-within:border-primary w-full">
+									<span class="bg-slate-100 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-700 border-r border-slate-300 flex items-center select-none font-mono font-bold flex-shrink-0">
 										+91
 									</span>
 									<input 
 										bind:value={trackPhone}
-										class="w-full px-3.5 py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-medium" 
+										class="w-full min-w-0 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-medium" 
 										id="track-input" 
 										maxlength="10" 
 										pattern="[0-9]{10}" 
@@ -418,7 +418,7 @@
 									/>
 								</div>
 								<button 
-									class="px-7 py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg" 
+									class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg flex-shrink-0" 
 									id="otp-btn" 
 									type="submit"
 									disabled={otpSending}
@@ -438,8 +438,8 @@
 
 							{#if statusMessage}
 								<div class={`mt-3 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : 'bg-emerald-950/80 text-emerald-200 border border-emerald-800'}`}>
-									<span class="material-symbols-outlined text-[16px]">{statusType === 'error' ? 'error' : 'check_circle'}</span>
-									<span class="font-medium">{statusMessage}</span>
+									<span class="material-symbols-outlined text-[16px] flex-shrink-0">{statusType === 'error' ? 'error' : 'check_circle'}</span>
+									<span class="font-medium break-words">{statusMessage}</span>
 								</div>
 							{/if}
 						</div>

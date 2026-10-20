@@ -304,35 +304,35 @@
 </svelte:head>
 
 <!-- Header -->
-<header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-sm">
-	<div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+<header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
+	<div class="max-w-5xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
 		<!-- Union Logo & Identity -->
-		<a href="/" class="flex items-center space-x-3 group">
-			<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:scale-105 transition-transform">
+		<a href="/" class="flex items-center space-x-2 sm:space-x-3 group min-w-0 flex-shrink">
+			<div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 text-white flex items-center justify-center font-bold text-base sm:text-lg shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
 				★
 			</div>
-			<div>
-				<span class="font-extrabold text-base tracking-tight text-slate-900 block group-hover:text-primary transition">GigWorkers.Online</span>
-				<span class="text-xs text-slate-500 font-medium block">
-					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
+			<div class="min-w-0">
+				<span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 block group-hover:text-primary transition truncate">GigWorkers.Online</span>
+				<span class="text-[10px] sm:text-xs text-slate-500 font-medium block truncate">
+					{lang === 'ml' ? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
 
 		<!-- Language Switcher & Home link -->
-		<div class="flex items-center space-x-3">
-			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
+		<div class="flex items-center space-x-1.5 sm:space-x-3 flex-shrink-0">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-0.5 sm:p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+					class={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
