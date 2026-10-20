@@ -12,7 +12,7 @@ def generate_opaque_card_token() -> str:
 
 def generate_verification_qr_svg(
     token: str,
-    base_url: str = "https://gigworkers.citu.org.in",
+    base_url: str = "https://gigworkers.online",
     scale: int = 4,
 ) -> str:
     """Generate an SVG string for the QR code encoding the public verify URL."""
@@ -25,7 +25,7 @@ def generate_verification_qr_svg(
 
 def generate_verification_qr_png_bytes(
     token: str,
-    base_url: str = "https://gigworkers.citu.org.in",
+    base_url: str = "https://gigworkers.online",
     scale: int = 5,
 ) -> bytes:
     """Generate PNG bytes for the QR code."""
@@ -38,7 +38,7 @@ def generate_verification_qr_png_bytes(
 
 def generate_verification_qr_data_uri(
     token: str,
-    base_url: str = "https://gigworkers.citu.org.in",
+    base_url: str = "https://gigworkers.online",
 ) -> str:
     """Generate a base64 Data URI string for direct embedding in HTML/CSS."""
     png_bytes = generate_verification_qr_png_bytes(token, base_url=base_url)
