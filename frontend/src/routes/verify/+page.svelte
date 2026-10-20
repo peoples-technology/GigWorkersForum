@@ -1,0 +1,127 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+
+	let lang = $state<'ml' | 'en'>('ml');
+	let searchInput = $state('');
+
+	function handleLookup() {
+		if (searchInput.trim()) {
+			goto(`/verify/${encodeURIComponent(searchInput.trim().toUpperCase())}`);
+		}
+	}
+</script>
+
+<svelte:head>
+	<title>{lang === 'ml' ? 'പൊതു അംഗത്വ പരിശോധന | KSGPWU CITU' : 'Public Member Verification | KSGPWU CITU'}</title>
+</svelte:head>
+
+<!-- Sticky Header -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-variant">
+	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+		<a href="/" class="flex items-center gap-3">
+			<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-lg shadow-sm shrink-0">
+				★
+			</div>
+			<div class="flex flex-col">
+				<div class="flex items-center gap-2">
+					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold">KSGPWU · CITU</span>
+					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] uppercase font-semibold">
+						Trade Union
+					</span>
+				</div>
+				<span class="text-xs text-secondary">
+					{lang === 'ml' ? 'അംഗത്വ പരിശോധന / Member Verification' : 'Public Member Verification'}
+				</span>
+			</div>
+		</a>
+
+		<div class="flex items-center gap-3">
+			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5">
+				<button 
+					type="button" 
+					onclick={() => lang = 'ml'}
+					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+				>
+					മലയാളം
+				</button>
+				<button 
+					type="button" 
+					onclick={() => lang = 'en'}
+					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+				>
+					EN
+				</button>
+			</div>
+
+			<a href="/" class="text-xs font-semibold text-secondary hover:text-primary transition">
+				Home
+			</a>
+		</div>
+	</div>
+</header>
+
+<main class="w-full pt-28 bg-surface min-h-[calc(100vh-80px)] flex flex-col items-center px-4">
+	<div class="max-w-lg w-full bg-surface-container-lowest rounded-2xl shadow-xl border border-surface-variant p-6 sm:p-8 text-center">
+		<div class="w-16 h-16 rounded-full bg-primary-fixed text-primary flex items-center justify-center mx-auto mb-4 shadow-sm">
+			<span class="material-symbols-outlined text-3xl">qr_code_scanner</span>
+		</div>
+
+		<h1 class="text-xl sm:text-2xl font-bold text-on-surface">
+			{lang === 'ml' ? 'അംഗത്വ കാർഡ് പരിശോധിക്കുക' : 'Verify Union Membership'}
+		</h1>
+		<p class="text-xs sm:text-sm text-secondary mt-1 max-w-sm mx-auto">
+			{lang === 'ml'
+				? 'ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുകയോ അംഗത്വ നമ്പർ നൽകുകയോ ചെയ്യുക.'
+				: 'Scan member QR code or enter membership registration number.'}
+		</p>
+
+		<!-- Search Input Form -->
+		<form onsubmit={(e) => { e.preventDefault(); handleLookup(); }} class="mt-6 flex flex-col gap-3">
+			<div class="relative flex items-center">
+				<span class="material-symbols-outlined absolute left-3 text-secondary text-[20px]">badge</span>
+				<input 
+					type="text" 
+					bind:value={searchInput}
+					placeholder="e.g. KLTVC000009 or KLERN000142" 
+					class="w-full h-12 pl-10 pr-3 rounded-xl border border-surface-variant bg-surface-container-low text-on-surface font-mono font-bold tracking-wider text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+				/>
+			</div>
+
+			<button 
+				type="submit" 
+				class="w-full py-3 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-bold text-sm shadow-md transition flex items-center justify-center gap-2"
+			>
+				<span class="material-symbols-outlined text-[18px]">verified</span>
+				<span>{lang === 'ml' ? 'പരിശോധിക്കുക' : 'Verify Credentials'}</span>
+			</button>
+		</form>
+
+		<!-- Sample Verification Quick Links -->
+		<div class="mt-6 pt-5 border-t border-surface-variant text-left">
+			<span class="text-xs text-secondary font-semibold block mb-2">
+				{lang === 'ml' ? 'സാമ്പിൾ ഐഡികൾ പരിശോധിക്കുക:' : 'Sample Active Records:'}
+			</span>
+			<div class="flex flex-wrap gap-2">
+				<a href="/verify/KLTVC000009" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-xs font-mono font-semibold text-primary">
+					KLTVC000009 (Zomato)
+				</a>
+				<a href="/verify/KLERN000142" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-xs font-mono font-semibold text-primary">
+					KLERN000142 (Uber)
+				</a>
+				<a href="/verify/KLKZD000219" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-xs font-mono font-semibold text-primary">
+					KLKZD000219 (Swiggy)
+				</a>
+			</div>
+		</div>
+
+		<!-- DPDP Notice -->
+		<div class="mt-6 p-3 rounded-lg bg-surface-container-low text-[11px] text-secondary text-left flex items-start gap-2 border border-surface-variant">
+			<span class="material-symbols-outlined text-[15px] shrink-0 text-secondary mt-0.5">privacy_tip</span>
+			<span><strong>DPDP Act 2023 Compliant:</strong> Zero personal contact details disclosed. Public verification validates union accreditation only.</span>
+		</div>
+	</div>
+</main>
+
+<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary">
+	Kerala State Gig &amp; Platform Workers Union (affil. CITU) · Kerala Platform Workers Welfare Registry
+</footer>
