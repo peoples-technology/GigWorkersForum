@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--primary-red: #C62828;
+	--primary-hover: #B71C1C;
+	--accent-gold: #F59E0B;
+	--slate-text: #1E293B;
+}
+
+body {
+	font-family: 'Noto Sans', 'Noto Sans Malayalam', sans-serif;
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* Touch targets for mobile gig workers */
+.touch-target {
+	min-height: 48px;
+	min-width: 48px;
+}
