@@ -65,17 +65,17 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P5 · Admin console
 
-- [ ] **T5.1** Role enforcement on server: state office-bearers (all districts) vs 14 district logins (own district only); server-side scoping. (FR7.1)
-- [ ] **T5.2** Members list: filter by unit, sector, platform, status, dues, working mode, age, registration date; paginated. (FR7.2)
-- [ ] **T5.3** Member detail view + edit (audit-logged); transfer member between units (audit-logged). (FR7.5)
-- [ ] **T5.4** Suspend/reactivate member with recorded reason; audit-logged. (FR7.5)
-- [ ] **T5.5** Payment reports by district and by month; reconciliation against provider settlements; record refunds. (FR7.6)
-- [ ] **T5.6** Summary counts by district and sector. (FR7.4)
-- [ ] **T5.7** CSV/Excel export; each export logged (user, time, filters). (FR7.3)
-- [ ] **T5.8** Master-data editors: districts, platforms, sectors, fees, grievance contacts, WhatsApp links — org_admin only; audited. (FR7.7)
-- [ ] **T5.9** Audit-log viewer (read-only, unalterable). (FR7.8)
-- [ ] **T5.10** 2FA enforced for all admin accounts. (FR7.9)
-- [ ] **T5.11** Tests: role-scoped queries (district can't see other districts), export logging, master-data permission.
+- [x] **T5.1** Role enforcement on server: state office-bearers (all districts) vs 14 district logins (own district only); server-side scoping. (FR7.1)
+- [x] **T5.2** Members list: filter by unit, sector, platform, status, dues, working mode, age, registration date; paginated. (FR7.2)
+- [x] **T5.3** Member detail view + edit (audit-logged); transfer member between units (audit-logged). (FR7.5)
+- [x] **T5.4** Suspend/reactivate member with recorded reason; audit-logged. (FR7.5)
+- [x] **T5.5** Payment reports by district and by month; reconciliation against provider settlements; record refunds. (FR7.6)
+- [x] **T5.6** Summary counts by district and sector. (FR7.4)
+- [x] **T5.7** CSV/Excel export; each export logged (user, time, filters). (FR7.3)
+- [x] **T5.8** Master-data editors: districts, platforms, sectors, fees, grievance contacts, WhatsApp links — org_admin only; audited. (FR7.7)
+- [x] **T5.9** Audit-log viewer (read-only, unalterable). (FR7.8)
+- [x] **T5.10** 2FA enforced for all admin accounts. (FR7.9)
+- [x] **T5.11** Tests: role-scoped queries (district can't see other districts), export logging, master-data permission.
 
 ## P6 · Bulk paper import
 

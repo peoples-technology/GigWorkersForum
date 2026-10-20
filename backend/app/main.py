@@ -3,6 +3,7 @@ from litestar.config.cors import CORSConfig
 from litestar.openapi.config import OpenAPIConfig
 from litestar.openapi.plugins import SwaggerRenderPlugin, YamlRenderPlugin
 
+from app.api.admin import AdminController
 from app.api.auth import AuthController
 from app.api.cards import CardsController, VerifyController
 from app.api.health import HealthController
@@ -38,6 +39,7 @@ app = Litestar(
         PaymentsController,
         CardsController,
         VerifyController,
+        AdminController,
     ],
     cors_config=cors_config,
     openapi_config=openapi_config,
