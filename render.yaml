@@ -1,0 +1,71 @@
+# Render Infrastructure as Code Blueprint
+# Kerala State Gig & Platform Workers Union (CITU) Trial Deployment
+
+databases:
+  - name: citu-gigworkers-db
+    databaseName: citu_gigworkers
+    user: citu_user
+    plan: free
+    region: singapore # Closest low-latency region to India
+
+services:
+  # ---------------------------------------------------------------------------
+  # 1. Litestar Backend API
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: citu-gigworkers-api
+    runtime: python
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: "./render_build.sh"
+    startCommand: "uv run python -m granian --interface asgi app.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: staging
+      - key: DEBUG
+        value: "true"
+      - key: MOCK_SMS
+        value: "true"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: citu-gigworkers-db
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: '["https://citu-gigworkers-web.onrender.com", "http://localhost:5173"]'
+      - key: FRONTEND_BASE_URL
+        value: "https://citu-gigworkers-web.onrender.com"
+
+  # ---------------------------------------------------------------------------
+  # 2. SvelteKit Static Frontend
+  # ---------------------------------------------------------------------------
+  - type: static
+    name: citu-gigworkers-web
+    rootDir: frontend
+    buildCommand: "npm ci && npm run build"
+    staticPublishPath: "./build"
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      # Proxy all API requests to the backend service
+      - type: rewrite
+        source: /api/*
+        destination: https://citu-gigworkers-api.onrender.com/api/*
+      - type: rewrite
+        source: /verify/*
+        destination: https://citu-gigworkers-api.onrender.com/verify/*
+      - type: rewrite
+        source: /health
+        destination: https://citu-gigworkers-api.onrender.com/health
+      # SPA fallback routing
+      - type: rewrite
+        source: /*
+        destination: /index.html
