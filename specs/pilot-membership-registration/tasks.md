@@ -20,14 +20,14 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P1 · Auth & identity
 
-- [ ] **T1.1** OTP request/verify endpoints with per-phone + per-IP rate limits and resend cooldown; DLT-registered template. (FR1.1, FR1.3, NFR3.5)
-- [ ] **T1.2** Reject already-registered phone numbers at OTP stage. (FR1.2)
-- [ ] **T1.3** Server-side sessions in Postgres; HttpOnly+Secure+SameSite cookies; expiry. (FR8.2)
-- [ ] **T1.4** Member password hashing with argon2id; rate-limited login; account-lock policy. (FR8.1, NFR3.5)
-- [ ] **T1.5** Admin login + mandatory TOTP 2FA; recovery codes. (FR7.9)
-- [ ] **T1.6** Append-only `audit_log` table + writer helper; every sensitive action audited. (FR7.8)
+- [x] **T1.1** OTP request/verify endpoints with per-phone + per-IP rate limits and resend cooldown; DLT-registered template. (FR1.1, FR1.3, NFR3.5)
+- [x] **T1.2** Reject already-registered phone numbers at OTP stage. (FR1.2)
+- [x] **T1.3** Server-side sessions in Postgres; HttpOnly+Secure+SameSite cookies; expiry. (FR8.2)
+- [x] **T1.4** Member password hashing with argon2id; rate-limited login; account-lock policy. (FR8.1, NFR3.5)
+- [x] **T1.5** Admin login + mandatory TOTP 2FA; recovery codes. (FR7.9)
+- [x] **T1.6** Append-only `audit_log` table + writer helper; every sensitive action audited. (FR7.8)
 - [ ] **T1.7** Password reset: email link (members with email); single-use short-lived reset code issued by district admin (members without email). (FR8.3)
-- [ ] **T1.8** Tests: OTP rate-limit, session expiry, 2FA flow, audit-log immutability.
+- [x] **T1.8** Tests: OTP rate-limit, session expiry, 2FA flow, audit-log immutability.
 
 ## P2 · Registration form
 
