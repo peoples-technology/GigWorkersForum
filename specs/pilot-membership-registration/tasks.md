@@ -44,15 +44,15 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P3 · Fees & payments
 
-- [ ] **T3.1** `fee_schedules` with `effective_from`; past rows retained; org_admin editor only. (FR3.3)
-- [ ] **T3.2** Payment-provider interface: `create_order`, `verify_webhook_signature`, `create/cancel_mandate`, `fetch_status`. Integrate one provider before launch (Razorpay/Cashfree — Q1). (FR3.4)
-- [ ] **T3.3** Order creation for registration fee + N months (default 6 at sign-up = Rs 160); allow pay-ahead 1–N. (FR3.1, FR3.2)
-- [ ] **T3.4** Idempotent webhook handler keyed on `provider_payment_id`; allocations to fee/month(s); `paid_up_to` computed. (FR3.6, FR3.9)
-- [ ] **T3.5** Automatic activation on confirmed payment; audit-log the activation. (FR1.7)
-- [ ] **T3.6** Append-only ledger enforcement (DB-level: no UPDATE/DELETE on `payments`); reversal-entry endpoint. (FR3.5)
-- [ ] **T3.7** Offline payment entry (cash/direct-UPI) by admin: records `logged_by`, method, reference, numbered receipt; never deletable. (FR3.7)
-- [ ] **T3.8** Numbered digital receipt download (PDF) for member. (FR3.8)
-- [ ] **T3.9** Tests: webhook idempotency, paid_up_to calc, append-only enforcement, offline entry immutability, activation-on-payment.
+- [x] **T3.1** `fee_schedules` with `effective_from`; past rows retained; org_admin editor only. (FR3.3)
+- [x] **T3.2** Payment-provider interface: `create_order`, `verify_webhook_signature`, `create/cancel_mandate`, `fetch_status`. Integrate one provider before launch (Razorpay/Cashfree — Q1). (FR3.4)
+- [x] **T3.3** Order creation for registration fee + N months (default 6 at sign-up = Rs 160); allow pay-ahead 1–N. (FR3.1, FR3.2)
+- [x] **T3.4** Idempotent webhook handler keyed on `provider_payment_id`; allocations to fee/month(s); `paid_up_to` computed. (FR3.6, FR3.9)
+- [x] **T3.5** Automatic activation on confirmed payment; audit-log the activation. (FR1.7)
+- [x] **T3.6** Append-only ledger enforcement (DB-level: no UPDATE/DELETE on `payments`); reversal-entry endpoint. (FR3.5)
+- [x] **T3.7** Offline payment entry (cash/direct-UPI) by admin: records `logged_by`, method, reference, numbered receipt; never deletable. (FR3.7)
+- [x] **T3.8** Numbered digital receipt download (PDF) for member. (FR3.8)
+- [x] **T3.9** Tests: webhook idempotency, paid_up_to calc, append-only enforcement, offline entry immutability, activation-on-payment.
 
 ## P4 · Membership number & card
 
