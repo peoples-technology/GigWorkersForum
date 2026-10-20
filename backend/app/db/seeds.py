@@ -1,7 +1,9 @@
+import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import FormVersion, Organisation, Platform, Setting, Unit
+from app.core.security import hash_password
+from app.db.models import Admin, FormVersion, Organisation, Platform, Setting, Unit
 
 KERALA_DISTRICTS = [
     {"name": "Thiruvananthapuram", "name_ml": "തിരുവനന്തപുരം", "code": "KLTVC", "path": "kerala.tvm"},
@@ -243,5 +245,29 @@ async def seed_database(session: AsyncSession) -> None:
                 description=s["description"],
             )
             session.add(setting)
+
+    # 7. Seed Default State Admin (state_gs / CITUSolidarity@2026)
+    admin_stmt = select(Admin).where(Admin.username == "state_gs")
+    admin_res = await session.execute(admin_stmt)
+    if not admin_res.scalar_one_or_none():
+        state_unit_stmt = select(Unit).where(Unit.code == "KLSTATE")
+        state_unit_res = await session.execute(state_unit_stmt)
+        unit = state_unit_res.scalar_one_or_none()
+        unit_id = unit.id if unit else uuid.uuid4()
+
+        default_admin = Admin(
+            id=uuid.UUID("99999999-9999-9999-9999-999999999999"),
+            username="state_gs",
+            name="Com. P. K. Sasidharan",
+            email="gs@citu.kerala.org",
+            role="state_admin",
+            unit_id=unit_id,
+            password_hash=hash_password("CITUSolidarity@2026"),
+            totp_secret="JBSWY3DPEHPK3PXP",
+            totp_enabled=True,
+            recovery_codes=["REC001AA", "REC002BB", "REC003CC"],
+            is_active=True,
+        )
+        session.add(default_admin)
 
     await session.commit()
