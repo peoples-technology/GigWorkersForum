@@ -252,7 +252,7 @@
 			idDocType,
 			idLastDigits,
 			photo: capturedPhoto,
-			amount: 160,
+			amount: 100,
 			timestamp: new Date().toISOString()
 		};
 
@@ -300,7 +300,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'അംഗത്വ രജിസ്ട്രേഷൻ | KSGPWU CITU' : 'Member Registration | KSGPWU CITU'}</title>
+	<title>{lang === 'ml' ? 'അംഗത്വ രജിസ്ട്രേഷൻ | GigWorkers.Online' : 'Member Registration | GigWorkers.Online'}</title>
 </svelte:head>
 
 <!-- Header -->
@@ -312,9 +312,9 @@
 				★
 			</div>
 			<div>
-				<span class="font-extrabold text-base tracking-tight text-slate-900 block group-hover:text-primary transition">KSGPWU · CITU</span>
+				<span class="font-extrabold text-base tracking-tight text-slate-900 block group-hover:text-primary transition">GigWorkers.Online</span>
 				<span class="text-xs text-slate-500 font-medium block">
-					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
+					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
@@ -978,13 +978,13 @@
 					</h3>
 					<div class="text-xs text-secondary leading-relaxed space-y-2 max-h-36 overflow-y-auto p-3 bg-surface-container-lowest rounded border border-surface-variant">
 						<p>
-							<strong>1. Union Constitution:</strong> I hereby declare that I am an active gig/platform worker in Kerala and willingly accept the constitution and discipline of the Kerala State Gig & Platform Workers Union (affiliated to CITU).
+							<strong>1. Union Constitution:</strong> I hereby declare that I am an active gig/platform worker in Kerala and willingly accept the constitution and discipline of the Kerala Gig & Platform Workers Union (affiliated to CITU).
 						</p>
 						<p>
 							<strong>2. Data Usage:</strong> I consent to the Union collecting and processing my details to maintain my digital membership card, organize grievance redressal with platform aggregators, and allocate my record to my district committee under DPDP Act provisions.
 						</p>
 						<p>
-							<strong>3. Fee Acknowledgement:</strong> I understand that an initial membership fee of <strong>₹160</strong> (₹100 registration + ₹60 subscription for 6 months) will be charged upon completing this form.
+							<strong>3. Fee Acknowledgement:</strong> I understand that a one-time registration fee of <strong>₹100</strong> will be charged upon completing this form.
 						</p>
 					</div>
 
@@ -1018,7 +1018,7 @@
 						disabled={submitting}
 						class="px-7 py-3 crimson-gradient-btn text-white font-bold rounded-xl text-sm shadow-lg flex items-center gap-2 disabled:opacity-50"
 					>
-						<span>{lang === 'ml' ? 'പേയ്‌മെന്റിലേക്ക് പോകുക (₹160)' : 'Proceed to Payment (₹160)'}</span>
+						<span>{lang === 'ml' ? 'പേയ്‌മെന്റിലേക്ക് പോകുക (₹100)' : 'Proceed to Payment (₹100)'}</span>
 						<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 					</button>
 				</div>
@@ -1043,7 +1043,7 @@
 <!-- Footer -->
 <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-8">
 	<div class="max-w-5xl mx-auto px-4 text-center text-xs">
-		<p class="font-bold text-white">Kerala State Gig & Platform Workers Union (affiliated to CITU)</p>
+		<p class="font-bold text-white">Kerala Gig & Platform Workers Union (affiliated to CITU)</p>
 		<p class="mt-1 text-slate-400">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
 	</div>
 </footer>

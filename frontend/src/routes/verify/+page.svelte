@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'പൊതു അംഗത്വ പരിശോധന | KSGPWU CITU' : 'Public Member Verification | KSGPWU CITU'}</title>
+	<title>{lang === 'ml' ? 'പൊതു അംഗത്വ പരിശോധന | GigWorkers.Online' : 'Public Member Verification | GigWorkers.Online'}</title>
 </svelte:head>
 
 <!-- Sticky Header -->
@@ -24,7 +24,7 @@
 			</div>
 			<div class="flex flex-col">
 				<div class="flex items-center gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black">KSGPWU · CITU</span>
+					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black">GigWorkers.Online</span>
 					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] uppercase font-bold">
 						Trade Union
 					</span>
@@ -123,5 +123,5 @@
 </main>
 
 <footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary">
-	Kerala State Gig &amp; Platform Workers Union (affil. CITU) · Kerala Platform Workers Welfare Registry
+	GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)
 </footer>

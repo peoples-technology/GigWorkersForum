@@ -82,7 +82,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? `അംഗത്വ പരിശോധന: ${member.id} | KSGPWU CITU` : `Member Verification: ${member.id} | KSGPWU CITU`}</title>
+	<title>{lang === 'ml' ? `അംഗത്വ പരിശോധന: ${member.id} | GigWorkers.Online` : `Member Verification: ${member.id} | GigWorkers.Online`}</title>
 </svelte:head>
 
 <!-- Sticky Header -->
@@ -95,7 +95,7 @@
 			</div>
 			<div class="flex flex-col">
 				<div class="flex items-center gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold">KSGPWU · CITU</span>
+					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold">GigWorkers.Online</span>
 					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] uppercase font-semibold">
 						Trade Union
 					</span>
@@ -405,7 +405,7 @@
 <footer class="w-full bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] py-6 mt-8 border-t border-surface-variant">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center gap-1 text-xs text-secondary">
 		<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-			<span class="font-semibold text-primary">Kerala State Gig &amp; Platform Workers Union (CITU)</span>
+			<span class="font-semibold text-primary">Kerala Gig &amp; Platform Workers Union (CITU)</span>
 			<span>•</span>
 			<span>Reg. Trade Union, Kerala</span>
 			<span>•</span>

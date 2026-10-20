@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>രജിസ്ട്രേഷൻ | Member Registration - KSGPWU CITU</title>
+  <!-- Google Fonts: Inter & Noto Sans Malayalam -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#C81D25',
+              darkred: '#9F1219',
+              lightred: '#FEF2F2',
+              charcoal: '#111827',
+              slate: '#4B5563',
+              subtle: '#F9FAFB'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Malayalam', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth transitions and custom touches */
+    .step-active {
+      background-color: #C81D25;
+      color: #ffffff;
+      border-color: #C81D25;
+    }
+    .step-complete {
+      background-color: #10B981;
+      color: #ffffff;
+      border-color: #10B981;
+    }
+    .step-idle {
+      background-color: #F3F4F6;
+      color: #6B7280;
+      border-color: #E5E7EB;
+    }
+  </style>
+</head>
+<body class="bg-[#F8F9FA] text-brand-charcoal antialiased min-h-screen flex flex-col font-sans">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Union Logo & Identity -->
+      <a href="/" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded bg-brand-red text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          ★
+        </div>
+        <div>
+          <span class="font-bold text-base tracking-tight text-brand-charcoal block group-hover:text-brand-red transition">KSGPWU · CITU</span>
+          <span class="text-xs text-brand-slate font-medium block">കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ</span>
+        </div>
+      </a>
+
+      <!-- Language Toggle & Nav Items -->
+      <div class="flex items-center space-x-4">
+        <button id="langToggle" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 text-xs font-semibold hover:border-gray-400 bg-white shadow-xs transition">
+          <i data-lucide="languages" class="w-3.5 h-3.5 text-gray-600"></i>
+          <span id="langLabel">മലയാളം / EN</span>
+        </button>
+        <a href="/" class="hidden sm:inline-flex text-xs font-medium text-brand-slate hover:text-brand-red transition items-center gap-1">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span class="lang-en">Back to Home</span>
+          <span class="lang-ml hidden">പ്രധാന താളിലേക്ക്</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+    
+    <!-- Title & Autosave Pill -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-gray-200 mb-8 gap-4">
+      <div>
+        <p class="text-xs uppercase font-bold tracking-wider text-brand-red mb-1">
+          <span class="lang-en">Union Membership Enrollment</span>
+          <span class="lang-ml hidden">യൂണിയൻ അംഗത്വ രജിസ്ട്രേഷൻ</span>
+        </p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-charcoal">
+          <span class="lang-en">Member Registration Form</span>
+          <span class="lang-ml hidden">അംഗത്വ രജിസ്ട്രേഷൻ ഫോം</span>
+        </h1>
+        <p class="text-sm text-gray-500 mt-1">
+          <span class="lang-en">Takes ~3 minutes. Your progress saves automatically.</span>
+          <span class="lang-ml hidden">ഏകദേശം 3 മിനിറ്റ് മാത്രം. വിവരങ്ങൾ സ്വയമേവ സേവ് ചെയ്യപ്പെടുന്നു.</span>
+        </p>
+      </div>
+      
+      <!-- Auto-save state indicator -->
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs text-gray-600 self-start sm:self-auto shadow-xs">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span id="saveStatus" class="font-medium text-gray-600">Draft saved locally</span>
+      </div>
+    </div>
+
+    <!-- Stepper Tracker -->
+    <div class="mb-10">
+      <div class="flex items-center justify-between relative">
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-full bg-gray-200 -z-0"></div>
+        
+        <!-- Step 1 Indicator -->
+        <div class="relative z-10 flex flex-col items-center">
+          <div id="step-badge-1" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 step-active shadow-sm transition">1</div>
+          <span class="text-xs font-semibold mt-2 text-brand-charcoal hidden sm:block">
+            <span class="lang-en">Phone Verification</span>
+            <span class="lang-ml hidden">ഫോൺ സ്ഥിരീകരണം</span>
+          </span>
+        </div>
+
+        <!-- Step 2 Indicator -->
+        <div class="relative z-10 flex flex-col items-center">
+          <div id="step-badge-2" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 step-idle shadow-sm transition">2</div>
+          <span class="text-xs font-semibold mt-2 text-gray-500 hidden sm:block">
+            <span class="lang-en">Personal Info</span>
+            <span class="lang-ml hidden">വ്യക്തിവിവരങ്ങൾ</span>
+          </span>
+        </div>
+
+        <!-- Step 3 Indicator -->
+        <div class="relative z-10 flex flex-col items-center">
+          <div id="step-badge-3" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 step-idle shadow-sm transition">3</div>
+          <span class="text-xs font-semibold mt-2 text-gray-500 hidden sm:block">
+            <span class="lang-en">Work & Identity</span>
+            <span class="lang-ml hidden">തൊഴിൽ & തിരിച്ചറിയൽ</span>
+          </span>
+        </div>
+
+        <!-- Step 4 Indicator -->
+        <div class="relative z-10 flex flex-col items-center">
+          <div id="step-badge-4" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 step-idle shadow-sm transition">4</div>
+          <span class="text-xs font-semibold mt-2 text-gray-500 hidden sm:block">
+            <span class="lang-en">Selfie & Consent</span>
+            <span class="lang-ml hidden">ഫോട്ടോ & സമ്മതം</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Form Container -->
+    <form id="registrationForm" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-10 transition">
+
+      <!-- STEP 1: Phone Verification -->
+      <section id="step-1" class="space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-brand-charcoal flex items-center gap-2">
+            <i data-lucide="smartphone" class="w-5 h-5 text-brand-red"></i>
+            <span class="lang-en">Mobile Number Verification</span>
+            <span class="lang-ml hidden">മൊബൈൽ നമ്പർ സ്ഥിരീകരിക്കുക</span>
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            <span class="lang-en">We verify your mobile number via OTP. This number will become your unique login identifier.</span>
+            <span class="lang-ml hidden">നിങ്ങളുടെ മൊബൈൽ നമ്പർ OTP വഴി പരിശോധിക്കും. ഇതായിരിക്കും നിങ്ങളുടെ ലോഗിൻ നമ്പർ.</span>
+          </p>
+        </div>
+
+        <div class="space-y-4 max-w-md">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
+              <span class="lang-en">Mobile Number</span>
+              <span class="lang-ml hidden">മൊബൈൽ നമ്പർ</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <div class="flex rounded-lg shadow-xs border border-gray-300 focus-within:ring-2 focus-within:ring-brand-red focus-within:border-brand-red overflow-hidden">
+              <span class="inline-flex items-center px-3.5 bg-gray-50 text-gray-500 text-sm font-semibold border-r border-gray-300">+91</span>
+              <input type="tel" id="mobileNumber" maxlength="10" placeholder="9876543210" required
+                class="block w-full px-3 py-2.5 text-brand-charcoal placeholder-gray-400 focus:outline-none text-sm font-medium">
+            </div>
+            <p id="phoneError" class="text-xs text-brand-red mt-1 hidden">Please enter a valid 10-digit mobile number.</p>
+          </div>
+
+          <!-- OTP Input Section (Hidden initially) -->
+          <div id="otpContainer" class="hidden space-y-3 pt-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">
+              <span class="lang-en">Enter 6-Digit OTP</span>
+              <span class="lang-ml hidden">OTP നൽകുക</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <div class="flex gap-2">
+              <input type="text" id="otpCode" maxlength="6" placeholder="123456" 
+                class="w-full tracking-widest text-center text-lg font-bold px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+              <span>Resend code in <strong id="timer">00:45</strong></span>
+              <button type="button" id="resendOtpBtn" class="text-brand-red font-semibold hover:underline disabled:opacity-50" disabled>Resend OTP</button>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button type="button" id="sendOtpBtn" class="w-full py-3 px-4 bg-brand-red hover:bg-brand-darkred text-white font-semibold rounded-lg shadow-sm text-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span id="sendOtpBtnText">Send OTP · കോഡ് അയക്കുക</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: Personal Details -->
+      <section id="step-2" class="hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-brand-charcoal flex items-center gap-2">
+            <i data-lucide="user" class="w-5 h-5 text-brand-red"></i>
+            <span class="lang-en">Personal Information</span>
+            <span class="lang-ml hidden">വ്യക്തിഗത വിവരങ്ങൾ</span>
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            <span class="lang-en">Provide your personal details accurately as they will appear on your union membership card.</span>
+            <span class="lang-ml hidden">അംഗത്വ കാർഡിൽ പ്രിന്റ് ചെയ്യുന്നതിനുള്ള ശരിയായ വിവരങ്ങൾ നൽകുക.</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Full Name -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Full Name (As in ID)</span>
+              <span class="lang-ml hidden">പൂർണ്ണമായ പേര്</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <input type="text" id="fullName" required placeholder="e.g. Sreekumar P"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+          </div>
+
+          <!-- Date of Birth & Auto-Age -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Date of Birth</span>
+              <span class="lang-ml hidden">ജനന തീയതി</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <input type="date" id="dob" required
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+            <div id="ageBadge" class="mt-1 text-xs text-gray-500 font-medium">Min age 18 years</div>
+          </div>
+
+          <!-- Gender -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Gender</span>
+              <span class="lang-ml hidden">ലിംഗം</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <select id="gender" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none bg-white">
+              <option value="" disabled selected>Select Gender</option>
+              <option value="Male">Male / പുരുഷൻ</option>
+              <option value="Female">Female / സ്ത്രീ</option>
+              <option value="Others">Others / മറ്റുള്ളവ</option>
+            </select>
+          </div>
+
+          <!-- Mother Tongue -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Mother Tongue</span>
+              <span class="lang-ml hidden">മാതൃഭാഷ</span>
+            </label>
+            <input type="text" id="motherTongue" value="Malayalam" placeholder="Malayalam / മലയാളം"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+          </div>
+
+          <!-- Email (Optional) -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Email Address (Optional)</span>
+              <span class="lang-ml hidden">ഇമെയിൽ വിലാസം (നിർബന്ധമില്ല)</span>
+            </label>
+            <input type="email" id="email" placeholder="name@example.com"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+          </div>
+
+          <!-- Current Residential Address -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Current Residential Address</span>
+              <span class="lang-ml hidden">നിലവിലെ താമസ വിലാസം</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <textarea id="currentAddress" rows="2" required placeholder="House / Room No, Street, Town, PIN"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none"></textarea>
+          </div>
+
+          <!-- WhatsApp Number Option -->
+          <div class="sm:col-span-2 flex items-center gap-2 pt-1">
+            <input type="checkbox" id="sameWhatsapp" checked class="w-4 h-4 text-brand-red rounded border-gray-300 focus:ring-brand-red">
+            <label for="sameWhatsapp" class="text-xs font-medium text-gray-700">
+              <span class="lang-en">WhatsApp number is the same as my registered mobile number</span>
+              <span class="lang-ml hidden">വാട്‌സ്ആപ്പ് നമ്പർ മൊബൈൽ നമ്പറിന് തുല്യമാണ്</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-between border-t border-gray-100">
+          <button type="button" onclick="goToStep(1)" class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 text-sm">Back</button>
+          <button type="button" onclick="validateStep2()" class="px-6 py-2.5 bg-brand-red hover:bg-brand-darkred text-white font-semibold rounded-lg text-sm shadow-sm">Continue</button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Work & Identity Details -->
+      <section id="step-3" class="hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-brand-charcoal flex items-center gap-2">
+            <i data-lucide="briefcase" class="w-5 h-5 text-brand-red"></i>
+            <span class="lang-en">Work, Sector & Identity</span>
+            <span class="lang-ml hidden">തൊഴിൽ മേഖല & തിരിച്ചറിയൽ രേഖ</span>
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            <span class="lang-en">Your working district decides your union district unit and WhatsApp group.</span>
+            <span class="lang-ml hidden">നിങ്ങൾ ജോലി ചെയ്യുന്ന ജില്ല യൂണിയൻ ഘടകത്തെ നിശ്ചയിക്കുന്നു.</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Working District -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Working District (14 Districts of Kerala)</span>
+              <span class="lang-ml hidden">ജോലി ചെയ്യുന്ന ജില്ല</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <select id="workingDistrict" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none bg-white">
+              <option value="" disabled selected>Select District / ജില്ല തിരഞ്ഞെടുക്കുക</option>
+              <option value="KLTVC">Thiruvananthapuram (തിരുവനന്തപുരം) [KLTVC]</option>
+              <option value="KLKLM">Kollam (കൊല്ലം) [KLKLM]</option>
+              <option value="KLPTA">Pathanamthitta (പത്തനംതിട്ട) [KLPTA]</option>
+              <option value="KLALP">Alappuzha (ആലപ്പുഴ) [KLALP]</option>
+              <option value="KLKTM">Kottayam (കോട്ടയം) [KLKTM]</option>
+              <option value="KLIDK">Idukki (ഇടുക്കി) [KLIDK]</option>
+              <option value="KLERN">Ernakulam (എറണാകുളം) [KLERN]</option>
+              <option value="KLTSR">Thrissur (തൃശ്ശൂർ) [KLTSR]</option>
+              <option value="KLPKD">Palakkad (പാലക്കാട്) [KLPKD]</option>
+              <option value="KLMLP">Malappuram (മലപ്പുറം) [KLMLP]</option>
+              <option value="KLKKD">Kozhikode (കോഴിക്കോട്) [KLKKD]</option>
+              <option value="KLWND">Wayanad (വയനാട്) [KLWND]</option>
+              <option value="KLKNR">Kannur (കണ്ണൂർ) [KLKNR]</option>
+              <option value="KLKSD">Kasaragod (കാസർഗോഡ്) [KLKSD]</option>
+            </select>
+          </div>
+
+          <!-- Sector & Primary Platform -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Primary Sector</span>
+              <span class="lang-ml hidden">പ്രധാന തൊഴിൽ മേഖല</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <select id="sectorSelect" onchange="updatePlatformOptions()" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none bg-white">
+              <option value="" disabled selected>Select Sector</option>
+              <option value="Delivery">Delivery & Logistics (ഭക്ഷണ/പാഴ്സൽ വിതരണം)</option>
+              <option value="Ride Hailing">Ride Hailing (ഓട്ടോ/ടാക്സി/ബൈക്ക്)</option>
+              <option value="On-Demand">On-Demand Services (വീട്ടുസേവനങ്ങൾ)</option>
+              <option value="Other">Other Sector (മറ്റു മേഖലകൾ)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Primary Platform / Company</span>
+              <span class="lang-ml hidden">പ്രവർത്തിക്കുന്ന പ്ലാറ്റ്‌ഫോം</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <select id="platformSelect" onchange="checkOtherPlatform()" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none bg-white">
+              <option value="" disabled selected>Select Sector First</option>
+            </select>
+            <input type="text" id="customPlatform" placeholder="Type platform name" class="w-full mt-2 px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm hidden focus:ring-2 focus:ring-brand-red focus:border-brand-red">
+          </div>
+
+          <!-- Working Mode -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Working Mode</span>
+              <span class="lang-ml hidden">ജോലി സമയം</span>
+              <span class="text-brand-red">*</span>
+            </label>
+            <div class="grid grid-cols-2 gap-4">
+              <label class="flex items-center p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 has-[:checked]:border-brand-red has-[:checked]:bg-brand-lightred">
+                <input type="radio" name="workingMode" value="Full Time" checked class="w-4 h-4 text-brand-red">
+                <span class="ml-2 text-xs font-semibold text-brand-charcoal">Full Time / പൂർണ്ണ സമയം</span>
+              </label>
+              <label class="flex items-center p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 has-[:checked]:border-brand-red has-[:checked]:bg-brand-lightred">
+                <input type="radio" name="workingMode" value="Part Time" class="w-4 h-4 text-brand-red">
+                <span class="ml-2 text-xs font-semibold text-brand-charcoal">Part Time / ഭാഗിക സമയം</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Vehicle Details (Optional/Conditional) -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Vehicle Registration No. (If applicable)</span>
+              <span class="lang-ml hidden">വാഹന നമ്പർ</span>
+            </label>
+            <input type="text" id="vehicleNumber" placeholder="e.g. KL-01-AB-1234"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm uppercase focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+              <span class="lang-en">Driving Licence No.</span>
+              <span class="lang-ml hidden">ഡ്രൈവിംഗ് ലൈസൻസ് നമ്പർ</span>
+            </label>
+            <input type="text" id="licenceNumber" placeholder="e.g. KL1420110001234"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm uppercase focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+          </div>
+
+          <!-- Identity Verification (DPDP Compliant: Masked Last 4 Digits) -->
+          <div class="sm:col-span-2 pt-2 border-t border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                <span class="lang-en">Government ID Verification</span>
+                <span class="lang-ml hidden">തിരിച്ചറിയൽ രേഖ</span>
+                <span class="text-brand-red">*</span>
+              </label>
+              <span class="text-[11px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">DPDP Act Compliant</span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <select id="idDocType" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-brand-red focus:border-brand-red bg-white">
+                  <option value="Aadhaar">Aadhaar Card (ആധാർ)</option>
+                  <option value="Voter ID">Voter ID (തിരിച്ചറിയൽ കാർഡ്)</option>
+                  <option value="Driving Licence">Driving Licence</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <input type="text" id="idLastDigits" maxlength="4" placeholder="Enter last 4 digits only (e.g. 5678)" required
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 text-sm tracking-wider font-mono focus:ring-2 focus:ring-brand-red focus:border-brand-red focus:outline-none">
+              </div>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-1.5">
+              <span class="lang-en">For data privacy protection, the union will never store your full 12-digit Aadhaar number.</span>
+              <span class="lang-ml hidden">സ്വകാര്യത സംരക്ഷിക്കാൻ ആധാർ നമ്പർ പൂർണ്ണമായി സൂക്ഷിക്കില്ല, അവസാന 4 അക്കങ്ങൾ മാത്രം നൽകുക.</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-between border-t border-gray-100">
+          <button type="button" onclick="goToStep(2)" class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 text-sm">Back</button>
+          <button type="button" onclick="validateStep3()" class="px-6 py-2.5 bg-brand-red hover:bg-brand-darkred text-white font-semibold rounded-lg text-sm shadow-sm">Continue</button>
+        </div>
+      </section>
+
+      <!-- STEP 4: Live Selfie & Declaration -->
+      <section id="step-4" class="hidden space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-brand-charcoal flex items-center gap-2">
+            <i data-lucide="camera" class="w-5 h-5 text-brand-red"></i>
+            <span class="lang-en">Live In-App Selfie Capture</span>
+            <span class="lang-ml hidden">തത്സമയ ഫോട്ടോ (സെൽഫി)</span>
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            <span class="lang-en">This photo will appear directly on your official digital trade union ID card.</span>
+            <span class="lang-ml hidden">ഈ ഫോട്ടോ നിങ്ങളുടെ ഔദ്യോഗിക യൂണിയൻ ഐഡി കാർഡിൽ പ്രിന്റ് ചെയ്യുന്നതാണ്.</span>
+          </p>
+        </div>
+
+        <!-- Camera Viewfinder & Preview Container -->
+        <div class="flex flex-col items-center justify-center p-6 bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl space-y-4">
+          
+          <!-- Live Video Stream -->
+          <div id="cameraStreamContainer" class="relative w-64 h-64 bg-black rounded-xl overflow-hidden shadow-inner hidden">
+            <video id="webcam" autoplay playsinline class="w-full h-full object-cover"></video>
+            <!-- Face guideline oval -->
+            <div class="absolute inset-0 border-2 border-white/60 rounded-full m-6 pointer-events-none border-dashed animate-pulse"></div>
+          </div>
+
+          <!-- Captured Canvas / Image Display -->
+          <div id="capturedPhotoContainer" class="w-64 h-64 bg-gray-200 rounded-xl overflow-hidden shadow-md hidden border-2 border-brand-red">
+            <img id="photoResult" src="" alt="Captured selfie" class="w-full h-full object-cover">
+          </div>
+
+          <!-- Empty Placeholder before camera open -->
+          <div id="cameraPlaceholder" class="text-center py-6">
+            <div class="w-16 h-16 rounded-full bg-brand-lightred text-brand-red mx-auto flex items-center justify-center mb-3">
+              <i data-lucide="camera" class="w-8 h-8"></i>
+            </div>
+            <p class="text-sm font-semibold text-brand-charcoal">Take a live photo using your phone camera</p>
+            <p class="text-xs text-gray-500 mt-1">Position your face in good light without sunglasses</p>
+          </div>
+
+          <!-- Camera Action Buttons -->
+          <div class="flex flex-wrap gap-3">
+            <button type="button" id="startCamBtn" onclick="initCamera()" class="px-4 py-2.5 bg-brand-charcoal hover:bg-black text-white text-xs font-semibold rounded-lg shadow-sm flex items-center gap-2">
+              <i data-lucide="video" class="w-4 h-4"></i>
+              <span>Open Camera</span>
+            </button>
+            <button type="button" id="captureBtn" onclick="takeSnapshot()" class="hidden px-5 py-2.5 bg-brand-red hover:bg-brand-darkred text-white text-xs font-semibold rounded-lg shadow-sm flex items-center gap-2">
+              <i data-lucide="aperture" class="w-4 h-4"></i>
+              <span>Capture Photo</span>
+            </button>
+            <button type="button" id="retakeBtn" onclick="retakePhoto()" class="hidden px-4 py-2.5 border border-gray-300 bg-white text-gray-700 text-xs font-semibold rounded-lg hover:bg-gray-100 flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Retake</span>
+            </button>
+          </div>
+          <input type="hidden" id="photoData" required>
+        </div>
+
+        <!-- Statutory Consent & Declaration Notice -->
+        <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-brand-charcoal flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-brand-red"></i>
+            <span class="lang-en">Union Declaration & Privacy Consent</span>
+            <span class="lang-ml hidden">സത്യപ്രസ്താവനയും സ്വകാര്യതാ സമ്മതവും</span>
+          </h3>
+          <div class="text-xs text-gray-600 leading-relaxed space-y-2 max-h-36 overflow-y-auto p-2 bg-white rounded border border-gray-200">
+            <p>
+              <strong>1. Union Constitution:</strong> I hereby declare that I am an active gig/platform worker in Kerala and willingly accept the constitution and discipline of the Kerala State Gig & Platform Workers Union (affiliated to CITU).
+            </p>
+            <p>
+              <strong>2. Data Usage:</strong> I consent to the Union collecting and processing my details to maintain my digital membership card, organize grievance redressal with platform aggregators, and allocate my record to my district committee.
+            </p>
+            <p>
+              <strong>3. Fee Acknowledgement:</strong> I understand that an initial membership fee of <strong>₹160</strong> (₹100 registration + ₹60 subscription for 6 months) will be charged upon completing this form.
+            </p>
+          </div>
+          
+          <label class="flex items-start gap-2.5 pt-1 cursor-pointer">
+            <input type="checkbox" id="consentCheckbox" required class="mt-0.5 w-4 h-4 text-brand-red rounded border-gray-300 focus:ring-brand-red">
+            <span class="text-xs font-semibold text-brand-charcoal">
+              <span class="lang-en">I have read, understood, and accept the union declaration and privacy terms.</span>
+              <span class="lang-ml hidden">മേൽപറഞ്ഞ വിവരങ്ങൾ സത്യമാണെന്നും യൂണിയൻ ചട്ടങ്ങൾ പാലിക്കാമെന്നും ഞാൻ സമ്മതിക്കുന്നു.</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit to Payment -->
+        <div class="pt-4 flex justify-between border-t border-gray-100">
+          <button type="button" onclick="goToStep(3)" class="px-5 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 text-sm">Back</button>
+          <button type="button" onclick="proceedToPayment()" class="px-6 py-3 bg-brand-red hover:bg-brand-darkred text-white font-bold rounded-lg text-sm shadow-md flex items-center gap-2">
+            <span>Proceed to Payment (₹160)</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- Support Help Card -->
+    <div class="mt-8 bg-white border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-600 gap-3">
+      <div class="flex items-center gap-2">
+        <i data-lucide="help-circle" class="w-4 h-4 text-brand-red shrink-0"></i>
+        <span>Need assistance with registration? Contact your district union representative.</span>
+      </div>
+      <a href="/contacts" class="text-brand-red font-semibold hover:underline flex items-center gap-1 shrink-0">
+        <span>View 14 District Helplines</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-6 mt-12">
+    <div class="max-w-5xl mx-auto px-4 text-center text-xs text-gray-500">
+      <p class="font-medium">Kerala State Gig & Platform Workers Union (affiliated to CITU)</p>
+      <p class="mt-1">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
+    </div>
+  </footer>
+
+  <!-- Script Logic -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Language Toggle State
+    let currentLang = 'en';
+    const langToggleBtn = document.getElementById('langToggle');
+    langToggleBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'ml' : 'en';
+      document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', currentLang === 'ml'));
+      document.querySelectorAll('.lang-ml').forEach(el => el.classList.toggle('hidden', currentLang === 'en'));
+      document.getElementById('langLabel').textContent = currentLang === 'en' ? 'മലയാളം / EN' : 'English / മലയാളം';
+    });
+
+    // Step Navigation
+    let activeStep = 1;
+    function goToStep(step) {
+      // Hide all step sections
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`step-${i}`).classList.add('hidden');
+        const badge = document.getElementById(`step-badge-${i}`);
+        badge.className = "w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 shadow-sm transition";
+        if (i < step) {
+          badge.classList.add('step-complete');
+          badge.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i>';
+        } else if (i === step) {
+          badge.classList.add('step-active');
+          badge.textContent = i;
+        } else {
+          badge.classList.add('step-idle');
+          badge.textContent = i;
+        }
+      }
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+      activeStep = step;
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // STEP 1: OTP Logic
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
+    let otpSent = false;
+    let timerInterval;
+
+    sendOtpBtn.addEventListener('click', () => {
+      const mobile = document.getElementById('mobileNumber').value.trim();
+      const phoneError = document.getElementById('phoneError');
+
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        phoneError.classList.remove('hidden');
+        return;
+      }
+      phoneError.classList.add('hidden');
+
+      if (!otpSent) {
+        // Send OTP Simulation
+        otpSent = true;
+        document.getElementById('otpContainer').classList.remove('hidden');
+        document.getElementById('sendOtpBtnText').textContent = 'Verify OTP & Continue · സ്ഥിരീകരിക്കുക';
+        startTimer();
+      } else {
+        // Verify OTP Simulation
+        const otpVal = document.getElementById('otpCode').value.trim();
+        if (otpVal.length === 6) {
+          saveToStorage();
+          goToStep(2);
+        } else {
+          alert('Please enter a valid 6-digit OTP code.');
+        }
+      }
+    });
+
+    function startTimer() {
+      let timeLeft = 45;
+      const timerDisplay = document.getElementById('timer');
+      const resendBtn = document.getElementById('resendOtpBtn');
+      resendBtn.disabled = true;
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          resendBtn.disabled = false;
+        }
+      }, 1000);
+    }
+
+    // STEP 2 Validation
+    function validateStep2() {
+      const name = document.getElementById('fullName').value.trim();
+      const dob = document.getElementById('dob').value;
+      const gender = document.getElementById('gender').value;
+      const address = document.getElementById('currentAddress').value.trim();
+
+      if (!name || !dob || !gender || !address) {
+        alert('Please fill all required personal fields.');
+        return;
+      }
+
+      // Check minimum 18 age
+      const birthDate = new Date(dob);
+      const diff = Date.now() - birthDate.getTime();
+      const ageDate = new Date(diff);
+      const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+      if (calculatedAge < 18) {
+        alert('Workers must be at least 18 years old to join the union.');
+        return;
+      }
+
+      saveToStorage();
+      goToStep(3);
+    }
+
+    // Auto calculate age preview
+    document.getElementById('dob').addEventListener('change', (e) => {
+      const dobVal = e.target.value;
+      if (!dobVal) return;
+      const birthDate = new Date(dobVal);
+      const diff = Date.now() - birthDate.getTime();
+      const ageDate = new Date(diff);
+      const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+      const badge = document.getElementById('ageBadge');
+      if (calculatedAge < 18) {
+        badge.innerHTML = `<span class="text-brand-red font-semibold">Underage: ${calculatedAge} years (Min 18 required)</span>`;
+      } else {
+        badge.innerHTML = `<span class="text-green-700 font-semibold">Age: ${calculatedAge} years (Eligible)</span>`;
+      }
+    });
+
+    // STEP 3: Platform & Sector Logic
+    const sectorPlatforms = {
+      'Delivery': ['Zomato', 'Swiggy', 'Instamart', 'BigBasket', 'Blinkit', 'Flipkart Minutes', 'Porter', 'Shadowfax', 'Ecom Express', 'Delhivery', 'Other'],
+      'Ride Hailing': ['Uber', 'Ola', 'Rapido', 'Kerala Savari', 'Yatri', 'Other'],
+      'On-Demand': ['Urban Company', 'Free Hour', 'Hiird', 'Other'],
+      'Other': ['Other']
+    };
+
+    function updatePlatformOptions() {
+      const sector = document.getElementById('sectorSelect').value;
+      const platformSelect = document.getElementById('platformSelect');
+      platformSelect.innerHTML = '<option value="" disabled selected>Select Platform</option>';
+      
+      if (sectorPlatforms[sector]) {
+        sectorPlatforms[sector].forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p;
+          opt.textContent = p;
+          platformSelect.appendChild(opt);
+        });
+      }
+      checkOtherPlatform();
+    }
+
+    function checkOtherPlatform() {
+      const platformVal = document.getElementById('platformSelect').value;
+      const customField = document.getElementById('customPlatform');
+      if (platformVal === 'Other') {
+        customField.classList.remove('hidden');
+        customField.required = true;
+      } else {
+        customField.classList.add('hidden');
+        customField.required = false;
+      }
+    }
+
+    function validateStep3() {
+      const district = document.getElementById('workingDistrict').value;
+      const sector = document.getElementById('sectorSelect').value;
+      const platform = document.getElementById('platformSelect').value;
+      const idDigits = document.getElementById('idLastDigits').value.trim();
+
+      if (!district || !sector || !platform || !idDigits) {
+        alert('Please fill all required work and identity fields.');
+        return;
+      }
+
+      if (!/^\d{4}$/.test(idDigits)) {
+        alert('Please enter exactly 4 digits for your government ID proof.');
+        return;
+      }
+
+      saveToStorage();
+      goToStep(4);
+    }
+
+    // STEP 4: Camera & Selfie Logic
+    let videoStream = null;
+
+    async function initCamera() {
+      const video = document.getElementById('webcam');
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 480 } },
+          audio: false
+        });
+        video.srcObject = videoStream;
+        document.getElementById('cameraStreamContainer').classList.remove('hidden');
+        document.getElementById('cameraPlaceholder').classList.add('hidden');
+        document.getElementById('capturedPhotoContainer').classList.add('hidden');
+        document.getElementById('startCamBtn').classList.add('hidden');
+        document.getElementById('captureBtn').classList.remove('hidden');
+        document.getElementById('retakeBtn').classList.add('hidden');
+      } catch (err) {
+        alert('Unable to access device camera. Please grant camera permission or use an updated browser.');
+      }
+    }
+
+    function takeSnapshot() {
+      const video = document.getElementById('webcam');
+      const canvas = document.createElement('canvas');
+      canvas.width = 400;
+      canvas.height = 400;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, 400, 400);
+
+      const base64Data = canvas.toDataURL('image/jpeg', 0.85);
+      document.getElementById('photoResult').src = base64Data;
+      document.getElementById('photoData').value = base64Data;
+
+      // Stop camera stream
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+      }
+
+      document.getElementById('cameraStreamContainer').classList.add('hidden');
+      document.getElementById('capturedPhotoContainer').classList.remove('hidden');
+      document.getElementById('captureBtn').classList.add('hidden');
+      document.getElementById('retakeBtn').classList.remove('hidden');
+    }
+
+    function retakePhoto() {
+      document.getElementById('photoData').value = '';
+      initCamera();
+    }
+
+    // Final Action: Proceed to Payment (/checkout)
+    function proceedToPayment() {
+      const photo = document.getElementById('photoData').value;
+      const consent = document.getElementById('consentCheckbox').checked;
+
+      if (!photo) {
+        alert('Please capture your selfie photo using the camera before continuing.');
+        return;
+      }
+
+      if (!consent) {
+        alert('You must tick the union declaration and privacy consent checkbox.');
+        return;
+      }
+
+      saveToStorage();
+
+      // Bundle registration payload
+      const payload = {
+        mobile: document.getElementById('mobileNumber').value,
+        name: document.getElementById('fullName').value,
+        dob: document.getElementById('dob').value,
+        gender: document.getElementById('gender').value,
+        district: document.getElementById('workingDistrict').value,
+        sector: document.getElementById('sectorSelect').value,
+        platform: document.getElementById('platformSelect').value === 'Other' 
+                  ? document.getElementById('customPlatform').value 
+                  : document.getElementById('platformSelect').value,
+        workingMode: document.querySelector('input[name="workingMode"]:checked').value,
+        idType: document.getElementById('idDocType').value,
+        idLast4: document.getElementById('idLastDigits').value,
+        feeAmount: 160
+      };
+
+      sessionStorage.setItem('pendingRegistration', JSON.stringify(payload));
+      
+      // Simulate navigation to Screen 3: Payment & Checkout
+      alert('Registration details verified! Redirecting to Payment Checkout (Screen 3)...');
+      window.location.href = '/checkout';
+    }
+
+    // Local Draft Auto-save
+    function saveToStorage() {
+      const draftData = {
+        mobile: document.getElementById('mobileNumber').value,
+        name: document.getElementById('fullName').value,
+        dob: document.getElementById('dob').value,
+        gender: document.getElementById('gender').value,
+        motherTongue: document.getElementById('motherTongue').value,
+        address: document.getElementById('currentAddress').value,
+        district: document.getElementById('workingDistrict').value,
+        sector: document.getElementById('sectorSelect').value,
+        vehicleNumber: document.getElementById('vehicleNumber').value,
+        licenceNumber: document.getElementById('licenceNumber').value
+      };
+      localStorage.setItem('ksgpwu_reg_draft', JSON.stringify(draftData));
+      const status = document.getElementById('saveStatus');
+      status.textContent = 'Draft auto-saved';
+      setTimeout(() => {
+        status.textContent = 'Draft saved locally';
+      }, 2000);
+    }
+
+    // Restore draft on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('ksgpwu_reg_draft');
+      if (saved) {
+        try {
+          const d = JSON.parse(saved);
+          if (d.mobile) document.getElementById('mobileNumber').value = d.mobile;
+          if (d.name) document.getElementById('fullName').value = d.name;
+          if (d.dob) {
+            document.getElementById('dob').value = d.dob;
+            document.getElementById('dob').dispatchEvent(new Event('change'));
+          }
+          if (d.gender) document.getElementById('gender').value = d.gender;
+          if (d.motherTongue) document.getElementById('motherTongue').value = d.motherTongue;
+          if (d.address) document.getElementById('currentAddress').value = d.address;
+          if (d.district) document.getElementById('workingDistrict').value = d.district;
+          if (d.sector) {
+            document.getElementById('sectorSelect').value = d.sector;
+            updatePlatformOptions();
+          }
+          if (d.vehicleNumber) document.getElementById('vehicleNumber').value = d.vehicleNumber;
+          if (d.licenceNumber) document.getElementById('licenceNumber').value = d.licenceNumber;
+        } catch (e) {
+          console.error('Draft restore failed', e);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

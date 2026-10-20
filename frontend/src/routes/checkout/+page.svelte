@@ -5,7 +5,7 @@
 	let lang = $state<'ml' | 'en'>('ml');
 	let activeTab = $state<'upi' | 'cards' | 'nb'>('upi');
 	let selectedApp = $state<'gpay' | 'phonepe' | 'paytm' | 'bhim'>('gpay');
-	let autopayEnabled = $state(true);
+
 	let upiVpa = $state('anandhu@okaxis');
 
 	// Card inputs
@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'പേയ്മെന്റ് & ചെക്ക്ഔട്ട് | KSGPWU CITU' : 'Payment & Checkout | KSGPWU CITU'}</title>
+	<title>{lang === 'ml' ? 'പേയ്മെന്റ് & ചെക്ക്ഔട്ട് | GigWorkers.Online' : 'Payment & Checkout | GigWorkers.Online'}</title>
 </svelte:head>
 
 <!-- Sticky Top Header -->
@@ -72,8 +72,8 @@
 				★
 			</div>
 			<div class="flex flex-col">
-				<span class="text-base sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight">KSGPWU <span class="text-primary">· CITU</span></span>
-				<span class="text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium">Kerala State Gig &amp; Platform Workers Union</span>
+				<span class="text-base sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight">GigWorkers<span class="text-primary">.Online</span></span>
+				<span class="text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium">Kerala Gig &amp; Platform Workers Union</span>
 			</div>
 		</a>
 
@@ -132,7 +132,7 @@
 				</a>
 				<h1 class="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight mt-1">
 					{lang === 'ml' ? 'പേയ്മെന്റ് & ചെക്ക്ഔട്ട്' : 'Payment & Checkout'} 
-					<span class="font-normal text-secondary text-lg sm:text-xl">/ ₹160</span>
+					<span class="font-normal text-secondary text-lg sm:text-xl">/ ₹100</span>
 				</h1>
 				<p class="text-xs sm:text-sm text-secondary">
 					{lang === 'ml' ? 'അംഗത്വം സജീവമാക്കാൻ പേയ്മെന്റ് പൂർത്തിയാക്കുക.' : 'Complete your payment to activate your official union membership.'}
@@ -222,26 +222,13 @@
 						<div class="flex items-start justify-between py-1">
 							<div class="flex flex-col pr-2">
 								<span class="text-xs font-bold text-slate-800">
-									{lang === 'ml' ? '1. യൂണിയൻ പ്രവേശന ഫീസ് (വൺ-ടൈം)' : '1. Union Admission Fee (One-time)'}
+									{lang === 'ml' ? 'യൂണിയൻ രജിസ്ട്രേഷൻ ഫീസ് (ഒറ്റ-തവണ)' : 'Union Registration Fee (One-time)'}
 								</span>
 								<span class="text-[11px] text-slate-500">
 									One-time registration &amp; union ledger setup
 								</span>
 							</div>
 							<span class="text-sm font-black text-slate-900">₹100.00</span>
-						</div>
-
-						<div class="h-px w-full bg-slate-200"></div>
-
-						<!-- Row 2 -->
-						<div class="flex items-start justify-between py-1">
-							<div class="flex flex-col pr-2">
-								<span class="text-xs font-bold text-slate-800">
-									{lang === 'ml' ? '2. പ്രതിമാസ വരിസംഖ്യ (6 മാസം മുൻകൂർ)' : '2. Monthly Subscription (6 Months Adv.)'}
-								</span>
-								<span class="text-[11px] text-slate-500">₹10 / month × 6 months</span>
-							</div>
-							<span class="text-sm font-black text-slate-900">₹60.00</span>
 						</div>
 
 						<!-- Benefit Callout -->
@@ -266,7 +253,7 @@
 								<span class="text-[11px] text-slate-300">Inclusive of all statutory taxes</span>
 							</div>
 							<div class="text-right">
-								<div class="text-3xl font-black text-white tracking-tight">₹160</div>
+								<div class="text-3xl font-black text-white tracking-tight">₹100</div>
 								<span class="text-[10px] text-slate-300">One-time processing</span>
 							</div>
 						</div>
@@ -494,27 +481,6 @@
 							</div>
 						{/if}
 
-						<!-- Autopay Mandate Card -->
-						<div class="bg-surface-container rounded-lg p-4 border border-surface-variant">
-							<label class="flex items-start gap-3 cursor-pointer select-none">
-								<input 
-									type="checkbox" 
-									bind:checked={autopayEnabled} 
-									class="mt-1 w-4 h-4 rounded text-primary focus:ring-primary accent-primary cursor-pointer flex-shrink-0"
-								/>
-								<div class="flex flex-col text-xs">
-									<span class="font-bold text-on-surface">
-										{lang === 'ml' ? 'ഓട്ടോ-പേ ആക്റ്റിവേറ്റ് ചെയ്യുക (ഓപ്ഷണൽ)' : 'Enable Autopay (₹10 / month)'}
-									</span>
-									<p class="text-secondary mt-0.5 leading-relaxed">
-										{lang === 'ml'
-											? 'ഭാവിയിലെ പ്രതിമാസ വരിസംഖ്യകൾ (₹10/മാസം) ഓട്ടോമാറ്റിക് ആയി അടയ്ക്കുക. എപ്പോൾ വേണമെങ്കിലും ഒറ്റ ക്ലിക്കിൽ റദ്ദാക്കാം. RBI e-mandate compliant.'
-											: 'Autopay future monthly union dues (₹10/mo). Cancel anytime from union portal or UPI app.'}
-									</p>
-								</div>
-							</label>
-						</div>
-
 						<!-- Primary CTA Button -->
 						<div class="flex flex-col gap-2">
 							<button 
@@ -528,7 +494,7 @@
 									<span>{lang === 'ml' ? 'പ്രോസസ്സ് ചെയ്യുന്നു...' : 'Processing Payment...'}</span>
 								{:else}
 									<span class="material-symbols-outlined text-[22px]">lock</span>
-									<span>{lang === 'ml' ? '₹160 അടയ്ക്കുക / അംഗത്വം ആക്റ്റീവ് ചെയ്യുക' : 'Pay ₹160 & Activate Membership'}</span>
+									<span>{lang === 'ml' ? '₹100 അടയ്ക്കുക / അംഗത്വം ആക്റ്റീവ് ചെയ്യുക' : 'Pay ₹100 & Activate Membership'}</span>
 									<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 								{/if}
 							</button>
@@ -551,7 +517,7 @@
 								<span class="px-2 py-0.5 rounded bg-surface-container font-mono font-bold">Mastercard</span>
 							</div>
 							<p class="text-[11px] text-secondary max-w-lg">
-								Kerala State Gig and Platform Workers Union (Registration: KL-07-TU-2026). All subscriptions are deposited directly to the Union Welfare Reserve Account.
+								Kerala Gig and Platform Workers Union — GigWorkers.Online (Registration: KL-07-TU-2026). All registration fees are deposited directly to the Union Welfare Reserve Account.
 							</p>
 						</div>
 					</div>
@@ -608,7 +574,7 @@
 				</div>
 				<div class="flex justify-between">
 					<span class="text-slate-500">{lang === 'ml' ? 'തുക' : 'Amount Paid'}:</span>
-					<span class="font-bold text-slate-900">₹160.00</span>
+					<span class="font-bold text-slate-900">₹100.00</span>
 				</div>
 				<div class="flex justify-between">
 					<span class="text-slate-500">{lang === 'ml' ? 'ഇടപാട് ഐഡി' : 'Transaction Ref'}:</span>
@@ -646,7 +612,7 @@
 <!-- Footer -->
 <footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-secondary">
-		<p>Kerala State Gig &amp; Platform Workers Union (affil. CITU) · Statutory Labour Protection &amp; Dignity</p>
+		<p>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</p>
 		<div class="flex items-center gap-2">
 			<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
 			<span class="font-semibold">Secure Payment Gateway</span>

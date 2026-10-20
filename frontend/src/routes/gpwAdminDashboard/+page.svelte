@@ -1,15 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	onMount(() => {
+		checkSession();
+	});
+
 	let lang = $state<'ml' | 'en'>('ml');
-	let isLoggedIn = $state(true);
+
+	// ── Auth state ────────────────────────────────────────────────────────────
+	let isLoggedIn      = $state(false);
+	let authLoading     = $state(true);   // true while session check is running
+	let authSubmitting  = $state(false);  // true while a login API call is in-flight
+	let authStep        = $state<'cred' | '2fa'>('cred');
+	let authError       = $state('');
+	let challengeToken  = $state('');     // server challenge token after step 1
+
+	// Session info (populated after successful login)
+	let sessionRole     = $state('');
+	let sessionName     = $state('');
+
+	// Form field values
+	let username = $state('');
+	let password = $state('');
+	let totp     = $state('');
+
 	let currentNav = $state<'overview' | 'members' | 'dues' | 'districts' | 'grievances' | 'import' | 'audit'>('overview');
-	
+
 	// Search and filter
 	let searchQuery = $state('');
 	let selectedDistrict = $state('All');
 	let selectedCategory = $state<'all' | 'delivery' | 'ride' | 'services'>('all');
-	
+
 	// Modal states
 	let showImportModal = $state(false);
 	let selectedMemberForModal = $state<any>(null);
@@ -17,13 +38,6 @@
 	let importDistrict = $state('KLERN');
 	let importCollector = $state('Com. K. Balakrishnan');
 	let importSuccess = $state(false);
-
-	// Auth credentials (if logged out)
-	let username = $state('state_gs');
-	let password = $state('CITUSolidarity@2026');
-	let totp = $state('REC001AA');
-	let authStep = $state<'cred' | '2fa'>('cred');
-	let authError = $state('');
 
 	// Sample Members data matching Civic Vanguard schema
 	let membersList = $state([
@@ -141,22 +155,81 @@
 		document.body.removeChild(link);
 	}
 
-	function handleLogin() {
-		if (authStep === 'cred') {
-			if (username === 'state_gs' && password === 'CITUSolidarity@2026') {
-				authStep = '2fa';
-				authError = '';
-			} else {
-				authError = 'Invalid credentials. Use state_gs / CITUSolidarity@2026';
+	// ── Auth API helpers ────────────────────────────────────────────────────
+	async function checkSession() {
+		try {
+			const res = await fetch('/api/auth/session', { credentials: 'include' });
+			if (res.ok) {
+				const data = await res.json();
+				if (data.authenticated && ['state_admin', 'district_admin'].includes(data.role)) {
+					sessionRole = data.role;
+					sessionName = data.user_id ?? '';
+					isLoggedIn = true;
+				}
 			}
-		} else {
-			if (totp.trim().length >= 6) {
+		} catch {
+			// network error — stay on login screen
+		} finally {
+			authLoading = false;
+		}
+	}
+
+	async function handleLogin() {
+		authError = '';
+		authSubmitting = true;
+		try {
+			if (authStep === 'cred') {
+				// Step 1: username + password → get challenge token
+				const res = await fetch('/api/auth/admin/login', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include',
+					body: JSON.stringify({ username: username.trim(), password })
+				});
+				const data = await res.json();
+				if (!res.ok) {
+					authError = data?.detail ?? data?.message ?? 'Invalid credentials.';
+					return;
+				}
+				challengeToken = data.challenge_token ?? '';
+				authStep = '2fa';
+			} else {
+				// Step 2: TOTP / recovery code + challenge token → session cookie
+				const res = await fetch('/api/auth/admin/2fa', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					credentials: 'include',
+					body: JSON.stringify({ challenge_token: challengeToken, totp_code: totp.trim() })
+				});
+				const data = await res.json();
+				if (!res.ok) {
+					authError = data?.detail ?? data?.message ?? 'Invalid 2FA code.';
+					return;
+				}
+				sessionRole = data.role ?? '';
+				sessionName = data.name ?? '';
 				isLoggedIn = true;
 				authError = '';
-			} else {
-				authError = 'Enter valid 6-8 character 2FA TOTP';
 			}
+		} catch {
+			authError = 'Network error — ensure the backend is running.';
+		} finally {
+			authSubmitting = false;
 		}
+	}
+
+	async function handleLogout() {
+		try {
+			await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+		} catch { /* ignore */ }
+		isLoggedIn = false;
+		sessionRole = '';
+		sessionName = '';
+		authStep = 'cred';
+		username = '';
+		password = '';
+		totp = '';
+		challengeToken = '';
 	}
 
 	function handleImportSubmit() {
@@ -170,12 +243,20 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'അഡ്മിൻ കൺസോൾ | KSGPWU CITU' : 'Admin Console | KSGPWU CITU'}</title>
+	<title>{lang === 'ml' ? 'അഡ്മിൻ കൺസോൾ | GigWorkers.Online' : 'Admin Console | GigWorkers.Online'}</title>
 	<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
 	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
 </svelte:head>
 
-{#if !isLoggedIn}
+{#if authLoading}
+	<!-- Session check in progress — show minimal splash to avoid flash -->
+	<div class="min-h-screen bg-[#0F172A] flex items-center justify-center">
+		<div class="flex flex-col items-center gap-4 text-white">
+			<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-2xl font-bold shadow-md animate-pulse">★</div>
+			<span class="text-sm text-slate-400 font-medium">Verifying session…</span>
+		</div>
+	</div>
+{:else if !isLoggedIn}
 	<!-- Login Screen with 2FA Gate -->
 	<div class="min-h-screen bg-[#0F172A] flex items-center justify-center p-4">
 		<div class="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-slate-700/50 p-8">
@@ -183,7 +264,7 @@
 				<div class="w-14 h-14 rounded-xl bg-primary text-white mx-auto flex items-center justify-center text-2xl font-bold shadow-md mb-3">
 					★
 				</div>
-				<h2 class="text-xl font-bold text-slate-900">KSGPWU · CITU Admin</h2>
+				<h2 class="text-xl font-bold text-slate-900">GigWorkers.Online Admin</h2>
 				<p class="text-xs text-slate-500 mt-1">State Executive & District Council Secure Console</p>
 			</div>
 
@@ -195,7 +276,7 @@
 			{/if}
 
 			{#if authStep === 'cred'}
-				<div class="space-y-4">
+				<form class="space-y-4" onsubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 					<div>
 						<label for="admin-username-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Username / ഐഡി</label>
 						<input 
@@ -217,20 +298,23 @@
 					</div>
 
 					<button 
-						type="button" 
-						onclick={handleLogin}
-						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2"
+						type="submit" 
+						disabled={authSubmitting}
+						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2 disabled:opacity-60"
 					>
-						<span>Continue to 2FA</span>
-						<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+						{#if authSubmitting}
+							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+							<span>Verifying…</span>
+						{:else}
+							<span>Continue to 2FA</span>
+							<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+						{/if}
 					</button>
 
-					<div class="p-2.5 bg-slate-100 rounded-lg text-[11px] text-slate-600 border border-slate-200">
-						Demo credentials: <strong>state_gs</strong> / <strong>CITUSolidarity@2026</strong>
-					</div>
-				</div>
+
+				</form>
 			{:else}
-				<div class="space-y-4">
+				<form class="space-y-4" onsubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 					<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 flex items-center gap-2">
 						<span class="material-symbols-outlined text-[16px]">lock</span>
 						<span>Step 2: Enter 2FA TOTP hardware or authenticator code</span>
@@ -248,18 +332,21 @@
 					</div>
 
 					<button 
-						type="button" 
-						onclick={handleLogin}
-						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2"
+						type="submit" 
+						disabled={authSubmitting}
+						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2 disabled:opacity-60"
 					>
-						<span class="material-symbols-outlined text-[18px]">verified_user</span>
-						<span>Verify & Authenticate</span>
+						{#if authSubmitting}
+							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+							<span>Authenticating…</span>
+						{:else}
+							<span class="material-symbols-outlined text-[18px]">verified_user</span>
+							<span>Verify & Authenticate</span>
+						{/if}
 					</button>
 
-					<div class="p-2.5 bg-slate-100 rounded-lg text-[11px] text-slate-600 border border-slate-200">
-						Demo TOTP bypass key: <strong>REC001AA</strong>
-					</div>
-				</div>
+
+				</form>
 			{/if}
 		</div>
 	</div>
@@ -276,7 +363,7 @@
 							★
 						</div>
 						<div>
-							<div class="text-sm font-bold tracking-tight text-white leading-tight">KSGPWU · CITU</div>
+							<div class="text-sm font-bold tracking-tight text-white leading-tight">GigWorkers.Online</div>
 							<div class="text-[11px] text-slate-400 leading-tight mt-0.5">സംസ്ഥാന കമ്മിറ്റി / State HQ</div>
 						</div>
 					</a>
@@ -286,8 +373,8 @@
 							<span class="material-symbols-outlined text-[18px]">badge</span>
 						</div>
 						<div class="overflow-hidden">
-							<div class="text-xs font-semibold text-slate-200 truncate">Com. K. Balakrishnan</div>
-							<div class="text-[10px] text-slate-400 truncate">സംസ്ഥാന സെക്രട്ടറി / Gen. Sec.</div>
+							<div class="text-xs font-semibold text-slate-200 truncate">{sessionName || 'Com. P. K. Sasidharan'}</div>
+							<div class="text-[10px] text-slate-400 truncate">{sessionRole === 'district_admin' ? 'ജില്ലാ സെക്രട്ടറി / Dist. Sec.' : 'സംസ്ഥാന സെക്രട്ടറി / Gen. Sec.'}</div>
 						</div>
 					</div>
 				</div>
@@ -379,16 +466,16 @@
 			<!-- Bottom Security Pill & Logout -->
 			<div class="p-4 border-t border-slate-800 flex flex-col gap-2">
 				<div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-slate-900 border border-emerald-900/40 text-emerald-400 text-xs">
-					<div class="flex items-center gap-1.5">
-						<span class="material-symbols-outlined text-[16px]">verified_user</span>
-						<span class="text-[11px] font-medium">2FA TOTP Active</span>
+					<div class="flex items-center gap-1.5 min-w-0">
+						<span class="material-symbols-outlined text-[16px] flex-shrink-0">verified_user</span>
+						<span class="text-[11px] font-medium truncate">{sessionRole || '2FA Active'}</span>
 					</div>
-					<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+					<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
 				</div>
 
 				<button 
 					type="button" 
-					onclick={() => isLoggedIn = false}
+					onclick={handleLogout}
 					class="flex items-center gap-2 px-2.5 py-2 text-slate-400 hover:text-red-400 text-xs transition-colors"
 				>
 					<span class="material-symbols-outlined text-[18px]">logout</span>
