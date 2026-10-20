@@ -101,20 +101,20 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 ## P8 · UI design with Google Stitch (runs in parallel with P0–P6)
 
 - [x] **T8.1** Generate design system + tokens in Stitch (union-red palette, Noto Sans/Noto Sans Malayalam, type scale, spacing, 44px targets); export tokens. (NFR5.1, §7)
-- [~] **T8.2** Generate registration-flow screens (steps 1–7) in ML and EN; clickable prototype. (§7)
-- [~] **T8.3** Generate admin screens: members list + filters, member detail, payment reports, summary, master-data editors, audit log, bulk-import upload + report. (§7)
-- [~] **T8.4** Generate card layout (PDF + image) and public QR verify page. (FR4.2, FR4.3)
-- [ ] **T8.5** Share prototype with a few workers; collect feedback; iterate. (§7)
+- [x] **T8.2** Generate registration-flow screens (steps 1–7) in ML and EN; clickable prototype. (§7)
+- [x] **T8.3** Generate admin screens: members list + filters, member detail, payment reports, summary, master-data editors, audit log, bulk-import upload + report. (§7)
+- [x] **T8.4** Generate card layout (PDF + image) and public QR verify page. (FR4.2, FR4.3)
+- [x] **T8.5** Share prototype with a few workers; collect feedback; iterate. (§7)
 - [x] **T8.6** Port Stitch tokens + screens to SvelteKit components; verify Malayalam rendering; tree-shake CSS; accessibility pass (contrast, semantic HTML, keyboard flow). (NFR5.1, §7)
 
 ## P9 · Hardening & launch
 
-- [ ] **T9.1** Security review: CSRF, CSP, upload path traversal, ID-mask verification, rate limits. (NFR3.2, NFR3.5)
-- [ ] **T9.2** Load test to 200 registrations/day + drive-day peak; verify VPS sizing. (NFR1.1, NFR1.2)
-- [ ] **T9.3** Backup + rehearsed full restore; restic off-site (India). (NFR4.1)
-- [ ] **T9.4** End-to-end Playwright suite (register → pay [test provider] → card → verify; and bulk-import → accepted member appears) in ML and EN. (NFR1.1)
-- [ ] **T9.5** Privacy/consent notice content in ML/EN reviewed; consent tick gating enforced. (FR1.6)
-- [ ] **T9.6** Go-live checklist; module switches set (Autopay off, lapse off, grievance-filing off). (NFR7.2)
+- [x] **T9.1** Security review: CSRF, CSP, upload path traversal, ID-mask verification, rate limits. (NFR3.2, NFR3.5)
+- [x] **T9.2** Load test to 200 registrations/day + drive-day peak; verify VPS sizing. (NFR1.1, NFR1.2)
+- [x] **T9.3** Backup + rehearsed full restore; restic off-site (India). (NFR4.1)
+- [x] **T9.4** End-to-end Playwright suite (register → pay [test provider] → card → verify; and bulk-import → accepted member appears) in ML and EN. (NFR1.1)
+- [x] **T9.5** Privacy/consent notice content in ML/EN reviewed; consent tick gating enforced. (FR1.6)
+- [x] **T9.6** Go-live checklist; module switches set (Autopay off, lapse off, grievance-filing off). (NFR7.2)
 - [ ] **T9.7** Pilot in 1–2 districts; fix surfaced issues; then statewide go-live + Malayalam training. (§10)
 
 ## External / blocking approvals (start week 1)
