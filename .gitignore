@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+.svelte-kit/
+build/
+package-lock.json.bak
+.npm
+.pnpm-store
+
+# Environment & Secret variables
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Database
+.dev_pg/
+*.sqlite3
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
