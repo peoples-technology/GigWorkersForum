@@ -42,8 +42,9 @@ services:
   # ---------------------------------------------------------------------------
   # 2. SvelteKit Static Frontend
   # ---------------------------------------------------------------------------
-  - type: static
+  - type: web
     name: citu-gigworkers-web
+    runtime: static
     rootDir: frontend
     buildCommand: "npm ci && npm run build"
     staticPublishPath: "./build"
