@@ -1,0 +1,61 @@
+name: CI / Quality Assurance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-qa:
+    name: Backend Lint & Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install Dependencies
+        working-directory: ./backend
+        run: |
+          uv venv
+          uv sync --extra dev
+
+      - name: Lint with Ruff
+        working-directory: ./backend
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        working-directory: ./backend
+        run: uv run pytest
+
+      - name: Export & Check OpenAPI Schema
+        working-directory: ./backend
+        run: |
+          uv run python scripts/export_openapi.py
+          git diff --exit-code ../openapi.json || (echo "openapi.json is out of sync!" && exit 1)
+
+  frontend-qa:
+    name: Frontend Check & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Node Dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build Static PWA Bundle
+        working-directory: ./frontend
+        run: npm run build

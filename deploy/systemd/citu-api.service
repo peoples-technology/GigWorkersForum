@@ -1,0 +1,26 @@
+[Unit]
+Description=CITU Kerala Gig Workers Union Platform API (Granian ASGI)
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=citu
+Group=citu
+WorkingDirectory=/var/www/citu-gigworkers/backend
+Environment="PATH=/var/www/citu-gigworkers/backend/.venv/bin:/usr/local/bin:/usr/bin"
+EnvironmentFile=/etc/citu-gigworkers/backend.env
+ExecStart=/var/www/citu-gigworkers/backend/.venv/bin/granian \
+    --interface asgi \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 2 \
+    --threads 4 \
+    --backlog 1024 \
+    app.main:app
+Restart=always
+RestartSec=3
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

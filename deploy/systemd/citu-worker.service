@@ -1,0 +1,19 @@
+[Unit]
+Description=CITU Kerala Gig Workers Union Platform Async Worker (Procrastinate)
+After=network.target postgresql.service citu-api.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=citu
+Group=citu
+WorkingDirectory=/var/www/citu-gigworkers/backend
+Environment="PATH=/var/www/citu-gigworkers/backend/.venv/bin:/usr/local/bin:/usr/bin"
+EnvironmentFile=/etc/citu-gigworkers/backend.env
+ExecStart=/var/www/citu-gigworkers/backend/.venv/bin/procrastinate \
+    --app=app.worker.procrastinate_app worker
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

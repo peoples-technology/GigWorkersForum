@@ -9,14 +9,14 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P0 · Foundations
 
-- [ ] **T0.1** Initialise monorepo: `backend/`, `frontend/`, `deploy/`, `docs/`. Pin tooling: uv, ruff, ty, pytest (backend); Biome, Vitest, Playwright (frontend). (NFR4.2)
-- [ ] **T0.2** Litestar app skeleton with Granian entrypoint; health check; structured logging; warnings-as-errors. (§2.1)
-- [ ] **T0.3** Postgres 18 local setup; Alembic baseline; `organisations`, `units` (ltree + GIST index) migration; seed State + 14 districts. (FR7.7, NFR7.1)
-- [ ] **T0.4** `settings` table with module on/off switches (Autopay off, lapse off, grievance-filing off) and the lapse setting. (NFR7.2, FR5.2)
-- [ ] **T0.5** SvelteKit (Svelte 5) PWA skeleton, TypeScript strict, Biome, Paraglide ML/EN scaffolding, service worker for installability. (NFR2.2, FR9.1)
-- [ ] **T0.6** OpenAPI → openapi-typescript pipeline; CI contract check. (§2.2)
-- [ ] **T0.7** nginx local config + Let's Encrypt staging; static app + reverse proxy; authorised file-download location header. (NFR3.2, NFR4.3)
-- [ ] **T0.8** CI: lint, typecheck, test, build on push; tag-triggered deploy (sync → migrate → restart). (NFR4.2)
+- [x] **T0.1** Initialise monorepo: `backend/`, `frontend/`, `deploy/`, `docs/`. Pin tooling: uv, ruff, ty, pytest (backend); Biome, Vitest, Playwright (frontend). (NFR4.2)
+- [x] **T0.2** Litestar app skeleton with Granian entrypoint; health check; structured logging; warnings-as-errors. (§2.1)
+- [x] **T0.3** Postgres 18 local setup; Alembic baseline; `organisations`, `units` (ltree + GIST index) migration; seed State + 14 districts. (FR7.7, NFR7.1)
+- [x] **T0.4** `settings` table with module on/off switches (Autopay off, lapse off, grievance-filing off) and the lapse setting. (NFR7.2, FR5.2)
+- [x] **T0.5** SvelteKit (Svelte 5) PWA skeleton, TypeScript strict, Biome, Paraglide ML/EN scaffolding, service worker for installability. (NFR2.2, FR9.1)
+- [x] **T0.6** OpenAPI → openapi-typescript pipeline; CI contract check. (§2.2)
+- [x] **T0.7** nginx local config + Let's Encrypt staging; static app + reverse proxy; authorised file-download location header. (NFR3.2, NFR4.3)
+- [x] **T0.8** CI: lint, typecheck, test, build on push; tag-triggered deploy (sync → migrate → restart). (NFR4.2)
 
 ## P1 · Auth & identity
 
@@ -105,7 +105,7 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 - [~] **T8.3** Generate admin screens: members list + filters, member detail, payment reports, summary, master-data editors, audit log, bulk-import upload + report. (§7)
 - [~] **T8.4** Generate card layout (PDF + image) and public QR verify page. (FR4.2, FR4.3)
 - [ ] **T8.5** Share prototype with a few workers; collect feedback; iterate. (§7)
-- [ ] **T8.6** Port Stitch tokens + screens to SvelteKit components; verify Malayalam rendering; tree-shake CSS; accessibility pass (contrast, semantic HTML, keyboard flow). (NFR5.1, §7)
+- [x] **T8.6** Port Stitch tokens + screens to SvelteKit components; verify Malayalam rendering; tree-shake CSS; accessibility pass (contrast, semantic HTML, keyboard flow). (NFR5.1, §7)
 
 ## P9 · Hardening & launch
 
