@@ -40,74 +40,80 @@
 	<title>{lang === 'ml' ? 'KSGPWU · സിഐടിയു കേരള ഗിഗ് വർക്കേഴ്സ് യൂണിയൻ' : 'KSGPWU · CITU Kerala Gig Workers Union'}</title>
 </svelte:head>
 
-<!-- Sticky Header -->
-<header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)]">
+<!-- Frosted Glass Sticky Header -->
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
 	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
 		<!-- Union Logo & Title -->
-		<a href="/" class="flex items-center gap-3 min-w-max group">
-			<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-xl shadow-inner group-hover:scale-105 transition-transform">
+		<a href="/" class="flex items-center gap-3.5 min-w-max group">
+			<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-black text-2xl shadow-md shadow-red-700/20 group-hover:scale-105 group-hover:rotate-1 transition-transform">
 				★
 			</div>
 			<div class="flex flex-col">
-				<span class="font-bold text-base sm:text-lg text-primary tracking-tight">KSGPWU · CITU</span>
-				<span class="text-[11px] sm:text-xs text-secondary uppercase tracking-wider font-medium">
+				<div class="flex items-center gap-2">
+					<span class="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight group-hover:text-primary transition-colors">
+						KSGPWU <span class="text-primary">· CITU</span>
+					</span>
+					<span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-200 uppercase tracking-wide">
+						Kerala
+					</span>
+				</div>
+				<span class="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider font-medium">
 					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
 
 		<!-- Desktop Navigation -->
-		<nav class="hidden lg:flex items-center gap-1 font-medium text-sm">
-			<a href="#quick-access-banner" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all">
+		<nav class="hidden lg:flex items-center gap-1 font-semibold text-sm">
+			<a href="#quick-access-banner" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all">
 				{lang === 'ml' ? 'അംഗത്വം' : 'Membership'}
 			</a>
-			<a href="/register" class="px-3.5 py-2 rounded-lg bg-primary-container text-on-primary-container font-semibold transition-all hover:opacity-90">
+			<a href="/register" class="px-4 py-2 rounded-lg bg-red-50 text-primary border border-red-200/80 hover:bg-red-100/70 transition-all font-bold">
 				{lang === 'ml' ? 'രജിസ്ട്രേഷൻ' : 'Register'}
 			</a>
-			<a href="/verify" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all">
+			<a href="/verify" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all">
 				{lang === 'ml' ? 'ഐഡി പരിശോധന' : 'Verify ID'}
 			</a>
-			<a href="/admin" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1">
-				<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
-				<span>{lang === 'ml' ? 'അഡ്മിൻ ലോഗിൻ' : 'Admin Login'}</span>
+			<a href="/admin" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all flex items-center gap-1.5">
+				<span class="material-symbols-outlined text-[18px] text-slate-500">admin_panel_settings</span>
+				<span>{lang === 'ml' ? 'അഡ്മിൻ' : 'Admin'}</span>
 			</a>
 		</nav>
 
-		<!-- Right Action Strip: Language Toggle + CTA -->
+		<!-- Right Action Strip: Language Toggle + Register CTA -->
 		<div class="flex items-center gap-3 min-w-max">
 			<!-- Language Toggle Pill -->
-			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-1 shadow-sm">
+			<div class="inline-flex items-center bg-slate-100/90 border border-slate-200 rounded-full p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => toggleLang('ml')}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'ml' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
-				<span class="text-secondary/40 text-xs px-0.5">/</span>
 				<button 
 					type="button" 
 					onclick={() => toggleLang('en')}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'en' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
 			</div>
 
-			<!-- Quick Register / User Action -->
+			<!-- Quick Register CTA Button -->
 			<a 
 				href="/register" 
-				class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary text-xs font-semibold shadow hover:bg-primary-container transition-colors"
+				class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl crimson-gradient-btn text-white text-xs font-bold tracking-wide shadow-md"
 			>
 				<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
-				<span>{lang === 'ml' ? 'അംഗമാകുക' : 'Join'}</span>
+				<span>{lang === 'ml' ? 'അംഗമാകുക (₹160)' : 'Join Union (₹160)'}</span>
 			</a>
 
 			<!-- Mobile Hamburger Toggle -->
 			<button 
 				type="button" 
 				onclick={() => mobileMenuOpen = !mobileMenuOpen}
-				class="lg:hidden p-2 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container"
+				class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
 				aria-label="Toggle menu"
 			>
 				<span class="material-symbols-outlined text-2xl">{mobileMenuOpen ? 'close' : 'menu'}</span>
@@ -117,32 +123,32 @@
 
 	<!-- Mobile Menu Drawer -->
 	{#if mobileMenuOpen}
-		<div class="lg:hidden bg-surface-container-lowest border-b border-surface-variant px-4 py-3 space-y-2">
+		<div class="lg:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-2 shadow-lg animate-in slide-in-from-top-2">
 			<a 
 				href="#quick-access-banner" 
 				onclick={() => mobileMenuOpen = false} 
-				class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container"
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
 			>
 				{lang === 'ml' ? 'അംഗത്വം · Membership' : 'Membership Track'}
 			</a>
 			<a 
 				href="/register" 
 				onclick={() => mobileMenuOpen = false} 
-				class="block px-3 py-2 rounded-lg text-sm font-semibold text-primary bg-primary-fixed/40"
+				class="block px-3 py-2.5 rounded-lg text-sm font-bold text-primary bg-red-50 border border-red-200/80"
 			>
 				{lang === 'ml' ? 'പുതിയ രജിസ്ട്രേഷൻ · Register (₹160)' : 'Register Member (₹160)'}
 			</a>
 			<a 
 				href="/verify" 
 				onclick={() => mobileMenuOpen = false} 
-				class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container"
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
 			>
 				{lang === 'ml' ? 'ഐഡി പരിശോധന · Verify Member' : 'Public Verification'}
 			</a>
 			<a 
 				href="/admin" 
 				onclick={() => mobileMenuOpen = false} 
-				class="block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:bg-surface-container"
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
 			>
 				{lang === 'ml' ? 'അഡ്മിൻ ലോഗിൻ · Admin Portal' : 'Admin Portal'}
 			</a>
@@ -150,131 +156,140 @@
 	{/if}
 </header>
 
-<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]">
+<main class="w-full pt-20 min-h-[calc(100vh-80px)]">
 	<div class="flex flex-col w-full">
 		<!-- Top Statutory Notification Ticker -->
-		<aside aria-label="Statutory Notice" class="w-full bg-surface-container border-b border-surface-variant/80">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-secondary">
-				<div class="flex items-center gap-2 min-w-0">
-					<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold text-[11px] uppercase tracking-wider">
-						CITU Affiliated
+		<aside aria-label="Statutory Notice" class="w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white border-b border-red-900/40">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+				<div class="flex items-center gap-2.5 min-w-0">
+					<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-600 text-white font-bold text-[10px] uppercase tracking-wider shadow-xs">
+						★ CITU Affiliated
 					</span>
-					<span class="truncate font-medium">
+					<span class="truncate font-medium text-slate-200">
 						{lang === 'ml' 
 							? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളി യൂണിയൻ · രജിസ്ട്രേഷൻ നമ്പർ: KL-07-TU-2026' 
 							: 'Kerala State Gig & Platform Workers Union · Reg No: KL-07-TU-2026'}
 					</span>
 				</div>
-				<div class="hidden sm:flex items-center gap-3 text-on-surface-variant font-medium text-xs">
-					<span class="flex items-center gap-1">
-						<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+				<div class="hidden sm:flex items-center gap-4 text-slate-300 font-medium text-xs">
+					<span class="flex items-center gap-1.5">
+						<span class="material-symbols-outlined text-[16px] text-amber-400">verified_user</span>
 						<span>Statutory Legal Cell</span>
 					</span>
-					<span>•</span>
-					<span class="flex items-center gap-1">
-						<span class="material-symbols-outlined text-[16px] text-tertiary">support_agent</span>
+					<span class="text-slate-600">•</span>
+					<span class="flex items-center gap-1.5">
+						<span class="material-symbols-outlined text-[16px] text-blue-400">support_agent</span>
 						<span>{lang === 'ml' ? '14 ജില്ലാ സമിതികൾ' : '14 District Committees'}</span>
 					</span>
 				</div>
 			</div>
 		</aside>
 
-		<!-- Hero Section: 2-Column Grid -->
-		<section class="w-full py-10 lg:py-16 bg-surface">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+		<!-- Hero Section with Atmospheric Gradient Mesh -->
+		<section class="w-full py-12 lg:py-20 hero-gradient-mesh relative overflow-hidden">
+			<!-- Subtle radiant light orbs in background -->
+			<div class="absolute -top-24 -left-24 w-96 h-96 bg-red-400/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/2 -right-24 w-96 h-96 bg-amber-400/15 rounded-full blur-3xl pointer-events-none"></div>
+
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 					<!-- Left Column: Copy & Actions -->
 					<div class="lg:col-span-7 flex flex-col items-start pr-0 lg:pr-4">
-						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed mb-5 border border-primary/20">
+						<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 text-red-900 mb-6 border border-red-200/80 shadow-xs">
 							<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-							<span class="text-xs font-semibold tracking-wide">
+							<span class="text-xs font-bold tracking-wide">
 								{lang === 'ml' ? 'ശക്തമായ നാളെക്കായി ഒന്നിച്ച് · Unity in Solidarity' : 'Solidarity & Dignity for Kerala Platform Workers'}
 							</span>
 						</div>
 
-						<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-on-surface tracking-tight mb-4 leading-tight">
-							{lang === 'ml' 
-								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളികൾ ഒന്നിക്കുന്നു' 
-								: 'Organising Kerala’s Gig & Platform Workers'}
+						<h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mb-5 leading-[1.15]">
+							{#if lang === 'ml'}
+								കേരളത്തിലെ <span class="bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent">ഗിഗ് &amp; പ്ലാറ്റ്‌ഫോം തൊഴിലാളികൾ</span> ഒന്നിക്കുന്നു
+							{:else}
+								Organising Kerala’s <span class="bg-gradient-to-r from-red-700 via-rose-600 to-amber-600 bg-clip-text text-transparent">Gig &amp; Platform Workers</span>
+							{/if}
 						</h1>
 
-						<p class="text-base sm:text-lg text-secondary max-w-2xl leading-relaxed mb-8">
+						<p class="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-8">
 							{lang === 'ml'
 								? 'ഡെലിവറി പാർട്ണർമാർ, ആപ്പ് ഡ്രൈവർമാർ, പ്ലാറ്റ്‌ഫോം ജീവനക്കാർ എന്നിവർക്കായി നിയമപരിരക്ഷ, മിനിമം നിരക്ക് സ്ഥിരത, മാന്യമായ തൊഴിൽ അന്തസ്സ് എന്നിവ ഉറപ്പാക്കാൻ സിഐടിയു നേതൃത്വത്തിലുള്ള ഡിജിറ്റൽ മുന്നേറ്റം.'
 								: 'A digital solidarity initiative by the Kerala State Gig & Platform Workers Union (CITU) to secure legal protection, algorithmic transparency, minimum rate parity, and civic dignity for delivery partners, app drivers, and platform personnel across all 14 districts.'}
 						</p>
 
 						<!-- Action Button Cluster -->
-						<div class="flex flex-wrap items-stretch sm:items-center gap-3 w-full sm:w-auto">
+						<div class="flex flex-wrap items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
 							<a 
 								href="/register" 
-								class="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-lg bg-primary text-on-primary text-sm font-semibold shadow-sm hover:bg-on-primary-fixed-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+								class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold shadow-lg"
 							>
-								<span>{lang === 'ml' ? 'അംഗമാകുക / Join the Union (₹160)' : 'Join the Union (₹160)'}</span>
+								<span>{lang === 'ml' ? 'അംഗമാകുക / Join Union (₹160)' : 'Join the Union (₹160)'}</span>
 								<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 							</a>
 
 							<a 
 								href="#quick-access-banner"
-								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-lg bg-surface-container-lowest border border-surface-variant text-on-surface text-sm font-semibold hover:bg-surface-container transition-all"
+								class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-sm font-bold shadow-xs hover:bg-slate-50 hover:border-slate-400 transition-all"
 							>
-								<span class="material-symbols-outlined text-[20px] text-secondary">search</span>
+								<span class="material-symbols-outlined text-[20px] text-slate-500">search</span>
 								<span>{lang === 'ml' ? 'തിരച്ചിൽ / Track Membership' : 'Track Membership'}</span>
 							</a>
 						</div>
 
 						<!-- Launch Pill Badge -->
-						<div class="mt-7 inline-flex items-center gap-2.5 bg-primary-fixed/50 border border-primary/30 text-primary text-xs font-medium px-4 py-2 rounded-full">
-							<span class="material-symbols-outlined text-[18px]">calendar_month</span>
-							<span><strong>1 November 2026</strong> · Kerala Piravi State Declaration</span>
+						<div class="mt-8 inline-flex items-center gap-2.5 bg-amber-50 border border-amber-300/80 text-amber-900 text-xs font-semibold px-4 py-2 rounded-full shadow-xs">
+							<span class="material-symbols-outlined text-[18px] text-amber-600">event_available</span>
+							<span>Target Launch: <strong>1 November 2026</strong> · Kerala Piravi State Declaration</span>
 						</div>
 
-						<!-- Micro Metric Proofpoints -->
-						<div class="mt-8 pt-6 border-t border-surface-variant w-full grid grid-cols-3 gap-4">
-							<div>
-								<p class="text-2xl sm:text-3xl font-bold text-on-surface">14</p>
-								<p class="text-xs sm:text-sm text-secondary font-medium">
+						<!-- Micro Metric Proofpoints Grid -->
+						<div class="mt-9 pt-7 border-t border-slate-200/80 w-full grid grid-cols-3 gap-4">
+							<div class="bg-white/70 backdrop-blur-xs p-3.5 rounded-xl border border-slate-200/60 shadow-xs">
+								<p class="text-2xl sm:text-3xl font-black text-slate-900">14</p>
+								<p class="text-xs text-slate-600 font-semibold mt-0.5">
 									{lang === 'ml' ? 'ജില്ലാ ഹെൽപ്പ്‌ഡെസ്ക്' : 'District Desks'}
 								</p>
 							</div>
-							<div>
-								<p class="text-2xl sm:text-3xl font-bold text-primary">₹160</p>
-								<p class="text-xs sm:text-sm text-secondary font-medium">
+							<div class="bg-white/70 backdrop-blur-xs p-3.5 rounded-xl border border-slate-200/60 shadow-xs">
+								<p class="text-2xl sm:text-3xl font-black text-primary">₹160</p>
+								<p class="text-xs text-slate-600 font-semibold mt-0.5">
 									{lang === 'ml' ? 'വാർഷിക വിഹിതം' : 'Annual Dues'}
 								</p>
 							</div>
-							<div>
-								<p class="text-2xl sm:text-3xl font-bold text-tertiary">100%</p>
-								<p class="text-xs sm:text-sm text-secondary font-medium">
-									{lang === 'ml' ? 'നിയമ സുരക്ഷാ പരിരക്ഷ' : 'Legal Protection'}
+							<div class="bg-white/70 backdrop-blur-xs p-3.5 rounded-xl border border-slate-200/60 shadow-xs">
+								<p class="text-2xl sm:text-3xl font-black text-emerald-600">100%</p>
+								<p class="text-xs text-slate-600 font-semibold mt-0.5">
+									{lang === 'ml' ? 'നിയമ സുരക്ഷ' : 'Legal Protection'}
 								</p>
 							</div>
 						</div>
 					</div>
 
-					<!-- Right Column: Editorial Visual Card -->
+					<!-- Right Column: Visual Card -->
 					<div class="lg:col-span-5 relative w-full">
-						<div class="relative bg-surface-container-lowest rounded-2xl p-3 border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] overflow-hidden">
-							<div class="w-full aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-low relative">
+						<!-- Glowing ambient backdrop -->
+						<div class="absolute -inset-2 bg-gradient-to-r from-red-600/20 to-amber-500/20 rounded-3xl blur-xl opacity-75"></div>
+
+						<div class="relative bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xl overflow-hidden">
+							<div class="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 relative group">
 								<img 
-									class="w-full h-full object-contain" 
+									class="w-full h-full object-contain transform group-hover:scale-102 transition-transform duration-500" 
 									alt="Solidarity artwork showing Kerala gig workers across food delivery, taxi, and courier logistics"
 									src="/images/HomePage-HeroAsset.png"
 									onerror={(e) => {
-										// Fallback if local asset is loading
 										(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAWe4zboGWqHL3jwywJUeVISdlnK_rC41LVB4QtSYp9gdGbXwg3nD6fRYs5iOt8M-yBKUJvXlMGr2iil4ngfjS-RjAvAcZ2dfz1HkXoPrzPkgJvZpJvo1ALHS7H5co15GqKBUWOPR3EYM9MlvLYJy5bPjXcHY3Ju2yNNHqhtJpDN0ai7h5rEgRGssd7vmm5HU_EbhSFCHVgEGVItQFkp_krs51AhFOzKbDwiYmeFYXV1bUaKEZzDSVfVA";
 									}}
 								/>
-								<!-- Subtle Floating Verified Seal Badge -->
-								<div class="absolute bottom-3 left-3 bg-surface-container-lowest/95 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-surface-variant flex items-center gap-2 shadow-sm">
-									<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
-									<span class="text-xs text-on-surface font-semibold">CITU Accredited State Portal</span>
+								<!-- Floating Verified Seal Badge -->
+								<div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200/80 flex items-center gap-2 shadow-lg">
+									<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+									<span class="text-xs text-slate-900 font-bold">CITU Accredited State Portal</span>
 								</div>
 							</div>
+
 							<!-- Mini Caption Strip -->
-							<div class="px-2 pt-3 pb-1 flex items-center justify-between text-secondary text-xs">
-								<span>{lang === 'ml' ? 'ഡെലിവറി • ക്യാബ് • ലോജിസ്റ്റിക്സ്' : 'Delivery • Cab • Logistics'}</span>
-								<span class="text-primary font-semibold">Kerala State Chapter</span>
+							<div class="px-3 pt-3 pb-1 flex items-center justify-between text-slate-500 text-xs">
+								<span class="font-medium">{lang === 'ml' ? 'ഡെലിവറി • ക്യാബ് • ലോജിസ്റ്റിക്സ്' : 'Delivery • Cab • Logistics'}</span>
+								<span class="text-primary font-bold">Kerala State Chapter</span>
 							</div>
 						</div>
 					</div>
@@ -283,18 +298,19 @@
 		</section>
 
 		<!-- Three Feature Highlights -->
-		<section class="w-full py-12 bg-surface-container-low border-y border-surface-variant">
+		<section class="w-full py-16 bg-slate-50 border-y border-slate-200/80">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-2">
+				<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-3">
 					<div>
-						<span class="text-primary text-xs uppercase tracking-wider font-bold">
+						<span class="text-primary text-xs uppercase tracking-wider font-extrabold flex items-center gap-1.5">
+							<span class="w-2 h-2 rounded-full bg-primary"></span>
 							{lang === 'ml' ? 'ഡിജിറ്റൽ ആനുകൂല്യങ്ങൾ' : 'Digital Protections'}
 						</span>
-						<h2 class="text-xl sm:text-2xl font-bold text-on-surface tracking-tight mt-1">
+						<h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-1.5">
 							{lang === 'ml' ? 'തൊഴിലാളി ക്ഷേമവും അംഗത്വ ആനുകൂല്യങ്ങളും' : 'Platform Protections & Member Services'}
 						</h2>
 					</div>
-					<p class="text-xs sm:text-sm text-secondary max-w-md">
+					<p class="text-xs sm:text-sm text-slate-600 max-w-md">
 						{lang === 'ml' 
 							? 'കേരളത്തിലെ എല്ലാ ഡെലിവറി, ക്യാബ്, ഇ-കൊമേഴ്സ് ഗിഗ് തൊഴിലാളികൾക്കും വിരൽത്തുമ്പിൽ സഹായം.' 
 							: 'Designed for frictionless operation in Kerala’s delivery, transport, and digital work sectors.'}
@@ -303,86 +319,92 @@
 
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 					<!-- Feature 1 -->
-					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+					<article class="card-gloss card-gloss-hover p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+						<div class="h-1 w-full bg-primary absolute top-0 left-0"></div>
 						<div>
-							<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary mb-5">
-								<span class="material-symbols-outlined text-[26px]">phonelink_lock</span>
+							<div class="w-14 h-14 rounded-2xl bg-red-100 text-primary flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
+								<span class="material-symbols-outlined text-[30px]">phonelink_lock</span>
 							</div>
-							<h3 class="text-lg font-bold text-on-surface mb-2">
+							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സ്വയം രജിസ്ട്രേഷൻ' : 'Instant Registration'}
 							</h3>
-							<p class="text-sm text-secondary leading-relaxed">
+							<p class="text-sm text-slate-600 leading-relaxed">
 								{lang === 'ml'
 									? 'മൊബൈൽ ഒടിപി വഴി മിനിറ്റുകൾക്കുള്ളിൽ വേരിഫിക്കേഷൻ. സ്വിഗ്ഗി, സൊമാറ്റോ, ഊബർ, ഒല, ആമസോൺ തൊഴിലാളികൾക്ക് ലളിതമായ രജിസ്ട്രേഷൻ.'
 									: 'Verified instantly via secure mobile SMS OTP. Enter your vehicle or delivery partner ID for automated activation across Zomato, Swiggy, Uber, Ola, and courier platforms.'}
 							</p>
 						</div>
-						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-primary text-xs font-semibold">
+						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-primary text-xs font-bold">
 							<span>{lang === 'ml' ? '2 മിനിറ്റിനകം ആക്റ്റീവ്' : 'Active in 2 minutes'}</span>
-							<span class="material-symbols-outlined text-[16px]">check_circle</span>
+							<span class="material-symbols-outlined text-[18px]">check_circle</span>
 						</div>
 					</article>
 
 					<!-- Feature 2 -->
-					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+					<article class="card-gloss card-gloss-hover p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+						<div class="h-1 w-full bg-blue-600 absolute top-0 left-0"></div>
 						<div>
-							<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-5">
-								<span class="material-symbols-outlined text-[26px]">badge</span>
+							<div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
+								<span class="material-symbols-outlined text-[30px]">badge</span>
 							</div>
-							<h3 class="text-lg font-bold text-on-surface mb-2">
+							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'ഡിജിറ്റൽ അംഗത്വ കാർഡ്' : 'Digital Membership ID Card'}
 							</h3>
-							<p class="text-sm text-secondary leading-relaxed">
+							<p class="text-sm text-slate-600 leading-relaxed">
 								{lang === 'ml'
 									? 'തത്സമയം ഡൗൺലോഡ് ചെയ്യാവുന്ന ക്രിപ്റ്റോഗ്രാഫിക് ക്യുആർ കോഡ് അടങ്ങിയ യൂണിയൻ ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ്.'
 									: 'Instantly generate an authenticated digital union membership ID card carrying a dynamic cryptographically verified QR seal for roadside verification and labour claims.'}
 							</p>
 						</div>
-						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-tertiary text-xs font-semibold">
+						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-blue-700 text-xs font-bold">
 							<span>{lang === 'ml' ? 'QR-സ്ഥിരീകരിച്ച ഐഡി' : 'Cryptographic QR Seal'}</span>
-							<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+							<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
 						</div>
 					</article>
 
 					<!-- Feature 3 -->
-					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+					<article class="card-gloss card-gloss-hover p-7 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+						<div class="h-1 w-full bg-amber-600 absolute top-0 left-0"></div>
 						<div>
-							<div class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed-variant mb-5">
-								<span class="material-symbols-outlined text-[26px]">support</span>
+							<div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
+								<span class="material-symbols-outlined text-[30px]">support</span>
 							</div>
-							<h3 class="text-lg font-bold text-on-surface mb-2">
+							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സഹായം & പരാതി പരിഹാരം' : 'Helpline & Grievance'}
 							</h3>
-							<p class="text-sm text-secondary leading-relaxed">
+							<p class="text-sm text-slate-600 leading-relaxed">
 								{lang === 'ml'
 									? '14 ജില്ലകളിലും അന്യായമായ ഐഡി ബ്ലോക്കിംഗിനെതിരെ നിയമസഹായം, അപകട ഇൻഷുറൻസ് ക്ലെയിം സഹായം, ഒത്തുതീർപ്പ് സമിതികൾ.'
 									: 'Direct access to all 14-district worker conciliation committees, legal aid desks for wrongful platform deactivation, and immediate accident assistance squads.'}
 							</p>
 						</div>
-						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-on-secondary-fixed-variant text-xs font-semibold">
+						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-amber-800 text-xs font-bold">
 							<span>{lang === 'ml' ? '24/7 നിയമ സഹായം' : '24/7 Legal Assistance'}</span>
-							<span class="material-symbols-outlined text-[16px]">call</span>
+							<span class="material-symbols-outlined text-[18px]">call</span>
 						</div>
 					</article>
 				</div>
 			</div>
 		</section>
 
-		<!-- Member Quick Access Banner -->
-		<section class="w-full py-12 bg-surface" id="quick-access-banner">
+		<!-- Member Quick Access Banner with Deep Gradient -->
+		<section class="w-full py-16 bg-white" id="quick-access-banner">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="bg-on-background text-on-primary rounded-2xl p-6 sm:p-8 lg:p-10 border border-surface-variant/30 shadow-md">
-					<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+				<div class="bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 text-white rounded-3xl p-8 sm:p-10 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+					<!-- Ambient Glow Inside Card -->
+					<div class="absolute -top-20 -right-20 w-80 h-80 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
 						<!-- Text Lockup -->
 						<div class="lg:col-span-6">
-							<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container-highest/20 text-on-tertiary-container text-xs font-medium mb-3">
-								<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">lock</span>
+							<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 text-red-300 border border-red-500/30 text-xs font-bold mb-4">
+								<span class="material-symbols-outlined text-[16px]">lock</span>
 								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
 							</div>
-							<h3 class="text-xl sm:text-2xl font-bold text-on-primary">
+							<h3 class="text-2xl sm:text-3xl font-black text-white">
 								{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം പരിശോധിക്കുക' : 'Access Your Membership'}
 							</h3>
-							<p class="text-xs sm:text-sm text-surface-variant mt-2 max-w-lg leading-relaxed">
+							<p class="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-lg leading-relaxed">
 								{lang === 'ml'
 									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
 									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or pay annual union subscriptions.'}
@@ -392,13 +414,13 @@
 						<!-- Input Action Form -->
 						<div class="lg:col-span-6 w-full">
 							<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
-								<div class="relative flex-1 flex items-center bg-surface-container-lowest rounded-lg border border-surface-variant overflow-hidden focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
-									<span class="bg-surface-container px-3.5 py-3 text-sm text-secondary border-r border-surface-variant flex items-center select-none font-mono font-medium">
+								<div class="relative flex-1 flex items-center bg-white/95 rounded-xl border border-slate-300 overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
+									<span class="bg-slate-100 px-3.5 py-3 text-sm text-slate-700 border-r border-slate-300 flex items-center select-none font-mono font-bold">
 										+91
 									</span>
 									<input 
 										bind:value={trackPhone}
-										class="w-full px-3 py-3 text-sm text-on-surface placeholder:text-secondary/60 bg-transparent focus:outline-none" 
+										class="w-full px-3.5 py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-medium" 
 										id="track-input" 
 										maxlength="10" 
 										pattern="[0-9]{10}" 
@@ -408,7 +430,7 @@
 									/>
 								</div>
 								<button 
-									class="px-6 py-3.5 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary text-sm font-semibold whitespace-nowrap transition-colors flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-70" 
+									class="px-7 py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg" 
 									id="otp-btn" 
 									type="submit"
 									disabled={otpSending}
@@ -427,9 +449,9 @@
 							</form>
 
 							{#if statusMessage}
-								<div class={`mt-3 text-xs flex items-center gap-2 ${statusType === 'error' ? 'text-error-container' : 'text-primary-fixed'}`}>
-									<span class="material-symbols-outlined text-[16px]">{statusType === 'error' ? 'error' : 'info'}</span>
-									<span>{statusMessage}</span>
+								<div class={`mt-3 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : 'bg-emerald-950/80 text-emerald-200 border border-emerald-800'}`}>
+									<span class="material-symbols-outlined text-[16px]">{statusType === 'error' ? 'error' : 'check_circle'}</span>
+									<span class="font-medium">{statusMessage}</span>
 								</div>
 							{/if}
 						</div>
@@ -440,18 +462,24 @@
 	</div>
 </main>
 
-<!-- Footer -->
-<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-8">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-2">
-		<p class="text-xs sm:text-sm text-secondary">
-			Kerala State Gig &amp; Platform Workers Union (affil. CITU) · Registration: KL-07-TU-2026 · Copyright © 2026
+<!-- Modern Clean Footer -->
+<footer class="w-full bg-slate-900 text-slate-400 border-t border-slate-800 py-10">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-3">
+		<div class="flex items-center gap-2 text-white font-bold text-sm">
+			<span class="text-primary text-xl">★</span>
+			<span>Kerala State Gig &amp; Platform Workers Union (affil. CITU)</span>
+		</div>
+		<p class="text-xs text-slate-400">
+			Registration: KL-07-TU-2026 · Statutory Labour Protection &amp; Civic Dignity · Copyright © 2026
 		</p>
-		<div class="flex flex-wrap items-center justify-center gap-3 text-secondary text-xs mt-1">
-			<span>തിരുവനന്തപുരം · കൊച്ചി · കോഴിക്കോട്</span>
+		<div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 mt-2">
+			<span>തിരുവനന്തപുരം</span>
 			<span>•</span>
-			<span>Statutory Labour Protection &amp; Civic Dignity</span>
+			<span>കൊച്ചി</span>
 			<span>•</span>
-			<a href="/admin" class="text-primary hover:underline font-semibold">Admin Console</a>
+			<span>കോഴിക്കോട്</span>
+			<span>•</span>
+			<a href="/admin" class="text-amber-400 hover:text-amber-300 font-semibold underline">Admin Console</a>
 		</div>
 	</div>
 </footer>

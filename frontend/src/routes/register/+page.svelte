@@ -304,16 +304,16 @@
 </svelte:head>
 
 <!-- Header -->
-<header class="bg-surface-container-lowest border-b border-surface-variant sticky top-0 z-40">
+<header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-sm">
 	<div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 		<!-- Union Logo & Identity -->
 		<a href="/" class="flex items-center space-x-3 group">
-			<div class="w-10 h-10 rounded bg-primary text-on-primary flex items-center justify-center font-bold text-lg shadow-sm">
+			<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 text-white flex items-center justify-center font-bold text-lg shadow-sm group-hover:scale-105 transition-transform">
 				★
 			</div>
 			<div>
-				<span class="font-bold text-base tracking-tight text-on-surface block group-hover:text-primary transition">KSGPWU · CITU</span>
-				<span class="text-xs text-secondary font-medium block">
+				<span class="font-extrabold text-base tracking-tight text-slate-900 block group-hover:text-primary transition">KSGPWU · CITU</span>
+				<span class="text-xs text-slate-500 font-medium block">
 					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
 				</span>
 			</div>
@@ -321,24 +321,24 @@
 
 		<!-- Language Switcher & Home link -->
 		<div class="flex items-center space-x-3">
-			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
 			</div>
 
-			<a href="/" class="hidden sm:inline-flex text-xs font-medium text-secondary hover:text-primary transition items-center gap-1">
+			<a href="/" class="hidden sm:inline-flex text-xs font-bold text-slate-600 hover:text-primary transition items-center gap-1">
 				<span class="material-symbols-outlined text-[16px]">arrow_back</span>
 				<span>{lang === 'ml' ? 'ഹോം' : 'Home'}</span>
 			</a>
@@ -346,85 +346,87 @@
 	</div>
 </header>
 
-<!-- Main Form Container -->
-<main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+<!-- Main Form Container with Atmospheric Mesh Background -->
+<div class="hero-gradient-mesh min-h-screen py-8">
+<main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6">
 	<!-- Title & Autosave Pill -->
-	<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-surface-variant mb-8 gap-4">
+	<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 mb-8 gap-4">
 		<div>
-			<p class="text-xs uppercase font-bold tracking-wider text-primary mb-1">
-				{lang === 'ml' ? 'യൂണിയൻ അംഗത്വ രജിസ്ട്രേഷൻ' : 'Union Membership Enrollment'}
-			</p>
-			<h1 class="text-2xl sm:text-3xl font-extrabold text-on-surface">
+			<div class="inline-flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-primary mb-1">
+				<span class="w-2 h-2 rounded-full bg-primary"></span>
+				<span>{lang === 'ml' ? 'യൂണിയൻ അംഗത്വ രജിസ്ട്രേഷൻ' : 'Union Membership Enrollment'}</span>
+			</div>
+			<h1 class="text-2xl sm:text-3xl font-black text-slate-900">
 				{lang === 'ml' ? 'അംഗത്വ രജിസ്ട്രേഷൻ ഫോം' : 'Member Registration Form'}
 			</h1>
-			<p class="text-sm text-secondary mt-1">
+			<p class="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
 				{lang === 'ml' ? 'ഏകദേശം 3 മിനിറ്റ് മാത്രം. വിവരങ്ങൾ സ്വയമേവ സേവ് ചെയ്യപ്പെടുന്നു.' : 'Takes ~3 minutes. Your progress saves automatically.'}
 			</p>
 		</div>
 
 		<!-- Autosave indicator -->
-		<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-surface-variant text-xs text-secondary self-start sm:self-auto shadow-xs">
+		<div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs text-slate-600 self-start sm:self-auto shadow-sm">
 			<span class="relative flex h-2 w-2">
-				<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-				<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+				<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+				<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
 			</span>
-			<span class="font-medium">{saveStatus}</span>
+			<span class="font-semibold">{saveStatus}</span>
 		</div>
 	</div>
 
 	<!-- Step Progress Tracker -->
 	<div class="mb-10">
 		<div class="flex items-center justify-between relative">
-			<div class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-full bg-surface-variant -z-0"></div>
+			<div class="absolute left-0 top-1/2 -translate-y-1/2 h-1 w-full bg-slate-200 rounded-full -z-0"></div>
 
 			<!-- Step 1 Indicator -->
 			<div class="relative z-10 flex flex-col items-center">
-				<div class={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-sm ${activeStep === 1 ? 'bg-primary text-on-primary border-primary' : activeStep > 1 ? 'bg-green-600 text-white border-green-600' : 'bg-surface-container text-secondary border-surface-variant'}`}>
+				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 1 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 1 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 1}
-						<span class="material-symbols-outlined text-[18px]">check</span>
+						<span class="material-symbols-outlined text-[20px]">check</span>
 					{:else}
 						1
 					{/if}
 				</div>
-				<span class="text-xs font-semibold mt-2 text-on-surface hidden sm:block">
+				<span class="text-xs font-bold mt-2 text-slate-800 hidden sm:block">
 					{lang === 'ml' ? 'മൊബൈൽ OTP' : 'Phone OTP'}
 				</span>
 			</div>
 
 			<!-- Step 2 Indicator -->
 			<div class="relative z-10 flex flex-col items-center">
-				<div class={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-sm ${activeStep === 2 ? 'bg-primary text-on-primary border-primary' : activeStep > 2 ? 'bg-green-600 text-white border-green-600' : 'bg-surface-container text-secondary border-surface-variant'}`}>
+				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 2 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 2 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 2}
-						<span class="material-symbols-outlined text-[18px]">check</span>
+						<span class="material-symbols-outlined text-[20px]">check</span>
 					{:else}
 						2
 					{/if}
 				</div>
-				<span class="text-xs font-semibold mt-2 text-secondary hidden sm:block">
+				<span class="text-xs font-bold mt-2 text-slate-600 hidden sm:block">
 					{lang === 'ml' ? 'വ്യക്തിവിവരങ്ങൾ' : 'Personal Info'}
 				</span>
 			</div>
 
 			<!-- Step 3 Indicator -->
 			<div class="relative z-10 flex flex-col items-center">
-				<div class={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-sm ${activeStep === 3 ? 'bg-primary text-on-primary border-primary' : activeStep > 3 ? 'bg-green-600 text-white border-green-600' : 'bg-surface-container text-secondary border-surface-variant'}`}>
+				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 3 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 3 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 3}
-						<span class="material-symbols-outlined text-[18px]">check</span>
+						<span class="material-symbols-outlined text-[20px]">check</span>
 					{:else}
 						3
 					{/if}
 				</div>
-				<span class="text-xs font-semibold mt-2 text-secondary hidden sm:block">
+				<span class="text-xs font-bold mt-2 text-slate-600 hidden sm:block">
 					{lang === 'ml' ? 'തൊഴിൽ & രേഖ' : 'Work & ID'}
 				</span>
 			</div>
 
 			<!-- Step 4 Indicator -->
 			<div class="relative z-10 flex flex-col items-center">
-				<div class={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-sm ${activeStep === 4 ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container text-secondary border-surface-variant'}`}>
+				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 4 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : 'bg-white text-slate-400 border-slate-300'}`}>
 					4
 				</div>
-				<span class="text-xs font-semibold mt-2 text-secondary hidden sm:block">
+				<span class="text-xs font-bold mt-2 text-slate-600 hidden sm:block">
 					{lang === 'ml' ? 'ഫോട്ടോ & സമ്മതം' : 'Selfie & Consent'}
 				</span>
 			</div>
@@ -432,7 +434,7 @@
 	</div>
 
 	<!-- Form Card -->
-	<div class="bg-surface-container-lowest rounded-2xl border border-surface-variant shadow-sm p-6 sm:p-10 transition">
+	<div class="card-gloss rounded-3xl p-6 sm:p-10 shadow-xl transition">
 		<!-- STEP 1: Mobile & OTP -->
 		{#if activeStep === 1}
 			<section class="space-y-6">
@@ -512,7 +514,7 @@
 							<button 
 								type="button" 
 								onclick={sendOtp}
-								class="w-full py-3 px-4 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-lg shadow-sm text-sm transition flex items-center justify-center gap-2"
+								class="w-full py-3.5 px-4 crimson-gradient-btn text-white font-bold rounded-xl shadow-md text-sm transition flex items-center justify-center gap-2"
 							>
 								<span class="material-symbols-outlined text-[18px]">send</span>
 								<span>{lang === 'ml' ? 'OTP അയക്കുക' : 'Send OTP'}</span>
@@ -521,7 +523,7 @@
 							<button 
 								type="button" 
 								onclick={verifyOtp}
-								class="w-full py-3 px-4 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-lg shadow-sm text-sm transition flex items-center justify-center gap-2"
+								class="w-full py-3.5 px-4 crimson-gradient-btn text-white font-bold rounded-xl shadow-md text-sm transition flex items-center justify-center gap-2"
 							>
 								<span class="material-symbols-outlined text-[18px]">verified</span>
 								<span>{lang === 'ml' ? 'സ്ഥിരീകരിച്ച് തുടരുക' : 'Verify OTP & Continue'}</span>
@@ -668,18 +670,18 @@
 					</div>
 				</div>
 
-				<div class="pt-4 flex justify-between border-t border-surface-variant">
+				<div class="pt-4 flex justify-between border-t border-slate-200">
 					<button 
 						type="button" 
 						onclick={() => activeStep = 1} 
-						class="px-5 py-2.5 border border-surface-variant text-secondary font-semibold rounded-lg hover:bg-surface-container text-sm"
+						class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 text-sm shadow-xs"
 					>
 						{lang === 'ml' ? 'പിന്നോട്ട്' : 'Back'}
 					</button>
 					<button 
 						type="button" 
 						onclick={validateStep2} 
-						class="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-lg text-sm shadow-sm"
+						class="px-7 py-2.5 crimson-gradient-btn text-white font-bold rounded-xl text-sm shadow-md"
 					>
 						{lang === 'ml' ? 'തുടരുക' : 'Continue'}
 					</button>
@@ -863,18 +865,18 @@
 					</div>
 				</div>
 
-				<div class="pt-4 flex justify-between border-t border-surface-variant">
+				<div class="pt-4 flex justify-between border-t border-slate-200">
 					<button 
 						type="button" 
 						onclick={() => activeStep = 2} 
-						class="px-5 py-2.5 border border-surface-variant text-secondary font-semibold rounded-lg hover:bg-surface-container text-sm"
+						class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 text-sm shadow-xs"
 					>
 						{lang === 'ml' ? 'പിന്നോട്ട്' : 'Back'}
 					</button>
 					<button 
 						type="button" 
 						onclick={validateStep3} 
-						class="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-lg text-sm shadow-sm"
+						class="px-7 py-2.5 crimson-gradient-btn text-white font-bold rounded-xl text-sm shadow-md"
 					>
 						{lang === 'ml' ? 'തുടരുക' : 'Continue'}
 					</button>
@@ -1002,11 +1004,11 @@
 				</div>
 
 				<!-- Submit to Payment -->
-				<div class="pt-4 flex justify-between border-t border-surface-variant">
+				<div class="pt-4 flex justify-between border-t border-slate-200">
 					<button 
 						type="button" 
 						onclick={() => activeStep = 3} 
-						class="px-5 py-2.5 border border-surface-variant text-secondary font-semibold rounded-lg hover:bg-surface-container text-sm"
+						class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 text-sm shadow-xs"
 					>
 						{lang === 'ml' ? 'പിന്നോട്ട്' : 'Back'}
 					</button>
@@ -1014,7 +1016,7 @@
 						type="button" 
 						onclick={proceedToPayment} 
 						disabled={submitting}
-						class="px-6 py-3 bg-primary hover:bg-primary-container text-on-primary font-bold rounded-lg text-sm shadow-md flex items-center gap-2 disabled:opacity-50"
+						class="px-7 py-3 crimson-gradient-btn text-white font-bold rounded-xl text-sm shadow-lg flex items-center gap-2 disabled:opacity-50"
 					>
 						<span>{lang === 'ml' ? 'പേയ്‌മെന്റിലേക്ക് പോകുക (₹160)' : 'Proceed to Payment (₹160)'}</span>
 						<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -1025,22 +1027,23 @@
 	</div>
 
 	<!-- Support Help Card -->
-	<div class="mt-8 bg-surface-container-lowest border border-surface-variant rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-secondary gap-3">
+	<div class="mt-8 card-gloss rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-3 shadow-sm">
 		<div class="flex items-center gap-2">
-			<span class="material-symbols-outlined text-[18px] text-primary shrink-0">help</span>
+			<span class="material-symbols-outlined text-[20px] text-primary shrink-0">help</span>
 			<span>{lang === 'ml' ? 'രജിസ്ട്രേഷനിൽ സഹായം വേണമോ? ജില്ലാ യൂണിയൻ പ്രതിനിധിയുമായി ബന്ധപ്പെടുക.' : 'Need assistance with registration? Contact your district union representative.'}</span>
 		</div>
-		<a href="/#quick-access-banner" class="text-primary font-semibold hover:underline flex items-center gap-1 shrink-0">
+		<a href="/#quick-access-banner" class="text-primary font-bold hover:underline flex items-center gap-1 shrink-0">
 			<span>{lang === 'ml' ? '14 ജില്ലാ ഹെൽപ്പ്‌ലൈനുകൾ' : 'View 14 District Helplines'}</span>
 			<span class="material-symbols-outlined text-[16px]">chevron_right</span>
 		</a>
 	</div>
 </main>
+</div>
 
 <!-- Footer -->
-<footer class="bg-surface-container-lowest border-t border-surface-variant py-6 mt-12">
-	<div class="max-w-5xl mx-auto px-4 text-center text-xs text-secondary">
-		<p class="font-medium">Kerala State Gig & Platform Workers Union (affiliated to CITU)</p>
-		<p class="mt-1">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
+<footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-8">
+	<div class="max-w-5xl mx-auto px-4 text-center text-xs">
+		<p class="font-bold text-white">Kerala State Gig & Platform Workers Union (affiliated to CITU)</p>
+		<p class="mt-1 text-slate-400">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
 	</div>
 </footer>

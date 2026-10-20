@@ -138,94 +138,106 @@
 	</div>
 </header>
 
-<main class="w-full pt-20 bg-surface flex-1 flex flex-col justify-start">
+<main class="w-full pt-20 hero-gradient-mesh flex-1 flex flex-col justify-start">
 	<div class="flex flex-col w-full py-8 sm:py-12 px-4 sm:px-6 items-center justify-center">
 		<!-- Subtle ambient decorative glow -->
 		<div class="relative w-full max-w-[640px] flex flex-col items-center">
-			<div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-			<div class="absolute -bottom-12 -right-12 w-72 h-72 bg-tertiary/5 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute -top-12 -left-12 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute -bottom-12 -right-12 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
 			<!-- Metadata Tag Header -->
-			<div class="w-full flex items-center justify-between pb-3 px-1 text-secondary text-xs">
-				<div class="flex items-center gap-1.5">
+			<div class="w-full flex items-center justify-between pb-3 px-1 text-slate-500 text-xs">
+				<div class="flex items-center gap-1.5 font-bold">
 					<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
-					<span class="uppercase tracking-wider font-semibold">Public Verification Protocol • v2.4</span>
+					<span class="uppercase tracking-wider">Public Verification Protocol • v2.4</span>
 				</div>
-				<div class="flex items-center gap-1.5">
-					<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+				<div class="flex items-center gap-1.5 font-bold text-emerald-700">
+					<span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse"></span>
 					<span class="font-mono text-[11px]">LIVE VERIFIED</span>
 				</div>
 			</div>
 
 			<!-- Main Credential Card -->
-			<div class="w-full bg-surface-container-lowest rounded-2xl shadow-xl border border-surface-variant overflow-hidden relative">
+			<div class="w-full card-gloss rounded-3xl shadow-2xl border border-slate-200/90 overflow-hidden relative">
 				<!-- Emerald Accent Status Bar -->
 				<div class="h-2 w-full bg-emerald-600"></div>
 
 				<!-- Verified Banner Section -->
-				<div class="bg-emerald-50 px-6 py-6 flex flex-col items-center text-center border-b border-emerald-100">
-					<div class="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md mb-2">
-						<span class="material-symbols-outlined text-[32px]">check_circle</span>
+				<div class="bg-gradient-to-b from-emerald-50 to-emerald-100/40 px-6 py-6 flex flex-col items-center text-center border-b border-emerald-100">
+					<div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-700/20 mb-2.5">
+						<span class="material-symbols-outlined text-[34px]">check_circle</span>
 					</div>
-					<h1 class="text-xl sm:text-2xl font-bold text-emerald-950 tracking-tight">
+					<h1 class="text-xl sm:text-2xl font-black text-emerald-950 tracking-tight">
 						{lang === 'ml' ? 'സാധുവായ അംഗത്വം' : 'VERIFIED ACTIVE MEMBER'}
 					</h1>
-					<p class="text-xs sm:text-sm text-emerald-800 mt-1 max-w-md">
+					<p class="text-xs sm:text-sm text-emerald-800 mt-1 max-w-md font-medium">
 						{lang === 'ml'
 							? 'ഈ തിരിച്ചറിയൽ കാർഡ് യൂണിയൻ രേഖകളുമായി ഒത്തുനോക്കി ഉറപ്പുവരുത്തിയതാണ്.'
 							: 'Verified against central union registry records • Secure State Database'}
 					</p>
 
 					<!-- Dynamic Token Hash Pill -->
-					<div class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full shadow-xs text-emerald-900 font-mono text-xs border border-emerald-200">
-						<span class="material-symbols-outlined text-[14px] text-emerald-700">fingerprint</span>
-						<span class="font-semibold">Token:</span>
-						<span class="text-secondary">{member.tokenHash}</span>
+					<div class="mt-3.5 inline-flex items-center gap-2 px-3.5 py-1 bg-white rounded-full shadow-xs text-emerald-900 font-mono text-xs border border-emerald-200 font-bold">
+						<span class="material-symbols-outlined text-[15px] text-emerald-700">fingerprint</span>
+						<span>Token:</span>
+						<span class="text-slate-600">{member.tokenHash}</span>
 						<span>•</span>
-						<span class="font-semibold text-emerald-700">Validated</span>
+						<span class="text-emerald-700">Validated</span>
 					</div>
 				</div>
 
 				<!-- Member Identity Profile Section -->
 				<div class="pt-8 pb-4 px-6 flex flex-col items-center text-center">
 					<!-- Worker Photo with Badge Overlay -->
-					<div class="relative w-32 h-32 rounded-2xl p-1 bg-surface-container-low shadow-md shrink-0 border border-surface-variant">
+					<div class="relative w-32 h-32 rounded-3xl p-1 bg-slate-100 shadow-xl shrink-0 border-2 border-slate-200">
 						<img 
-							class="w-full h-full object-cover rounded-xl" 
+							class="w-full h-full object-cover rounded-2xl" 
 							alt={member.name} 
 							src={member.photo}
 							onerror={(e) => {
 								(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCYyEu0qaQ2w1WiZP9iWtGjRuf2bZDkOpwgqz4ESsoieX_F7_jXg2jQ7Z5RTdMXXFEwaPkQvAjvu6dqW1P3GVAWU7AfOTZO3Tm0Q3iAEGqNcQxvvi0EGTen8-ymjqNmHp-A6UGwYcBKMQXCB9nuj6KtyXtYRjkpI-Jdho5SaWPaY26TAH8e9G0xl1bWzxHVhvsSxkyHNNiQbPyV6vD2vdLy0R9AwN7hD1p8rB-otH7tgdWaFNA4KQUrMA";
 							}}
 						/>
-						<div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-md">
+						<div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
 							<span class="material-symbols-outlined text-[18px]">verified</span>
 						</div>
 					</div>
 
 					<!-- Member Name Hierarchy -->
-					<h2 class="text-2xl font-bold text-on-surface mt-4 tracking-tight">
+					<h2 class="text-2xl font-black text-slate-900 mt-4 tracking-tight">
 						{member.name}
 					</h2>
-					<p class="text-base text-primary font-semibold mt-0.5">
-						{member.nameMl} <span class="text-secondary font-normal">({member.roleMl})</span>
+					<p class="text-base text-primary font-bold mt-0.5">
+						{member.nameMl} <span class="text-slate-500 font-normal">({member.roleMl})</span>
 					</p>
 
 					<!-- Member ID Pill with Copyable Cue -->
-					<div class="mt-3 inline-flex items-center gap-2 bg-surface-container-low px-4 py-1.5 rounded-full font-mono text-xs text-on-surface border border-surface-variant">
-						<span class="text-secondary font-sans font-medium">അംഗത്വ നമ്പർ / ID:</span>
+					<div class="mt-3 inline-flex items-center gap-2 bg-slate-100 px-4 py-1.5 rounded-full font-mono text-xs text-slate-800 border border-slate-200 shadow-2xs">
+						<span class="text-slate-500 font-sans font-semibold">അംഗത്വ നമ്പർ / ID:</span>
 						<span class="font-bold tracking-wider text-primary">{member.id}</span>
 						<button 
 							type="button" 
 							onclick={copyId} 
-							class="ml-1 text-secondary hover:text-primary transition-colors flex items-center" 
+							class="ml-1 text-slate-500 hover:text-primary transition-colors flex items-center" 
 							title="Copy Member ID"
 						>
 							{#if copied}
-								<span class="text-[10px] text-green-700 font-bold">COPIED</span>
+								<span class="text-[10px] text-emerald-700 font-bold">COPIED</span>
 							{:else}
 								<span class="material-symbols-outlined text-[15px]">content_copy</span>
 							{/if}
+						</button>
+					</div>
+
+					<!-- Print Quick Action -->
+					<div class="mt-4">
+						<button 
+							type="button" 
+							onclick={() => window.print()}
+							class="px-4 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-colors"
+						>
+							<span class="material-symbols-outlined text-[16px]">print</span>
+							<span>Print ID Card / സേവ് ചെയ്യുക</span>
 						</button>
 					</div>
 				</div>

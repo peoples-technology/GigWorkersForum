@@ -16,60 +16,60 @@
 </svelte:head>
 
 <!-- Sticky Header -->
-<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-variant">
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80">
 	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 		<a href="/" class="flex items-center gap-3">
-			<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-lg shadow-sm shrink-0">
+			<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-bold text-lg shadow-sm shrink-0">
 				★
 			</div>
 			<div class="flex flex-col">
 				<div class="flex items-center gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold">KSGPWU · CITU</span>
-					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] uppercase font-semibold">
+					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black">KSGPWU · CITU</span>
+					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] uppercase font-bold">
 						Trade Union
 					</span>
 				</div>
-				<span class="text-xs text-secondary">
+				<span class="text-xs text-slate-500 font-medium">
 					{lang === 'ml' ? 'അംഗത്വ പരിശോധന / Member Verification' : 'Public Member Verification'}
 				</span>
 			</div>
 		</a>
 
 		<div class="flex items-center gap-3">
-			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
 			</div>
 
-			<a href="/" class="text-xs font-semibold text-secondary hover:text-primary transition">
+			<a href="/" class="text-xs font-bold text-slate-600 hover:text-primary transition">
 				Home
 			</a>
 		</div>
 	</div>
 </header>
 
-<main class="w-full pt-28 bg-surface min-h-[calc(100vh-80px)] flex flex-col items-center px-4">
-	<div class="max-w-lg w-full bg-surface-container-lowest rounded-2xl shadow-xl border border-surface-variant p-6 sm:p-8 text-center">
-		<div class="w-16 h-16 rounded-full bg-primary-fixed text-primary flex items-center justify-center mx-auto mb-4 shadow-sm">
+<main class="w-full pt-28 hero-gradient-mesh min-h-[calc(100vh-80px)] flex flex-col items-center px-4">
+	<div class="max-w-lg w-full card-gloss rounded-3xl shadow-2xl border border-slate-200/90 p-6 sm:p-9 text-center">
+		<div class="w-16 h-16 rounded-2xl bg-red-100 text-primary flex items-center justify-center mx-auto mb-4 shadow-sm">
 			<span class="material-symbols-outlined text-3xl">qr_code_scanner</span>
 		</div>
 
-		<h1 class="text-xl sm:text-2xl font-bold text-on-surface">
+		<h1 class="text-xl sm:text-2xl font-black text-slate-900">
 			{lang === 'ml' ? 'അംഗത്വ കാർഡ് പരിശോധിക്കുക' : 'Verify Union Membership'}
 		</h1>
-		<p class="text-xs sm:text-sm text-secondary mt-1 max-w-sm mx-auto">
+		<p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto font-medium">
 			{lang === 'ml'
 				? 'ക്യുആർ കോഡ് സ്കാൻ ചെയ്യുകയോ അംഗത്വ നമ്പർ നൽകുകയോ ചെയ്യുക.'
 				: 'Scan member QR code or enter membership registration number.'}
@@ -78,18 +78,18 @@
 		<!-- Search Input Form -->
 		<form onsubmit={(e) => { e.preventDefault(); handleLookup(); }} class="mt-6 flex flex-col gap-3">
 			<div class="relative flex items-center">
-				<span class="material-symbols-outlined absolute left-3 text-secondary text-[20px]">badge</span>
+				<span class="material-symbols-outlined absolute left-3.5 text-slate-400 text-[20px]">badge</span>
 				<input 
 					type="text" 
 					bind:value={searchInput}
 					placeholder="e.g. KLTVC000009 or KLERN000142" 
-					class="w-full h-12 pl-10 pr-3 rounded-xl border border-surface-variant bg-surface-container-low text-on-surface font-mono font-bold tracking-wider text-sm focus:ring-2 focus:ring-primary focus:outline-none"
+					class="w-full h-12 pl-11 pr-3 rounded-xl border border-slate-300 bg-white text-slate-900 font-mono font-bold tracking-wider text-sm focus:ring-2 focus:ring-primary focus:outline-none shadow-xs"
 				/>
 			</div>
 
 			<button 
 				type="submit" 
-				class="w-full py-3 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-bold text-sm shadow-md transition flex items-center justify-center gap-2"
+				class="w-full py-3.5 rounded-xl crimson-gradient-btn text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"
 			>
 				<span class="material-symbols-outlined text-[18px]">verified</span>
 				<span>{lang === 'ml' ? 'പരിശോധിക്കുക' : 'Verify Credentials'}</span>

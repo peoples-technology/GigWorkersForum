@@ -396,24 +396,24 @@
 		</aside>
 
 		<!-- Main Workspace Area -->
-		<div class="pl-[260px] w-full min-h-screen flex flex-col">
+		<div class="pl-[260px] w-full min-h-screen flex flex-col bg-slate-50/60">
 			<!-- Top Action Bar -->
-			<header class="h-16 bg-surface-container-lowest border-b border-surface-variant z-40 flex items-center justify-between px-6 sticky top-0">
+			<header class="h-16 bg-white/90 backdrop-blur-md border-b border-slate-200/80 z-40 flex items-center justify-between px-6 sticky top-0 shadow-2xs">
 				<!-- Search & District Filter -->
 				<div class="flex items-center gap-3 flex-1 max-w-2xl">
 					<div class="relative w-full max-w-md">
-						<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">search</span>
+						<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
 						<input 
 							type="text" 
 							bind:value={searchQuery}
 							placeholder={lang === 'ml' ? 'അംഗത്തെ തിരയുക: പേര്, മൊബൈൽ, ID...' : 'Search member: Name, Phone, ID...'} 
-							class="w-full h-10 pl-10 pr-4 bg-surface-container-low border border-surface-variant rounded text-xs text-on-surface placeholder:text-secondary focus:border-primary focus:outline-none"
+							class="w-full h-10 pl-10 pr-4 bg-slate-100/90 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:outline-none transition-colors"
 						/>
 					</div>
 
 					<select 
 						bind:value={selectedDistrict}
-						class="h-10 px-3 bg-surface-container-low border border-surface-variant rounded text-xs text-on-surface focus:outline-none"
+						class="h-10 px-3 bg-slate-100/90 border border-slate-200 rounded-xl text-xs text-slate-700 font-medium focus:outline-none"
 					>
 						<option value="All">{lang === 'ml' ? 'എല്ലാ ജില്ലകളും' : 'All 14 Districts'}</option>
 						<option value="KLTVC">തിരുവനന്തപുരം (KLTVC)</option>
@@ -430,38 +430,38 @@
 					<button 
 						type="button" 
 						onclick={exportCSV}
-						class="h-9 px-3 bg-surface border border-surface-variant hover:bg-surface-container text-on-surface rounded text-xs font-semibold flex items-center gap-1.5 transition-colors"
+						class="h-9 px-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
 					>
-						<span class="material-symbols-outlined text-[18px]">download</span>
+						<span class="material-symbols-outlined text-[18px] text-slate-500">download</span>
 						<span>CSV എക്സ്പോർട്ട്</span>
 					</button>
 
 					<!-- Language Toggle -->
-					<div class="flex rounded border border-surface-variant p-0.5 bg-surface text-xs">
+					<div class="flex rounded-full border border-slate-200 p-0.5 bg-slate-100 text-xs shadow-inner">
 						<button 
 							type="button" 
 							onclick={() => lang = 'ml'}
-							class={`px-2 py-0.5 rounded font-medium ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+							class={`px-2.5 py-0.5 rounded-full font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 						>
 							മലയാളം
 						</button>
 						<button 
 							type="button" 
 							onclick={() => lang = 'en'}
-							class={`px-2 py-0.5 rounded font-medium ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+							class={`px-2.5 py-0.5 rounded-full font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
 						>
 							EN
 						</button>
 					</div>
 
 					<!-- Notification Bell -->
-					<div class="relative p-2 text-secondary hover:text-on-surface hover:bg-surface-container rounded transition-colors cursor-pointer">
+					<div class="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer">
 						<span class="material-symbols-outlined text-[22px]">notifications</span>
-						<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-on-primary rounded-full text-[10px] font-bold flex items-center justify-center leading-none">3</span>
+						<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-white rounded-full text-[10px] font-bold flex items-center justify-center leading-none">3</span>
 					</div>
 
 					<!-- Admin Profile Avatar -->
-					<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
+					<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center text-white shadow-xs">
 						<span class="material-symbols-outlined text-[18px]">person</span>
 					</div>
 				</div>
@@ -472,28 +472,28 @@
 				<!-- Context Heading -->
 				<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 					<div>
-						<div class="flex items-center gap-1.5 text-secondary text-xs">
+						<div class="flex items-center gap-1.5 text-slate-500 text-xs font-medium">
 							<span>സംസ്ഥാന ആസ്ഥാനം</span>
 							<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-							<span class="text-on-surface font-semibold">State Executive Overview</span>
+							<span class="text-slate-900 font-bold">State Executive Overview</span>
 						</div>
-						<div class="flex items-center gap-2 mt-1">
-							<h1 class="text-2xl font-bold text-on-surface tracking-tight">
+						<div class="flex items-center gap-2.5 mt-1">
+							<h1 class="text-2xl font-black text-slate-900 tracking-tight">
 								{lang === 'ml' ? 'ഡാഷ്‌ബോർഡ് അവലോകനം' : 'Executive Console Overview'}
 							</h1>
-							<span class="text-xs px-2.5 py-0.5 rounded-full bg-surface-container-high text-tertiary font-semibold">Live Realtime</span>
+							<span class="text-xs px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">Live Cockpit</span>
 						</div>
-						<div class="flex items-center gap-2 text-secondary text-xs mt-1">
-							<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+						<div class="flex items-center gap-2 text-slate-500 text-xs mt-1">
+							<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
 							<span>Updated 1 min ago · Akshaya Gateway Node-04</span>
 						</div>
 					</div>
 
-					<div class="flex items-center gap-2">
+					<div class="flex items-center gap-2.5">
 						<button 
 							type="button" 
 							onclick={() => showImportModal = true}
-							class="h-9 px-3.5 bg-primary hover:bg-primary-container text-on-primary rounded text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-all"
+							class="h-9 px-4 crimson-gradient-btn text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
 						>
 							<span class="material-symbols-outlined text-[18px]">upload_file</span>
 							<span>{lang === 'ml' ? 'പേപ്പർ ഫോമുകൾ ചേർക്കുക' : 'Bulk Paper Import'}</span>
@@ -501,9 +501,9 @@
 						<a 
 							href="/register" 
 							target="_blank"
-							class="h-9 px-3.5 bg-surface-container-lowest border border-surface-variant hover:bg-surface-container text-on-surface rounded text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-all"
+							class="h-9 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all"
 						>
-							<span class="material-symbols-outlined text-[18px]">person_add</span>
+							<span class="material-symbols-outlined text-[18px] text-slate-500">person_add</span>
 							<span>{lang === 'ml' ? 'പുതിയ അപേക്ഷ' : 'New Enrollment'}</span>
 						</a>
 					</div>
@@ -512,93 +512,93 @@
 				<!-- 4 Metric Cards Grid -->
 				<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 					<!-- Card 1 -->
-					<div class="bg-surface-container-lowest rounded-xl p-5 border border-surface-variant shadow-sm flex flex-col justify-between">
+					<div class="card-gloss rounded-2xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
 						<div class="flex items-start justify-between">
 							<div class="flex flex-col">
-								<span class="text-xs text-secondary uppercase font-bold tracking-wider">ആകെ അംഗങ്ങൾ</span>
-								<span class="text-[11px] text-secondary">Total Registered Members</span>
+								<span class="text-xs text-slate-500 uppercase font-bold tracking-wider">ആകെ അംഗങ്ങൾ</span>
+								<span class="text-[11px] text-slate-400">Total Registered Members</span>
 							</div>
-							<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+							<div class="w-10 h-10 rounded-xl bg-red-100 text-primary flex items-center justify-center shadow-xs">
 								<span class="material-symbols-outlined text-[22px]">groups</span>
 							</div>
 						</div>
 						<div class="mt-4">
-							<div class="text-3xl font-bold text-on-surface">42,850</div>
+							<div class="text-3xl font-black text-slate-900">42,850</div>
 							<div class="flex items-center gap-1 text-emerald-700 text-xs mt-1">
 								<span class="material-symbols-outlined text-[16px]">trending_up</span>
 								<span class="font-bold">+184 today</span>
-								<span class="text-secondary">· +4.2% this month</span>
+								<span class="text-slate-500">· +4.2% this month</span>
 							</div>
 						</div>
-						<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-3">
+						<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-3">
 							<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
 						</div>
 					</div>
 
 					<!-- Card 2 -->
-					<div class="bg-surface-container-lowest rounded-xl p-5 border border-surface-variant shadow-sm flex flex-col justify-between">
+					<div class="card-gloss rounded-2xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
 						<div class="flex items-start justify-between">
 							<div class="flex flex-col">
-								<span class="text-xs text-secondary uppercase font-bold tracking-wider">സജീവ വരിസംഖ്യ</span>
-								<span class="text-[11px] text-secondary">Active Dues Compliance</span>
+								<span class="text-xs text-slate-500 uppercase font-bold tracking-wider">സജീവ വരിസംഖ്യ</span>
+								<span class="text-[11px] text-slate-400">Active Dues Compliance</span>
 							</div>
-							<div class="w-10 h-10 rounded-lg bg-secondary-container flex items-center justify-center text-tertiary">
+							<div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shadow-xs">
 								<span class="material-symbols-outlined text-[22px]">verified</span>
 							</div>
 						</div>
 						<div class="mt-4">
-							<div class="text-3xl font-bold text-on-surface">38,420</div>
+							<div class="text-3xl font-black text-slate-900">38,420</div>
 							<div class="flex items-center gap-1 text-xs mt-1">
 								<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">89.6% COMPLIANT</span>
-								<span class="text-secondary">സാധുവായ അംഗത്വം</span>
+								<span class="text-slate-500">സാധുവായ അംഗത്വം</span>
 							</div>
 						</div>
-						<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-3">
+						<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-3">
 							<div class="bg-emerald-600 h-full rounded-full" style="width: 89.6%"></div>
 						</div>
 					</div>
 
 					<!-- Card 3 -->
-					<div class="bg-surface-container-lowest rounded-xl p-5 border border-surface-variant shadow-sm flex flex-col justify-between">
+					<div class="card-gloss rounded-2xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
 						<div class="flex items-start justify-between">
 							<div class="flex flex-col">
-								<span class="text-xs text-secondary uppercase font-bold tracking-wider">ഈ മാസത്തെ പിരിവ്</span>
-								<span class="text-[11px] text-secondary">Collections (Oct 2026)</span>
+								<span class="text-xs text-slate-500 uppercase font-bold tracking-wider">ഈ മാസത്തെ പിരിവ്</span>
+								<span class="text-[11px] text-slate-400">Collections (Oct 2026)</span>
 							</div>
-							<div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+							<div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shadow-xs">
 								<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
 							</div>
 						</div>
 						<div class="mt-4">
-							<div class="text-3xl font-bold text-on-surface">₹6,84,600</div>
-							<div class="text-xs text-secondary mt-1">
-								<strong class="text-on-surface">98.4%</strong> bank auto-credited via SBT/UPI
+							<div class="text-3xl font-black text-slate-900">₹6,84,600</div>
+							<div class="text-xs text-slate-500 mt-1">
+								<strong class="text-slate-800">98.4%</strong> bank auto-credited via SBT/UPI
 							</div>
 						</div>
-						<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-3">
-							<div class="bg-tertiary h-full rounded-full" style="width: 98.4%"></div>
+						<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-3">
+							<div class="bg-amber-600 h-full rounded-full" style="width: 98.4%"></div>
 						</div>
 					</div>
 
 					<!-- Card 4 -->
-					<div class="bg-surface-container-lowest rounded-xl p-5 border border-surface-variant shadow-sm flex flex-col justify-between">
+					<div class="card-gloss rounded-2xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
 						<div class="flex items-start justify-between">
 							<div class="flex flex-col">
-								<span class="text-xs text-secondary uppercase font-bold tracking-wider">തുറന്ന പരാതികൾ</span>
-								<span class="text-[11px] text-secondary">Disputes &amp; Conciliations</span>
+								<span class="text-xs text-slate-500 uppercase font-bold tracking-wider">തുറന്ന പരാതികൾ</span>
+								<span class="text-[11px] text-slate-400">Disputes &amp; Conciliations</span>
 							</div>
-							<div class="w-10 h-10 rounded-lg bg-error-container flex items-center justify-center text-primary">
+							<div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center shadow-xs">
 								<span class="material-symbols-outlined text-[22px]">gavel</span>
 							</div>
 						</div>
 						<div class="mt-4">
-							<div class="text-3xl font-bold text-on-surface">142</div>
+							<div class="text-3xl font-black text-slate-900">142</div>
 							<div class="flex items-center gap-1.5 text-xs mt-1">
-								<span class="px-2 py-0.5 rounded-full bg-primary-fixed-dim text-on-primary-fixed font-bold text-[10px]">28 HIGH PRIORITY</span>
-								<span class="text-secondary">14 കൗൺസിലുകൾ</span>
+								<span class="px-2 py-0.5 rounded-full bg-red-100 text-red-900 font-bold text-[10px]">28 HIGH PRIORITY</span>
+								<span class="text-slate-500">14 കൗൺസിലുകൾ</span>
 							</div>
 						</div>
-						<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-3">
+						<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-3">
 							<div class="bg-primary h-full rounded-full" style="width: 32%"></div>
 						</div>
 					</div>

@@ -64,55 +64,55 @@
 </svelte:head>
 
 <!-- Sticky Top Header -->
-<header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)]">
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
 	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
 		<!-- Union Logo -->
-		<a href="/" class="flex items-center gap-3 min-w-max hover:opacity-95 transition-opacity">
-			<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary shadow-sm flex-shrink-0 font-bold text-xl">
+		<a href="/" class="flex items-center gap-3.5 min-w-max hover:opacity-95 transition-opacity">
+			<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white shadow-md flex-shrink-0 font-bold text-xl">
 				★
 			</div>
 			<div class="flex flex-col">
-				<span class="text-base sm:text-lg text-primary tracking-tight font-bold leading-tight">KSGPWU · CITU</span>
-				<span class="text-xs text-secondary uppercase tracking-wider hidden sm:block">Kerala State Gig &amp; Platform Workers Union</span>
+				<span class="text-base sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight">KSGPWU <span class="text-primary">· CITU</span></span>
+				<span class="text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium">Kerala State Gig &amp; Platform Workers Union</span>
 			</div>
 		</a>
 
 		<!-- Stepper Navigation -->
-		<nav class="hidden md:flex items-center gap-2 text-xs font-semibold">
-			<a href="/register" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-secondary hover:text-on-surface hover:bg-surface-container transition-all">
+		<nav class="hidden md:flex items-center gap-2 text-xs font-bold">
+			<a href="/register" class="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">
 				<span>1. {lang === 'ml' ? 'രജിസ്ട്രേഷൻ' : 'Register'}</span>
-				<span class="text-green-600 font-bold">✓</span>
+				<span class="text-emerald-600 font-bold">✓</span>
 			</a>
-			<span class="text-secondary select-none">→</span>
-			<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full shadow-sm bg-primary-container text-on-primary-container font-semibold">
+			<span class="text-slate-400 select-none">→</span>
+			<span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shadow-sm bg-red-100 text-red-900 border border-red-200 font-bold">
 				<span>2. {lang === 'ml' ? 'പേയ്മെന്റ്' : 'Payment'}</span>
-				<span class="w-2 h-2 rounded-full bg-surface-container-lowest animate-pulse"></span>
+				<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
 			</span>
-			<span class="text-secondary select-none">→</span>
-			<span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-secondary opacity-60">
+			<span class="text-slate-400 select-none">→</span>
+			<span class="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-slate-400 opacity-60">
 				<span>3. {lang === 'ml' ? 'കാർഡ്' : 'ID Card'}</span>
 			</span>
 		</nav>
 
 		<!-- Security Pill & Language Switcher -->
 		<div class="flex items-center gap-2 sm:gap-3 min-w-max">
-			<div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container border border-surface-variant text-secondary text-xs">
-				<span class="material-symbols-outlined text-[16px] text-tertiary">lock</span>
-				<span class="font-semibold tracking-wide">256-Bit SSL</span>
+			<div class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
+				<span class="material-symbols-outlined text-[16px] text-emerald-700">lock</span>
+				<span class="tracking-wide">256-Bit SSL</span>
 			</div>
 
-			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-0.5">
+			<div class="inline-flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 shadow-inner">
 				<button 
 					type="button" 
 					onclick={() => lang = 'ml'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'ml' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ml' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					മലയാളം
 				</button>
 				<button 
 					type="button" 
 					onclick={() => lang = 'en'}
-					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'en' ? 'bg-primary text-on-primary' : 'text-secondary hover:text-on-surface'}`}
+					class={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-primary text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
 				>
 					EN
 				</button>
@@ -121,7 +121,7 @@
 	</div>
 </header>
 
-<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]">
+<main class="w-full pt-20 hero-gradient-mesh min-h-[calc(100vh-80px)]">
 	<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 		<!-- Top Context Header -->
 		<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -153,16 +153,16 @@
 			<!-- LEFT COLUMN: Member Summary & Itemized Ledger (5 cols) -->
 			<div class="lg:col-span-5 flex flex-col gap-6">
 				<!-- Applicant Verification Card -->
-				<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-variant relative overflow-hidden">
-					<div class="flex items-center justify-between pb-3 mb-3 border-b border-surface-variant">
-						<div class="flex items-center gap-1.5">
-							<span class="material-symbols-outlined text-primary text-[20px]">badge</span>
-							<h2 class="text-sm font-bold text-on-surface">
+				<section class="card-gloss rounded-2xl p-6 shadow-md border border-slate-200/90 relative overflow-hidden">
+					<div class="flex items-center justify-between pb-3.5 mb-3.5 border-b border-slate-200">
+						<div class="flex items-center gap-2">
+							<span class="material-symbols-outlined text-primary text-[22px]">badge</span>
+							<h2 class="text-sm font-bold text-slate-900">
 								{lang === 'ml' ? 'അപേക്ഷകന്റെ വിവരങ്ങൾ' : 'Applicant Details'}
 							</h2>
 						</div>
-						<span class="inline-flex items-center gap-1 bg-surface-container px-2.5 py-1 rounded-full text-tertiary text-[11px] font-semibold">
-							<span class="material-symbols-outlined text-[14px]">verified</span>
+						<span class="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-emerald-800 text-[11px] font-bold shadow-2xs">
+							<span class="material-symbols-outlined text-[15px]">verified</span>
 							<span>{lang === 'ml' ? 'പരിശോധിച്ചു' : 'Verified'}</span>
 						</span>
 					</div>
@@ -171,47 +171,47 @@
 						<div class="relative flex-shrink-0">
 							<img 
 								alt={memberName} 
-								class="w-16 h-16 rounded-full object-cover shadow-sm ring-2 ring-primary-fixed" 
+								class="w-16 h-16 rounded-2xl object-cover shadow-md ring-2 ring-primary/20" 
 								src={memberPhoto}
 								onerror={(e) => {
 									(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAw3aryKMEN6bCfcCaYf0tt2COhyR_la4FZRRuZKukGXcifwrYhg3DQBUwDt9nJjZkvRL0bzXPp6MlTyU9PQK1_7hv5Gm1YlkfXLqN7EYTDPvWL1R-Dg4KTXvtMCz2xCUBLZN16l9UYjGt3vc7Yq6SGnhs5IrXMNA9R_Rdz5n0ovSZtqvKvgKGfDzhs2UckUwtAzIbJ2iDOsSz3s2eGHL8uOrURfh0HmdmEkbO7_vXcahXIaRh1fiK8Dg";
 								}}
 							/>
-							<div class="absolute -bottom-1 -right-1 bg-surface-container-lowest rounded-full p-0.5 shadow-sm">
-								<span class="material-symbols-outlined text-tertiary text-[16px] block">check_circle</span>
+							<div class="absolute -bottom-1 -right-1 bg-emerald-600 text-white rounded-full p-0.5 shadow-sm">
+								<span class="material-symbols-outlined text-[15px] block">check_circle</span>
 							</div>
 						</div>
 
 						<div class="flex flex-col min-w-0">
-							<span class="text-base text-on-surface font-bold truncate">{memberName}</span>
+							<span class="text-base text-slate-900 font-extrabold truncate">{memberName}</span>
 							<div class="flex items-center gap-1.5 mt-1">
-								<span class="font-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-on-surface font-semibold">
+								<span class="font-mono text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-700 font-bold border border-slate-200">
 									{memberAppId}
 								</span>
-								<span class="text-secondary text-xs">· Kerala Unit</span>
+								<span class="text-slate-500 text-xs">· Kerala Unit</span>
 							</div>
-							<div class="flex items-center gap-1 text-xs text-secondary mt-1">
-								<span class="material-symbols-outlined text-[15px] text-outline">location_on</span>
+							<div class="flex items-center gap-1 text-xs text-slate-600 mt-1">
+								<span class="material-symbols-outlined text-[15px] text-slate-400">location_on</span>
 								<span class="truncate">{memberDistrict}</span>
 							</div>
-							<div class="flex items-center gap-1 text-xs text-secondary mt-0.5">
+							<div class="flex items-center gap-1 text-xs text-slate-600 mt-0.5">
 								<span class="material-symbols-outlined text-[15px] text-primary">two_wheeler</span>
-								<span class="font-medium text-on-surface truncate">{memberSector}</span>
+								<span class="font-semibold text-slate-800 truncate">{memberSector}</span>
 							</div>
 						</div>
 					</div>
 				</section>
 
 				<!-- Itemized Fee Summary Card -->
-				<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-variant">
-					<div class="flex items-center justify-between pb-3 mb-4 border-b border-surface-variant">
-						<div class="flex items-center gap-1.5">
-							<span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
-							<h2 class="text-sm font-bold text-on-surface">
+				<section class="card-gloss rounded-2xl p-6 shadow-md border border-slate-200/90">
+					<div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-200">
+						<div class="flex items-center gap-2">
+							<span class="material-symbols-outlined text-slate-700 text-[22px]">receipt_long</span>
+							<h2 class="text-sm font-bold text-slate-900">
 								{lang === 'ml' ? 'വരിസംഖ്യ വിവരങ്ങൾ' : 'Itemized Fee Breakdown'}
 							</h2>
 						</div>
-						<span class="font-mono text-xs text-secondary bg-surface-container px-2 py-0.5 rounded">
+						<span class="font-mono text-xs text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded font-semibold">
 							FY 2026-27
 						</span>
 					</div>
@@ -221,53 +221,53 @@
 						<!-- Row 1 -->
 						<div class="flex items-start justify-between py-1">
 							<div class="flex flex-col pr-2">
-								<span class="text-xs font-semibold text-on-surface">
+								<span class="text-xs font-bold text-slate-800">
 									{lang === 'ml' ? '1. യൂണിയൻ പ്രവേശന ഫീസ് (വൺ-ടൈം)' : '1. Union Admission Fee (One-time)'}
 								</span>
-								<span class="text-[11px] text-secondary">
+								<span class="text-[11px] text-slate-500">
 									One-time registration &amp; union ledger setup
 								</span>
 							</div>
-							<span class="text-sm font-bold text-on-surface">₹100.00</span>
+							<span class="text-sm font-black text-slate-900">₹100.00</span>
 						</div>
 
-						<div class="h-px w-full bg-surface-variant opacity-60"></div>
+						<div class="h-px w-full bg-slate-200"></div>
 
 						<!-- Row 2 -->
 						<div class="flex items-start justify-between py-1">
 							<div class="flex flex-col pr-2">
-								<span class="text-xs font-semibold text-on-surface">
+								<span class="text-xs font-bold text-slate-800">
 									{lang === 'ml' ? '2. പ്രതിമാസ വരിസംഖ്യ (6 മാസം മുൻകൂർ)' : '2. Monthly Subscription (6 Months Adv.)'}
 								</span>
-								<span class="text-[11px] text-secondary">₹10 / month × 6 months</span>
+								<span class="text-[11px] text-slate-500">₹10 / month × 6 months</span>
 							</div>
-							<span class="text-sm font-bold text-on-surface">₹60.00</span>
+							<span class="text-sm font-black text-slate-900">₹60.00</span>
 						</div>
 
 						<!-- Benefit Callout -->
-						<div class="bg-surface-container-high rounded-lg p-3 flex items-start gap-2.5 mt-2">
-							<span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0 mt-0.5">security</span>
+						<div class="bg-gradient-to-r from-red-50 to-amber-50 rounded-xl p-3.5 flex items-start gap-3 mt-2 border border-red-200/60 shadow-xs">
+							<span class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5">security</span>
 							<div class="flex flex-col text-xs">
-								<span class="font-bold text-on-surface">
+								<span class="font-bold text-slate-900">
 									{lang === 'ml' ? 'ഡിജിറ്റൽ ഐഡി കാർഡ് & ആനുകൂല്യങ്ങൾ' : 'Digital ID Card & Legal Cell Benefits'}
 								</span>
-								<p class="text-secondary leading-snug mt-0.5">
+								<p class="text-slate-600 leading-snug mt-0.5">
 									Includes Official CITU QR ID Card, Welfare Board representation, and 24/7 Legal Dispute Protection.
 								</p>
 							</div>
 						</div>
 
 						<!-- Total Block -->
-						<div class="flex items-center justify-between pt-2 bg-surface-container-low p-3.5 rounded-lg mt-2">
+						<div class="flex items-center justify-between pt-2 bg-gradient-to-br from-slate-900 via-slate-800 to-red-950 text-white p-4 rounded-xl mt-2 shadow-md">
 							<div class="flex flex-col">
-								<span class="text-xs font-bold uppercase tracking-wide text-on-surface">
+								<span class="text-xs font-bold uppercase tracking-wider text-red-300">
 									{lang === 'ml' ? 'ആകെ അടയ്ക്കേണ്ട തുക' : 'Total Payable Amount'}
 								</span>
-								<span class="text-[11px] text-secondary">Inclusive of all statutory taxes</span>
+								<span class="text-[11px] text-slate-300">Inclusive of all statutory taxes</span>
 							</div>
 							<div class="text-right">
-								<div class="text-2xl font-bold text-primary tracking-tight">₹160</div>
-								<span class="text-[10px] text-secondary">One-time processing</span>
+								<div class="text-3xl font-black text-white tracking-tight">₹160</div>
+								<span class="text-[10px] text-slate-300">One-time processing</span>
 							</div>
 						</div>
 					</div>
@@ -521,13 +521,13 @@
 								type="button" 
 								onclick={handlePayment} 
 								disabled={isProcessing}
-								class="w-full min-h-[52px] py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-base font-bold shadow-md transition-all flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-60"
+								class="w-full min-h-[56px] py-4 px-6 rounded-2xl crimson-gradient-btn text-white text-base font-extrabold shadow-xl flex items-center justify-center gap-2.5 active:scale-[0.99] disabled:opacity-60 transition-all cursor-pointer"
 							>
 								{#if isProcessing}
-									<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+									<span class="material-symbols-outlined animate-spin text-[22px]">progress_activity</span>
 									<span>{lang === 'ml' ? 'പ്രോസസ്സ് ചെയ്യുന്നു...' : 'Processing Payment...'}</span>
 								{:else}
-									<span class="material-symbols-outlined text-[20px]">lock</span>
+									<span class="material-symbols-outlined text-[22px]">lock</span>
 									<span>{lang === 'ml' ? '₹160 അടയ്ക്കുക / അംഗത്വം ആക്റ്റീവ് ചെയ്യുക' : 'Pay ₹160 & Activate Membership'}</span>
 									<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 								{/if}
