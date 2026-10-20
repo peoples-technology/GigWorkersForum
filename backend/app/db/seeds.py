@@ -1,10 +1,7 @@
-import asyncio
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.models import Organisation, Setting, Unit
-from app.db.session import async_session_factory
+from app.db.models import FormVersion, Organisation, Platform, Setting, Unit
 
 KERALA_DISTRICTS = [
     {"name": "Thiruvananthapuram", "name_ml": "തിരുവനന്തപുരം", "code": "KLTVC", "path": "kerala.tvm"},
@@ -21,6 +18,124 @@ KERALA_DISTRICTS = [
     {"name": "Wayanad", "name_ml": "വയനാട്", "code": "KLWYD", "path": "kerala.wyd"},
     {"name": "Kannur", "name_ml": "കണ്ണൂർ", "code": "KLKNR", "path": "kerala.knr"},
     {"name": "Kasaragod", "name_ml": "കാസർഗോഡ്", "code": "KLKSD", "path": "kerala.ksd"},
+]
+
+DEFAULT_PLATFORMS = [
+    {"id": "swiggy", "name": "Swiggy", "sector": "food_delivery"},
+    {"id": "zomato", "name": "Zomato", "sector": "food_delivery"},
+    {"id": "uber", "name": "Uber", "sector": "cab_mobility"},
+    {"id": "ola", "name": "Ola", "sector": "cab_mobility"},
+    {"id": "zepto", "name": "Zepto", "sector": "quick_commerce"},
+    {"id": "blinkit", "name": "Blinkit", "sector": "quick_commerce"},
+    {"id": "amazon_flex", "name": "Amazon Flex", "sector": "logistics"},
+    {"id": "rapido", "name": "Rapido", "sector": "cab_mobility"},
+    {"id": "porter", "name": "Porter", "sector": "logistics"},
+]
+
+CONFIRMED_15_FIELDS = [
+    {
+        "key": "full_name",
+        "type": "text",
+        "labels": {"en": "Full Name", "ml": "മുഴുവൻ പേര്"},
+        "required": True,
+    },
+    {
+        "key": "current_address",
+        "type": "textarea",
+        "labels": {"en": "Present Address", "ml": "നിലവിലെ മേൽവിലാസം"},
+        "required": True,
+    },
+    {
+        "key": "permanent_address",
+        "type": "textarea",
+        "labels": {"en": "Permanent Address (if different)", "ml": "സ്ഥിര മേൽവിലാസം"},
+        "required": False,
+    },
+    {
+        "key": "working_district",
+        "type": "select",
+        "labels": {"en": "Working District", "ml": "തൊഴിൽ ചെയ്യുന്ന ജില്ല"},
+        "required": True,
+        "options": [d["code"] for d in KERALA_DISTRICTS],
+    },
+    {
+        "key": "email",
+        "type": "email",
+        "labels": {"en": "Email Address (Optional)", "ml": "ഇമെയിൽ (നിർബന്ധമില്ല)"},
+        "required": False,
+    },
+    {
+        "key": "mobile_number",
+        "type": "phone",
+        "labels": {"en": "Mobile Number", "ml": "മൊബൈൽ നമ്പർ"},
+        "required": True,
+    },
+    {
+        "key": "whatsapp_number",
+        "type": "phone",
+        "labels": {"en": "WhatsApp Number", "ml": "വാട്ട്സ്ആപ്പ് നമ്പർ"},
+        "required": True,
+    },
+    {
+        "key": "dob",
+        "type": "date",
+        "labels": {"en": "Date of Birth", "ml": "ജനന തീയതി"},
+        "required": True,
+        "validation": {"min_age": 18},
+    },
+    {
+        "key": "gender",
+        "type": "select",
+        "labels": {"en": "Gender", "ml": "ലിംഗം"},
+        "required": True,
+        "options": ["male", "female", "transgender"],
+    },
+    {
+        "key": "mother_tongue",
+        "type": "text",
+        "labels": {"en": "Mother Tongue", "ml": "മാതൃഭാഷ"},
+        "required": True,
+        "default": "Malayalam",
+    },
+    {
+        "key": "platforms",
+        "type": "multiselect",
+        "labels": {"en": "Platforms Worked On", "ml": "തൊഴിലെടുക്കുന്ന പ്ലാറ്റ്‌ഫോമുകൾ"},
+        "required": True,
+    },
+    {
+        "key": "primary_platform",
+        "type": "select",
+        "labels": {"en": "Primary Platform", "ml": "പ്രധാന പ്ലാറ്റ്‌ഫോം"},
+        "required": True,
+    },
+    {
+        "key": "vehicle_type",
+        "type": "select",
+        "labels": {"en": "Vehicle Type", "ml": "വാഹന തരം"},
+        "required": True,
+        "options": ["motorcycle", "scooter_ev", "auto_rickshaw", "cab_car", "bicycle", "none"],
+    },
+    {
+        "key": "vehicle_reg_no",
+        "type": "text",
+        "labels": {"en": "Vehicle Registration Number", "ml": "വാഹന രജിസ്ട്രേഷൻ നമ്പർ"},
+        "required": False,
+    },
+    {
+        "key": "id_doc_type",
+        "type": "select",
+        "labels": {"en": "ID Document Type", "ml": "തിരിച്ചറിയൽ രേഖ"},
+        "required": True,
+        "options": ["aadhaar", "driving_licence", "voter_id"],
+    },
+    {
+        "key": "id_last4",
+        "type": "text",
+        "labels": {"en": "Last 4 Digits Only (DPDP Masked)", "ml": "അവസാന 4 അക്കങ്ങൾ മാത്രം"},
+        "required": True,
+        "validation": {"length": 4, "digits_only": True},
+    },
 ]
 
 DEFAULT_SETTINGS = [
@@ -92,7 +207,32 @@ async def seed_database(session: AsyncSession) -> None:
             )
             session.add(unit)
 
-    # 4. Seed Settings
+    # 4. Seed Platforms
+    for p in DEFAULT_PLATFORMS:
+        p_stmt = select(Platform).where(Platform.id == p["id"])
+        p_res = await session.execute(p_stmt)
+        if not p_res.scalar_one_or_none():
+            platform = Platform(
+                id=p["id"],
+                name=p["name"],
+                sector=p["sector"],
+                is_active=True,
+            )
+            session.add(platform)
+
+    # 5. Seed Form Version v1.0 with 15 confirmed fields
+    fv_stmt = select(FormVersion).where(FormVersion.id == "v1.0")
+    fv_res = await session.execute(fv_stmt)
+    if not fv_res.scalar_one_or_none():
+        fv = FormVersion(
+            id="v1.0",
+            name="Standard Registration v1.0 (15 Confirmed Fields)",
+            fields=CONFIRMED_15_FIELDS,
+            is_active=True,
+        )
+        session.add(fv)
+
+    # 6. Seed Settings
     for s in DEFAULT_SETTINGS:
         setting_stmt = select(Setting).where(Setting.key == s["key"])
         setting_res = await session.execute(setting_stmt)
@@ -105,12 +245,3 @@ async def seed_database(session: AsyncSession) -> None:
             session.add(setting)
 
     await session.commit()
-
-
-if __name__ == "__main__":
-    async def main():
-        async with async_session_factory() as session:
-            await seed_database(session)
-            print("Successfully seeded CITU Organisation, Units & Settings.")
-
-    asyncio.run(main())

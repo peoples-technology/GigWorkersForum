@@ -15,5 +15,6 @@ def export_schema():
         json.dump(schema, f, indent=2)
     print(f"OpenAPI schema successfully written to {out_path}")
 
+
 if __name__ == "__main__":
     export_schema()

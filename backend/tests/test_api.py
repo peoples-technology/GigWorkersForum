@@ -67,4 +67,3 @@ async def test_otp_flow():
         good_data = good.json()
         assert good_data["verified"] is True
         assert "citu_sess_" in good_data["session_token"]
-

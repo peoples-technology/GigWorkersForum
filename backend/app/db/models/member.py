@@ -23,16 +23,16 @@ class Member(Base):
     language: Mapped[str] = mapped_column(String(10), default="ml", nullable=False)
     photo_path: Mapped[str | None] = mapped_column(String(500), nullable=True)
     photo_pending: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    
+
     # DPDP Compliance: Masked ID storage only
     id_doc_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
     id_last4: Mapped[str | None] = mapped_column(String(4), nullable=True)
     encrypted_id_path: Mapped[str | None] = mapped_column(String(500), nullable=True)
-    
+
     # Form version & answers JSONB
     form_version_id: Mapped[str | None] = mapped_column(String(50), nullable=True)
     answers: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
-    
+
     # Consent
     consented_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(

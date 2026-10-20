@@ -261,8 +261,7 @@ class AuthController(Controller):
         if not admin:
             # In testing or fallback when admin not in DB
             is_valid = (
-                verify_totp_code("JBSWY3DPEHPK3PXP", data.totp_code)
-                or data.totp_code == "REC001AA"
+                verify_totp_code("JBSWY3DPEHPK3PXP", data.totp_code) or data.totp_code == "REC001AA"
             )
             if not is_valid:
                 raise ValidationException("Invalid 2FA authentication code")

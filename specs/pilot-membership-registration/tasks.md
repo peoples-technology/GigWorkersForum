@@ -31,16 +31,16 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P2 · Registration form
 
-- [ ] **T2.1** `form_versions` schema (ordered fields, bilingual labels, types, required, options, validation); seed the 15 confirmed fields. (FR2.1, FR2.5)
-- [ ] **T2.2** JSONB answers storage keyed to `form_version_id`; server-side validation against that version. (FR2.4, FR2.5)
-- [ ] **T2.3** Autosave on field blur; resume endpoint returns incomplete submission. (FR1.4)
-- [ ] **T2.4** Live selfie capture component (in-app camera), compression + EXIF strip (Pillow), lighting/framing guidance, slow-connection tolerance. (FR1.5, NFR5.2)
-- [ ] **T2.5** Masked identity proof: capture doc type + last-4 only; encrypt + store upload outside web root; admins-only access (audited). (FR2.2, FR2.3, NFR3.1)
-- [ ] **T2.6** Sector-grouped platform picker with "Others (specify)"; `platform_entries` with exactly one `is_primary`. (FR2.6)
-- [ ] **T2.7** DOB with auto age display; block under-18. (FR2.7)
-- [ ] **T2.8** Bilingual labels + validation messages via Paraglide; Malayalam input works; language switcher persists. (FR9.1–FR9.3)
-- [ ] **T2.9** Archiving a field keeps existing answers; archived fields hidden from new forms but visible/exportable to admins. (FR2.4)
-- [ ] **T2.10** Tests: form-version validation, resume, selfie EXIF strip, masked-ID storage, primary-platform uniqueness, under-18 block.
+- [x] **T2.1** `form_versions` schema (ordered fields, bilingual labels, types, required, options, validation); seed the 15 confirmed fields. (FR2.1, FR2.5)
+- [x] **T2.2** JSONB answers storage keyed to `form_version_id`; server-side validation against that version. (FR2.4, FR2.5)
+- [x] **T2.3** Autosave on field blur; resume endpoint returns incomplete submission. (FR1.4)
+- [x] **T2.4** Live selfie capture component (in-app camera), compression + EXIF strip (Pillow), lighting/framing guidance, slow-connection tolerance. (FR1.5, NFR5.2)
+- [x] **T2.5** Masked identity proof: capture doc type + last-4 only; encrypt + store upload outside web root; admins-only access (audited). (FR2.2, FR2.3, NFR3.1)
+- [x] **T2.6** Sector-grouped platform picker with "Others (specify)"; `platform_entries` with exactly one `is_primary`. (FR2.6)
+- [x] **T2.7** DOB with auto age display; block under-18. (FR2.7)
+- [x] **T2.8** Bilingual labels + validation messages via Paraglide; Malayalam input works; language switcher persists. (FR9.1–FR9.3)
+- [x] **T2.9** Archiving a field keeps existing answers; archived fields hidden from new forms but visible/exportable to admins. (FR2.4)
+- [x] **T2.10** Tests: form-version validation, resume, selfie EXIF strip, masked-ID storage, primary-platform uniqueness, under-18 block.
 
 ## P3 · Fees & payments
 

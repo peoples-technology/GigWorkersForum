@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     APP_ENV: str = "development"
     DEBUG: bool = True
     SECRET_KEY: str = "dev_secret_key_citu_solidarity_change_in_production_32b"
-    
+
     # Server
     HOST: str = "127.0.0.1"
     PORT: int = 8000
@@ -21,10 +21,10 @@ class Settings(BaseSettings):
 
     # Storage
     UPLOAD_DIR: str = "/tmp/citu_uploads"
-    
+
     # Flags & Mocks
     MOCK_SMS: bool = True
-    
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 

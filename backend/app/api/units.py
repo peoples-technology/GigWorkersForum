@@ -28,7 +28,7 @@ class UnitsController(Controller):
                     ]
         except Exception:
             pass
-        
+
         # Return fallback districts list for immediate responsiveness
         return [
             {"id": d["code"], "name": d["name"], "name_ml": d["name_ml"], "code": d["code"]}

@@ -5,6 +5,7 @@ from litestar.openapi.plugins import SwaggerRenderPlugin, YamlRenderPlugin
 
 from app.api.auth import AuthController
 from app.api.health import HealthController
+from app.api.registration import RegistrationController
 from app.api.settings import SettingsController
 from app.api.units import UnitsController
 from app.config import get_settings
@@ -31,6 +32,7 @@ app = Litestar(
         SettingsController,
         UnitsController,
         AuthController,
+        RegistrationController,
     ],
     cors_config=cors_config,
     openapi_config=openapi_config,
