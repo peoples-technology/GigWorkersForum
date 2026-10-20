@@ -35,3 +35,4 @@ package-lock.json.bak
 Thumbs.db
 .vscode/
 .idea/
+.kiro/
