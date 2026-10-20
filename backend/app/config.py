@@ -22,6 +22,16 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/citu_gigworkers"
+
+    @property
+    def async_database_url(self) -> str:
+        """Ensure DATABASE_URL uses the asyncpg driver (e.g. Render provides postgres:// or postgresql://)."""
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif url.startswith("postgresql://") and not url.startswith("postgresql+asyncpg://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
     DB_POOL_SIZE: int = 15
     DB_MAX_OVERFLOW: int = 5
 
