@@ -74,10 +74,6 @@
 			<a href="/verify" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all">
 				{lang === 'ml' ? 'ഐഡി പരിശോധന' : 'Verify ID'}
 			</a>
-			<a href="/admin" class="px-3.5 py-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all flex items-center gap-1.5">
-				<span class="material-symbols-outlined text-[18px] text-slate-500">admin_panel_settings</span>
-				<span>{lang === 'ml' ? 'അഡ്മിൻ' : 'Admin'}</span>
-			</a>
 		</nav>
 
 		<!-- Right Action Strip: Language Toggle + Register CTA -->
@@ -144,13 +140,6 @@
 				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
 			>
 				{lang === 'ml' ? 'ഐഡി പരിശോധന · Verify Member' : 'Public Verification'}
-			</a>
-			<a 
-				href="/admin" 
-				onclick={() => mobileMenuOpen = false} 
-				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
-			>
-				{lang === 'ml' ? 'അഡ്മിൻ ലോഗിൻ · Admin Portal' : 'Admin Portal'}
 			</a>
 		</div>
 	{/if}
@@ -473,13 +462,13 @@
 			Registration: KL-07-TU-2026 · Statutory Labour Protection &amp; Civic Dignity · Copyright © 2026
 		</p>
 		<div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 mt-2">
-			<span>തിരുവനന്തപുരം</span>
+			<span>തിരുവനന്തപുരം (TVM)</span>
 			<span>•</span>
-			<span>കൊച്ചി</span>
+			<span>കൊച്ചി (EKM)</span>
 			<span>•</span>
-			<span>കോഴിക്കോട്</span>
+			<span>കോഴിക്കോട് (KKD)</span>
 			<span>•</span>
-			<a href="/admin" class="text-amber-400 hover:text-amber-300 font-semibold underline">Admin Console</a>
+			<span>തൃശ്ശൂർ (TSR)</span>
 		</div>
 	</div>
 </footer>

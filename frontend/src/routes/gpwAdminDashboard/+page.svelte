@@ -171,6 +171,8 @@
 
 <svelte:head>
 	<title>{lang === 'ml' ? 'അഡ്മിൻ കൺസോൾ | KSGPWU CITU' : 'Admin Console | KSGPWU CITU'}</title>
+	<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
 </svelte:head>
 
 {#if !isLoggedIn}
