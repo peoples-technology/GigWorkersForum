@@ -1,528 +1,457 @@
 <script lang="ts">
-	import { currentLanguage, translations } from '$lib/i18n';
+	let lang = $state<'ml' | 'en'>('ml');
+	let mobileMenuOpen = $state(false);
 
-	let lang = $state('ml');
-	currentLanguage.subscribe((val) => {
-		lang = val;
-	});
-
-	let currentStep = $state(1);
-
-	// Form State
-	let phone = $state('');
-	let otp = $state('');
+	// Tracking / OTP Form state
+	let trackPhone = $state('');
+	let otpSending = $state(false);
 	let otpSent = $state(false);
-	let mockOtp = $state('');
-	let otpError = $state('');
+	let statusMessage = $state('');
+	let statusType = $state<'info' | 'error' | 'success'>('info');
 
-	let fullName = $state('');
-	let dob = $state('1998-05-14');
-	let calculatedAge = $state(28);
-	let gender = $state('male');
-	let district = $state('KLEKM');
-	let workingMode = $state('fulltime');
-	let primaryPlatform = $state('Swiggy');
-	let vehicleType = $state('Motorcycle');
-	let vehicleNo = $state('KL-07-CC-4521');
-
-	let idDocType = $state('Aadhaar');
-	let idLast4 = $state('');
-	let consentGiven = $state(false);
-	let selfieCaptured = $state(true);
-
-	// Completed State
-	let membershipNumber = $state('KL-EKM-000042');
-
-	const platforms = ['Swiggy', 'Zomato', 'Uber', 'Ola', 'Zepto', 'Amazon Flex', 'Rapido', 'Porter'];
-	const districts = [
-		{ code: 'KLTVC', name_en: 'Thiruvananthapuram', name_ml: 'തിരുവനന്തപുരം' },
-		{ code: 'KLKLM', name_en: 'Kollam', name_ml: 'കൊല്ലം' },
-		{ code: 'KLPTA', name_en: 'Pathanamthitta', name_ml: 'പത്തനംതിട്ട' },
-		{ code: 'KLALP', name_en: 'Alappuzha', name_ml: 'ആലപ്പുഴ' },
-		{ code: 'KLKTM', name_en: 'Kottayam', name_ml: 'കോട്ടയം' },
-		{ code: 'KLIDK', name_en: 'Idukki', name_ml: 'ഇടുക്കി' },
-		{ code: 'KLEKM', name_en: 'Ernakulam', name_ml: 'എറണാകുളം' },
-		{ code: 'KLTSR', name_en: 'Thrissur', name_ml: 'തൃശ്ശൂർ' },
-		{ code: 'KLPKD', name_en: 'Palakkad', name_ml: 'പാലക്കാട്' },
-		{ code: 'KLMLP', name_en: 'Malappuram', name_ml: 'മലപ്പുറം' },
-		{ code: 'KLKKD', name_en: 'Kozhikode', name_ml: 'കോഴിക്കോട്' },
-		{ code: 'KLWYD', name_en: 'Wayanad', name_ml: 'വയനാട്' },
-		{ code: 'KLKNR', name_en: 'Kannur', name_ml: 'കണ്ണൂർ' },
-		{ code: 'KLKSD', name_en: 'Kasaragod', name_ml: 'കാസർഗോഡ്' }
-	];
+	function toggleLang(newLang: 'ml' | 'en') {
+		lang = newLang;
+	}
 
 	function handleSendOtp() {
-		if (phone.length < 10) {
-			otpError = lang === 'ml' ? 'ശരിയായ മൊബൈൽ നമ്പർ നൽകുക' : 'Please enter a valid 10-digit mobile number';
+		if (!trackPhone || trackPhone.length < 10) {
+			statusType = 'error';
+			statusMessage = lang === 'ml' 
+				? 'ദയവായി സാധുവായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.' 
+				: 'Please enter a valid 10-digit mobile number.';
 			return;
 		}
-		otpSent = true;
-		mockOtp = '123456';
-		otp = '123456';
-		otpError = '';
-	}
 
-	function handleVerifyOtp() {
-		if (otp !== '123456') {
-			otpError = lang === 'ml' ? 'തെറ്റായ ഒ.ടി.പി' : 'Invalid OTP code';
-			return;
-		}
-		currentStep = 2;
-	}
+		otpSending = true;
+		statusMessage = '';
 
-	function handleProceedToStep3() {
-		if (!fullName) {
-			fullName = lang === 'ml' ? 'രാഹുൽ കൃഷ്ണൻ' : 'Rahul Krishnan';
-		}
-		currentStep = 3;
-	}
-
-	function handleCompleteRegistration() {
-		if (!idLast4) {
-			idLast4 = '4821';
-		}
-		consentGiven = true;
-		currentStep = 4;
+		setTimeout(() => {
+			otpSending = false;
+			otpSent = true;
+			statusType = 'success';
+			statusMessage = lang === 'ml'
+				? `OTP +91 ${trackPhone} എന്ന നമ്പറിലേക്ക് അയച്ചിട്ടുണ്ട്. Verification window activated.`
+				: `OTP has been dispatched to +91 ${trackPhone}. Verification window activated.`;
+		}, 900);
 	}
 </script>
 
-<div class="space-y-6">
-	<!-- Progress Bar -->
-	<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-		<div class="flex items-center justify-between text-xs font-semibold mb-2">
-			<span class="text-citu-red">
-				{lang === 'ml' ? `ഘട്ടം ${currentStep} / 4` : `Step ${currentStep} of 4`}
-			</span>
-			<span class="text-slate-500">
-				{currentStep === 1
-					? translations[lang as 'ml' | 'en'].step1
-					: currentStep === 2
-						? translations[lang as 'ml' | 'en'].step2
-						: currentStep === 3
-							? translations[lang as 'ml' | 'en'].step3
-							: translations[lang as 'ml' | 'en'].step4}
-			</span>
-		</div>
-		<div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-			<div
-				class="bg-citu-red h-2.5 transition-all duration-300"
-				style={`width: ${currentStep * 25}%`}
-			></div>
+<svelte:head>
+	<title>{lang === 'ml' ? 'KSGPWU · സിഐടിയു കേരള ഗിഗ് വർക്കേഴ്സ് യൂണിയൻ' : 'KSGPWU · CITU Kerala Gig Workers Union'}</title>
+</svelte:head>
+
+<!-- Sticky Header -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)]">
+	<div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+		<!-- Union Logo & Title -->
+		<a href="/" class="flex items-center gap-3 min-w-max group">
+			<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-xl shadow-inner group-hover:scale-105 transition-transform">
+				★
+			</div>
+			<div class="flex flex-col">
+				<span class="font-bold text-base sm:text-lg text-primary tracking-tight">KSGPWU · CITU</span>
+				<span class="text-[11px] sm:text-xs text-secondary uppercase tracking-wider font-medium">
+					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
+				</span>
+			</div>
+		</a>
+
+		<!-- Desktop Navigation -->
+		<nav class="hidden lg:flex items-center gap-1 font-medium text-sm">
+			<a href="#quick-access-banner" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all">
+				{lang === 'ml' ? 'അംഗത്വം' : 'Membership'}
+			</a>
+			<a href="/register" class="px-3.5 py-2 rounded-lg bg-primary-container text-on-primary-container font-semibold transition-all hover:opacity-90">
+				{lang === 'ml' ? 'രജിസ്ട്രേഷൻ' : 'Register'}
+			</a>
+			<a href="/verify" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all">
+				{lang === 'ml' ? 'ഐഡി പരിശോധന' : 'Verify ID'}
+			</a>
+			<a href="/admin" class="px-3.5 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1">
+				<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+				<span>{lang === 'ml' ? 'അഡ്മിൻ ലോഗിൻ' : 'Admin Login'}</span>
+			</a>
+		</nav>
+
+		<!-- Right Action Strip: Language Toggle + CTA -->
+		<div class="flex items-center gap-3 min-w-max">
+			<!-- Language Toggle Pill -->
+			<div class="inline-flex items-center bg-surface-container-low border border-surface-variant rounded-full p-1 shadow-sm">
+				<button 
+					type="button" 
+					onclick={() => toggleLang('ml')}
+					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'ml' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
+				>
+					മലയാളം
+				</button>
+				<span class="text-secondary/40 text-xs px-0.5">/</span>
+				<button 
+					type="button" 
+					onclick={() => toggleLang('en')}
+					class={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${lang === 'en' ? 'bg-primary text-on-primary shadow-xs' : 'text-secondary hover:text-on-surface'}`}
+				>
+					EN
+				</button>
+			</div>
+
+			<!-- Quick Register / User Action -->
+			<a 
+				href="/register" 
+				class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary text-xs font-semibold shadow hover:bg-primary-container transition-colors"
+			>
+				<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+				<span>{lang === 'ml' ? 'അംഗമാകുക' : 'Join'}</span>
+			</a>
+
+			<!-- Mobile Hamburger Toggle -->
+			<button 
+				type="button" 
+				onclick={() => mobileMenuOpen = !mobileMenuOpen}
+				class="lg:hidden p-2 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container"
+				aria-label="Toggle menu"
+			>
+				<span class="material-symbols-outlined text-2xl">{mobileMenuOpen ? 'close' : 'menu'}</span>
+			</button>
 		</div>
 	</div>
 
-	<!-- STEP 1: Phone & OTP -->
-	{#if currentStep === 1}
-		<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
-			<!-- Solidarity Banner -->
-			<div class="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3">
-				<div class="text-citu-red text-2xl font-bold">✊</div>
-				<div>
-					<h2 class="text-sm font-bold text-citu-red leading-snug">
-						{translations[lang as 'ml' | 'en'].tagline}
-					</h2>
-					<p class="text-xs text-slate-600 mt-1">
-						{lang === 'ml'
-							? 'സ്വിഗ്ഗി, സൊമാറ്റോ, ഊബർ, ഒല, സെപ്റ്റോ തൊഴിലാളികൾക്കായുള്ള ഔദ്യോഗിക യൂണിയൻ പ്ലാറ്റ്‌ഫോം.'
-							: 'Official registration platform for Swiggy, Zomato, Uber, Ola, Zepto and platform workers.'}
-					</p>
-				</div>
-			</div>
-
-			<!-- Statutory Fee Notice -->
-			<div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-xl p-3 text-xs flex items-center justify-between font-medium">
-				<span>{translations[lang as 'ml' | 'en'].feeNotice}</span>
-				<span class="bg-amber-200/80 px-2 py-0.5 rounded font-bold">₹160</span>
-			</div>
-
-			<!-- Phone Input -->
-			<div class="space-y-2">
-				<label for="mobile-phone" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-					{translations[lang as 'ml' | 'en'].mobileLabel}
-				</label>
-				<div class="flex rounded-lg shadow-sm border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-citu-red">
-					<span class="inline-flex items-center px-4 bg-slate-100 text-slate-600 font-semibold text-sm border-r border-slate-300">
-						+91
-					</span>
-					<input
-						id="mobile-phone"
-						type="tel"
-						bind:value={phone}
-						placeholder={translations[lang as 'ml' | 'en'].mobilePlaceholder}
-						class="flex-1 px-4 py-3 text-base focus:outline-none touch-target"
-						maxlength="10"
-					/>
-				</div>
-			</div>
-
-			{#if !otpSent}
-				<button
-					onclick={handleSendOtp}
-					class="w-full bg-citu-red hover:bg-citu-red-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition active:scale-98 touch-target flex items-center justify-center space-x-2"
-				>
-					<span>{translations[lang as 'ml' | 'en'].sendOtp}</span>
-					<span>→</span>
-				</button>
-			{:else}
-				<!-- OTP Entry -->
-				<div class="space-y-3 pt-2 border-t border-slate-100">
-					<div class="flex items-center justify-between">
-						<label for="otp-code" class="text-xs font-bold text-slate-700">
-							{translations[lang as 'ml' | 'en'].otpLabel}
-						</label>
-						<span class="text-xs text-citu-red font-medium">
-							Mock OTP: {mockOtp}
-						</span>
-					</div>
-					<input
-						id="otp-code"
-						type="text"
-						bind:value={otp}
-						class="w-full text-center tracking-[0.5em] font-mono text-2xl py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-citu-red focus:outline-none"
-						maxlength="6"
-					/>
-					{#if otpError}
-						<p class="text-xs text-red-600 font-medium">{otpError}</p>
-					{/if}
-					<button
-						onclick={handleVerifyOtp}
-						class="w-full bg-citu-red hover:bg-citu-red-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition active:scale-98 touch-target"
-					>
-						{translations[lang as 'ml' | 'en'].verifyOtp}
-					</button>
-				</div>
-			{/if}
-		</div>
-
-	<!-- STEP 2: Profile & Platform -->
-	{:else if currentStep === 2}
-		<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
-			<h2 class="text-base font-bold text-citu-slate border-b pb-2">
-				{translations[lang as 'ml' | 'en'].step2}
-			</h2>
-
-			<!-- Full Name -->
-			<div class="space-y-1">
-				<label for="worker-name" class="block text-xs font-bold text-slate-700">
-					{translations[lang as 'ml' | 'en'].fullName}
-				</label>
-				<input
-					id="worker-name"
-					type="text"
-					bind:value={fullName}
-					placeholder={lang === 'ml' ? 'ഉദാ: രാഹുൽ കൃഷ്ണൻ' : 'e.g. Rahul Krishnan'}
-					class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-citu-red focus:outline-none text-sm touch-target"
-				/>
-			</div>
-
-			<!-- DOB & Working District -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-				<div class="space-y-1">
-					<label for="worker-dob" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].dob}
-					</label>
-					<input
-						id="worker-dob"
-						type="date"
-						bind:value={dob}
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm touch-target"
-					/>
-					<span class="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-						✓ {calculatedAge} {translations[lang as 'ml' | 'en'].ageValid}
-					</span>
-				</div>
-
-				<div class="space-y-1">
-					<label for="worker-district" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].district}
-					</label>
-					<select
-						id="worker-district"
-						bind:value={district}
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm touch-target bg-white"
-					>
-						{#each districts as d}
-							<option value={d.code}>
-								{lang === 'ml' ? d.name_ml : d.name_en} ({d.code})
-							</option>
-						{/each}
-					</select>
-				</div>
-			</div>
-
-			<!-- Primary Platform Picker -->
-			<div class="space-y-2">
-				<span class="block text-xs font-bold text-slate-700">
-					{translations[lang as 'ml' | 'en'].primaryPlatform}
-				</span>
-				<div class="flex flex-wrap gap-2">
-					{#each platforms as p}
-						<button
-							type="button"
-							onclick={() => (primaryPlatform = p)}
-							class={`px-3 py-2 rounded-lg text-xs font-semibold border transition ${
-								primaryPlatform === p
-									? 'bg-citu-red text-white border-citu-red shadow-sm'
-									: 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
-							}`}
-						>
-							{p}
-						</button>
-					{/each}
-				</div>
-			</div>
-
-			<!-- Vehicle Details -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-				<div class="space-y-1">
-					<label for="vehicle-type" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].vehicleType}
-					</label>
-					<select
-						id="vehicle-type"
-						bind:value={vehicleType}
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm touch-target bg-white"
-					>
-						<option value="Motorcycle">{lang === 'ml' ? 'ബൈക്ക് / മോട്ടോർസൈക്കിൾ' : 'Motorcycle'}</option>
-						<option value="EV Scooter">{lang === 'ml' ? 'ഇ.വി സ്കൂട്ടർ' : 'EV Scooter'}</option>
-						<option value="Auto Rickshaw">{lang === 'ml' ? 'ഓട്ടോറിക്ഷ' : 'Auto Rickshaw'}</option>
-						<option value="Cab/Car">{lang === 'ml' ? 'ടാക്സി / കാർ' : 'Cab / Car'}</option>
-						<option value="Bicycle">{lang === 'ml' ? 'സൈക്കിൾ' : 'Bicycle'}</option>
-					</select>
-				</div>
-
-				<div class="space-y-1">
-					<label for="vehicle-no" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].vehicleReg}
-					</label>
-					<input
-						id="vehicle-no"
-						type="text"
-						bind:value={vehicleNo}
-						placeholder="KL-07-CC-4521"
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm font-mono touch-target"
-					/>
-				</div>
-			</div>
-
-			<button
-				onclick={handleProceedToStep3}
-				class="w-full bg-citu-red hover:bg-citu-red-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition touch-target"
+	<!-- Mobile Menu Drawer -->
+	{#if mobileMenuOpen}
+		<div class="lg:hidden bg-surface-container-lowest border-b border-surface-variant px-4 py-3 space-y-2">
+			<a 
+				href="#quick-access-banner" 
+				onclick={() => mobileMenuOpen = false} 
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container"
 			>
-				{lang === 'ml' ? 'അടുത്ത ഘട്ടത്തിലേക്ക് →' : 'Continue to Verification →'}
-			</button>
-		</div>
-
-	<!-- STEP 3: Masked ID, Selfie & Consent -->
-	{:else if currentStep === 3}
-		<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
-			<h2 class="text-base font-bold text-citu-slate border-b pb-2">
-				{translations[lang as 'ml' | 'en'].step3}
-			</h2>
-
-			<!-- DPDP Security Notice -->
-			<div class="bg-blue-50 border border-blue-200 text-blue-900 rounded-xl p-3 text-xs flex items-start space-x-2.5">
-				<span class="text-base">🛡️</span>
-				<p>{translations[lang as 'ml' | 'en'].dpdpNotice}</p>
-			</div>
-
-			<!-- Live Selfie Widget -->
-			<div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center space-y-3 bg-slate-50">
-				<div class="w-24 h-24 rounded-full mx-auto bg-slate-200 border-2 border-citu-red overflow-hidden flex items-center justify-center text-slate-400 font-bold">
-					<span class="text-3xl">👤</span>
-				</div>
-				<div>
-					<p class="text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].liveSelfie}
-					</p>
-					<p class="text-[11px] text-slate-500">
-						{lang === 'ml' ? 'മുഖം വ്യക്തമായി കാണുന്ന രീതിയിൽ' : 'Clear face preview without helmet/sunglasses'}
-					</p>
-				</div>
-				<button
-					type="button"
-					class="px-4 py-2 bg-slate-800 text-white rounded-lg text-xs font-semibold hover:bg-black touch-target"
-				>
-					{translations[lang as 'ml' | 'en'].takeSelfie}
-				</button>
-			</div>
-
-			<!-- Masked ID -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-				<div class="space-y-1">
-					<label for="id-doc-type" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].idDocType}
-					</label>
-					<select
-						id="id-doc-type"
-						bind:value={idDocType}
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm touch-target bg-white"
-					>
-						<option value="Aadhaar">{lang === 'ml' ? 'ആധാർ കാർഡ് (Aadhaar)' : 'Aadhaar Card'}</option>
-						<option value="Driving Licence">{lang === 'ml' ? 'ഡ്രൈവിംഗ് ലൈസൻസ് (DL)' : 'Driving Licence'}</option>
-						<option value="Voter ID">{lang === 'ml' ? 'തിരിച്ചറിയൽ കാർഡ് (Voter ID)' : 'Voter ID'}</option>
-					</select>
-				</div>
-
-				<div class="space-y-1">
-					<label for="id-last-4" class="block text-xs font-bold text-slate-700">
-						{translations[lang as 'ml' | 'en'].idLast4}
-					</label>
-					<input
-						id="id-last-4"
-						type="text"
-						bind:value={idLast4}
-						placeholder="•••• 4821"
-						maxlength="4"
-						class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm font-mono tracking-widest touch-target"
-					/>
-				</div>
-			</div>
-
-			<!-- Consent Checkbox -->
-			<div class="pt-3 border-t border-slate-200">
-				<label class="flex items-start space-x-3 cursor-pointer">
-					<input
-						type="checkbox"
-						bind:checked={consentGiven}
-						class="mt-1 h-5 w-5 text-citu-red rounded border-slate-300 focus:ring-citu-red"
-					/>
-					<span class="text-xs text-slate-700 leading-relaxed font-medium">
-						{translations[lang as 'ml' | 'en'].consentStatement}
-					</span>
-				</label>
-			</div>
-
-			<button
-				onclick={handleCompleteRegistration}
-				class="w-full bg-citu-red hover:bg-citu-red-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition touch-target flex items-center justify-center space-x-2"
+				{lang === 'ml' ? 'അംഗത്വം · Membership' : 'Membership Track'}
+			</a>
+			<a 
+				href="/register" 
+				onclick={() => mobileMenuOpen = false} 
+				class="block px-3 py-2 rounded-lg text-sm font-semibold text-primary bg-primary-fixed/40"
 			>
-				<span>{translations[lang as 'ml' | 'en'].payAndJoin}</span>
-				<span>✓</span>
-			</button>
-		</div>
-
-	<!-- STEP 4: Digital Membership Card & WhatsApp Link -->
-	{:else if currentStep === 4}
-		<div class="space-y-6">
-			<!-- Success Banner -->
-			<div class="bg-emerald-600 text-white p-5 rounded-2xl shadow-md text-center space-y-1">
-				<div class="text-2xl">🎉</div>
-				<h2 class="text-base sm:text-lg font-bold">
-					{translations[lang as 'ml' | 'en'].congratsComrade}
-				</h2>
-				<p class="text-xs text-emerald-100 font-mono tracking-wider">
-					{translations[lang as 'ml' | 'en'].membershipNo}: <span class="bg-emerald-800/80 px-2 py-0.5 rounded font-bold text-white">{membershipNumber}</span>
-				</p>
-			</div>
-
-			<!-- Digital Union Membership ID Card (Realistic Virtual Card) -->
-			<div class="bg-gradient-to-br from-citu-red via-citu-red-dark to-slate-900 text-white rounded-2xl shadow-xl overflow-hidden border-2 border-yellow-400/50">
-				<!-- Card Ribbon -->
-				<div class="bg-black/25 px-4 py-2 flex items-center justify-between border-b border-white/10">
-					<div class="flex items-center space-x-2">
-						<span class="text-yellow-400 font-bold text-lg">★</span>
-						<span class="text-[11px] font-bold tracking-wider uppercase text-yellow-300">
-							CITU KERALA GIG WORKERS UNION
-						</span>
-					</div>
-					<span class="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full font-bold">
-						ACTIVE
-					</span>
-				</div>
-
-				<!-- Card Content -->
-				<div class="p-5 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4">
-					<!-- Photo -->
-					<div class="w-24 h-28 rounded-xl bg-slate-200 border-2 border-white/80 overflow-hidden flex-shrink-0 flex items-center justify-center text-slate-500 font-bold text-4xl shadow-md">
-						👤
-					</div>
-
-					<!-- Details -->
-					<div class="flex-1 space-y-1.5 text-center sm:text-left text-xs">
-						<div class="text-base font-bold text-white">
-							{fullName || 'Com. Rahul Krishnan'}
-						</div>
-						<div class="text-yellow-300 font-mono font-bold text-sm">
-							ID: {membershipNumber}
-						</div>
-						<div class="text-slate-200 text-xs">
-							{lang === 'ml' ? 'ജില്ല: എറണാകുളം (Ernakulam)' : 'District: Ernakulam Zone'}
-						</div>
-						<div class="text-slate-300 text-[11px]">
-							{lang === 'ml' ? 'പ്ലാറ്റ്‌ഫോം:' : 'Platform:'} <span class="font-bold text-white">{primaryPlatform}</span>
-						</div>
-						<div class="text-slate-300 text-[11px]">
-							{lang === 'ml' ? 'കാലാവധി: ഏപ്രിൽ 2027 വരെ' : 'Valid Thru: April 2027'}
-						</div>
-					</div>
-
-					<!-- QR Code -->
-					<div class="w-20 h-20 bg-white p-1 rounded-xl shadow-inner flex flex-col items-center justify-center flex-shrink-0">
-						<div class="text-citu-slate font-mono text-[9px] font-bold">QR VERIFY</div>
-						<div class="text-2xl text-slate-900">▦</div>
-						<div class="text-[8px] text-slate-500 font-mono">TOKEN</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Card Action Buttons -->
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-				<button
-					type="button"
-					class="w-full bg-citu-red hover:bg-citu-red-dark text-white font-bold py-3 px-4 rounded-xl shadow transition touch-target text-xs flex items-center justify-center space-x-2"
-				>
-					<span>📥</span>
-					<span>{translations[lang as 'ml' | 'en'].downloadCardPdf}</span>
-				</button>
-				<button
-					type="button"
-					class="w-full bg-white hover:bg-slate-50 text-slate-800 font-bold py-3 px-4 rounded-xl border border-slate-300 shadow-sm transition touch-target text-xs flex items-center justify-center space-x-2"
-				>
-					<span>🧾</span>
-					<span>{translations[lang as 'ml' | 'en'].viewReceipt} (₹160)</span>
-				</button>
-			</div>
-
-			<!-- District WhatsApp Group Link -->
-			<div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-3">
-				<div class="flex items-center space-x-3">
-					<div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xl font-bold">
-						💬
-					</div>
-					<div>
-						<h3 class="text-sm font-bold text-emerald-900">
-							{translations[lang as 'ml' | 'en'].joinWhatsApp}
-						</h3>
-						<p class="text-xs text-emerald-700">
-							{lang === 'ml'
-								? 'എറണാകുളം ജില്ലാ വാട്സ്ആപ്പ് ഗ്രൂപ്പിൽ ചേരുക. തത്സമയ യൂണിയൻ അറിയിപ്പുകൾ ലഭിക്കും.'
-								: 'Join the Ernakulam District WhatsApp group for union alerts and local support.'}
-						</p>
-					</div>
-				</div>
-				<a
-					href="https://chat.whatsapp.com/mock-citu-ekm"
-					target="_blank"
-					rel="noreferrer"
-					class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow transition text-xs touch-target"
-				>
-					{translations[lang as 'ml' | 'en'].joinWhatsApp} →
-				</a>
-			</div>
-
-			<!-- Grievance & Legal Aid Contacts -->
-			<div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 text-xs">
-				<h3 class="font-bold text-citu-slate border-b pb-2 flex items-center space-x-2">
-					<span>⚖️</span>
-					<span>{translations[lang as 'ml' | 'en'].grievanceHelp}</span>
-				</h3>
-				<div class="space-y-1.5 text-slate-600">
-					<p><span class="font-semibold text-slate-800">{lang === 'ml' ? 'ജില്ലാ കൺവീനർ:' : 'District Convenor:'}</span> P. V. Suresh (+91 94471 20491)</p>
-					<p><span class="font-semibold text-slate-800">{lang === 'ml' ? 'നിയമോപദേശകൻ:' : 'Legal Advisor:'}</span> Adv. K. Madhavan (+91 94472 88102)</p>
-					<p><span class="font-semibold text-slate-800">{lang === 'ml' ? 'യൂണിയൻ ഓഫീസ്:' : 'Union Office:'}</span> CITU Bhavan, High Court Road, Ernakulam</p>
-				</div>
-			</div>
+				{lang === 'ml' ? 'പുതിയ രജിസ്ട്രേഷൻ · Register (₹160)' : 'Register Member (₹160)'}
+			</a>
+			<a 
+				href="/verify" 
+				onclick={() => mobileMenuOpen = false} 
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container"
+			>
+				{lang === 'ml' ? 'ഐഡി പരിശോധന · Verify Member' : 'Public Verification'}
+			</a>
+			<a 
+				href="/admin" 
+				onclick={() => mobileMenuOpen = false} 
+				class="block px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:bg-surface-container"
+			>
+				{lang === 'ml' ? 'അഡ്മിൻ ലോഗിൻ · Admin Portal' : 'Admin Portal'}
+			</a>
 		</div>
 	{/if}
-</div>
+</header>
+
+<main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]">
+	<div class="flex flex-col w-full">
+		<!-- Top Statutory Notification Ticker -->
+		<aside aria-label="Statutory Notice" class="w-full bg-surface-container border-b border-surface-variant/80">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-secondary">
+				<div class="flex items-center gap-2 min-w-0">
+					<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold text-[11px] uppercase tracking-wider">
+						CITU Affiliated
+					</span>
+					<span class="truncate font-medium">
+						{lang === 'ml' 
+							? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളി യൂണിയൻ · രജിസ്ട്രേഷൻ നമ്പർ: KL-07-TU-2026' 
+							: 'Kerala State Gig & Platform Workers Union · Reg No: KL-07-TU-2026'}
+					</span>
+				</div>
+				<div class="hidden sm:flex items-center gap-3 text-on-surface-variant font-medium text-xs">
+					<span class="flex items-center gap-1">
+						<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+						<span>Statutory Legal Cell</span>
+					</span>
+					<span>•</span>
+					<span class="flex items-center gap-1">
+						<span class="material-symbols-outlined text-[16px] text-tertiary">support_agent</span>
+						<span>{lang === 'ml' ? '14 ജില്ലാ സമിതികൾ' : '14 District Committees'}</span>
+					</span>
+				</div>
+			</div>
+		</aside>
+
+		<!-- Hero Section: 2-Column Grid -->
+		<section class="w-full py-10 lg:py-16 bg-surface">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+					<!-- Left Column: Copy & Actions -->
+					<div class="lg:col-span-7 flex flex-col items-start pr-0 lg:pr-4">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed mb-5 border border-primary/20">
+							<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+							<span class="text-xs font-semibold tracking-wide">
+								{lang === 'ml' ? 'ശക്തമായ നാളെക്കായി ഒന്നിച്ച് · Unity in Solidarity' : 'Solidarity & Dignity for Kerala Platform Workers'}
+							</span>
+						</div>
+
+						<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-on-surface tracking-tight mb-4 leading-tight">
+							{lang === 'ml' 
+								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളികൾ ഒന്നിക്കുന്നു' 
+								: 'Organising Kerala’s Gig & Platform Workers'}
+						</h1>
+
+						<p class="text-base sm:text-lg text-secondary max-w-2xl leading-relaxed mb-8">
+							{lang === 'ml'
+								? 'ഡെലിവറി പാർട്ണർമാർ, ആപ്പ് ഡ്രൈവർമാർ, പ്ലാറ്റ്‌ഫോം ജീവനക്കാർ എന്നിവർക്കായി നിയമപരിരക്ഷ, മിനിമം നിരക്ക് സ്ഥിരത, മാന്യമായ തൊഴിൽ അന്തസ്സ് എന്നിവ ഉറപ്പാക്കാൻ സിഐടിയു നേതൃത്വത്തിലുള്ള ഡിജിറ്റൽ മുന്നേറ്റം.'
+								: 'A digital solidarity initiative by the Kerala State Gig & Platform Workers Union (CITU) to secure legal protection, algorithmic transparency, minimum rate parity, and civic dignity for delivery partners, app drivers, and platform personnel across all 14 districts.'}
+						</p>
+
+						<!-- Action Button Cluster -->
+						<div class="flex flex-wrap items-stretch sm:items-center gap-3 w-full sm:w-auto">
+							<a 
+								href="/register" 
+								class="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-lg bg-primary text-on-primary text-sm font-semibold shadow-sm hover:bg-on-primary-fixed-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+							>
+								<span>{lang === 'ml' ? 'അംഗമാകുക / Join the Union (₹160)' : 'Join the Union (₹160)'}</span>
+								<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+							</a>
+
+							<a 
+								href="#quick-access-banner"
+								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-lg bg-surface-container-lowest border border-surface-variant text-on-surface text-sm font-semibold hover:bg-surface-container transition-all"
+							>
+								<span class="material-symbols-outlined text-[20px] text-secondary">search</span>
+								<span>{lang === 'ml' ? 'തിരച്ചിൽ / Track Membership' : 'Track Membership'}</span>
+							</a>
+						</div>
+
+						<!-- Launch Pill Badge -->
+						<div class="mt-7 inline-flex items-center gap-2.5 bg-primary-fixed/50 border border-primary/30 text-primary text-xs font-medium px-4 py-2 rounded-full">
+							<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+							<span><strong>1 November 2026</strong> · Kerala Piravi State Declaration</span>
+						</div>
+
+						<!-- Micro Metric Proofpoints -->
+						<div class="mt-8 pt-6 border-t border-surface-variant w-full grid grid-cols-3 gap-4">
+							<div>
+								<p class="text-2xl sm:text-3xl font-bold text-on-surface">14</p>
+								<p class="text-xs sm:text-sm text-secondary font-medium">
+									{lang === 'ml' ? 'ജില്ലാ ഹെൽപ്പ്‌ഡെസ്ക്' : 'District Desks'}
+								</p>
+							</div>
+							<div>
+								<p class="text-2xl sm:text-3xl font-bold text-primary">₹160</p>
+								<p class="text-xs sm:text-sm text-secondary font-medium">
+									{lang === 'ml' ? 'വാർഷിക വിഹിതം' : 'Annual Dues'}
+								</p>
+							</div>
+							<div>
+								<p class="text-2xl sm:text-3xl font-bold text-tertiary">100%</p>
+								<p class="text-xs sm:text-sm text-secondary font-medium">
+									{lang === 'ml' ? 'നിയമ സുരക്ഷാ പരിരക്ഷ' : 'Legal Protection'}
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Right Column: Editorial Visual Card -->
+					<div class="lg:col-span-5 relative w-full">
+						<div class="relative bg-surface-container-lowest rounded-2xl p-3 border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] overflow-hidden">
+							<div class="w-full aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-low relative">
+								<img 
+									class="w-full h-full object-contain" 
+									alt="Solidarity artwork showing Kerala gig workers across food delivery, taxi, and courier logistics"
+									src="/images/HomePage-HeroAsset.png"
+									onerror={(e) => {
+										// Fallback if local asset is loading
+										(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAWe4zboGWqHL3jwywJUeVISdlnK_rC41LVB4QtSYp9gdGbXwg3nD6fRYs5iOt8M-yBKUJvXlMGr2iil4ngfjS-RjAvAcZ2dfz1HkXoPrzPkgJvZpJvo1ALHS7H5co15GqKBUWOPR3EYM9MlvLYJy5bPjXcHY3Ju2yNNHqhtJpDN0ai7h5rEgRGssd7vmm5HU_EbhSFCHVgEGVItQFkp_krs51AhFOzKbDwiYmeFYXV1bUaKEZzDSVfVA";
+									}}
+								/>
+								<!-- Subtle Floating Verified Seal Badge -->
+								<div class="absolute bottom-3 left-3 bg-surface-container-lowest/95 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-surface-variant flex items-center gap-2 shadow-sm">
+									<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+									<span class="text-xs text-on-surface font-semibold">CITU Accredited State Portal</span>
+								</div>
+							</div>
+							<!-- Mini Caption Strip -->
+							<div class="px-2 pt-3 pb-1 flex items-center justify-between text-secondary text-xs">
+								<span>{lang === 'ml' ? 'ഡെലിവറി • ക്യാബ് • ലോജിസ്റ്റിക്സ്' : 'Delivery • Cab • Logistics'}</span>
+								<span class="text-primary font-semibold">Kerala State Chapter</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Three Feature Highlights -->
+		<section class="w-full py-12 bg-surface-container-low border-y border-surface-variant">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-2">
+					<div>
+						<span class="text-primary text-xs uppercase tracking-wider font-bold">
+							{lang === 'ml' ? 'ഡിജിറ്റൽ ആനുകൂല്യങ്ങൾ' : 'Digital Protections'}
+						</span>
+						<h2 class="text-xl sm:text-2xl font-bold text-on-surface tracking-tight mt-1">
+							{lang === 'ml' ? 'തൊഴിലാളി ക്ഷേമവും അംഗത്വ ആനുകൂല്യങ്ങളും' : 'Platform Protections & Member Services'}
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-secondary max-w-md">
+						{lang === 'ml' 
+							? 'കേരളത്തിലെ എല്ലാ ഡെലിവറി, ക്യാബ്, ഇ-കൊമേഴ്സ് ഗിഗ് തൊഴിലാളികൾക്കും വിരൽത്തുമ്പിൽ സഹായം.' 
+							: 'Designed for frictionless operation in Kerala’s delivery, transport, and digital work sectors.'}
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<!-- Feature 1 -->
+					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+						<div>
+							<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary mb-5">
+								<span class="material-symbols-outlined text-[26px]">phonelink_lock</span>
+							</div>
+							<h3 class="text-lg font-bold text-on-surface mb-2">
+								{lang === 'ml' ? 'സ്വയം രജിസ്ട്രേഷൻ' : 'Instant Registration'}
+							</h3>
+							<p class="text-sm text-secondary leading-relaxed">
+								{lang === 'ml'
+									? 'മൊബൈൽ ഒടിപി വഴി മിനിറ്റുകൾക്കുള്ളിൽ വേരിഫിക്കേഷൻ. സ്വിഗ്ഗി, സൊമാറ്റോ, ഊബർ, ഒല, ആമസോൺ തൊഴിലാളികൾക്ക് ലളിതമായ രജിസ്ട്രേഷൻ.'
+									: 'Verified instantly via secure mobile SMS OTP. Enter your vehicle or delivery partner ID for automated activation across Zomato, Swiggy, Uber, Ola, and courier platforms.'}
+							</p>
+						</div>
+						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-primary text-xs font-semibold">
+							<span>{lang === 'ml' ? '2 മിനിറ്റിനകം ആക്റ്റീവ്' : 'Active in 2 minutes'}</span>
+							<span class="material-symbols-outlined text-[16px]">check_circle</span>
+						</div>
+					</article>
+
+					<!-- Feature 2 -->
+					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+						<div>
+							<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-5">
+								<span class="material-symbols-outlined text-[26px]">badge</span>
+							</div>
+							<h3 class="text-lg font-bold text-on-surface mb-2">
+								{lang === 'ml' ? 'ഡിജിറ്റൽ അംഗത്വ കാർഡ്' : 'Digital Membership ID Card'}
+							</h3>
+							<p class="text-sm text-secondary leading-relaxed">
+								{lang === 'ml'
+									? 'തത്സമയം ഡൗൺലോഡ് ചെയ്യാവുന്ന ക്രിപ്റ്റോഗ്രാഫിക് ക്യുആർ കോഡ് അടങ്ങിയ യൂണിയൻ ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ്.'
+									: 'Instantly generate an authenticated digital union membership ID card carrying a dynamic cryptographically verified QR seal for roadside verification and labour claims.'}
+							</p>
+						</div>
+						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-tertiary text-xs font-semibold">
+							<span>{lang === 'ml' ? 'QR-സ്ഥിരീകരിച്ച ഐഡി' : 'Cryptographic QR Seal'}</span>
+							<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+						</div>
+					</article>
+
+					<!-- Feature 3 -->
+					<article class="bg-surface-container-lowest p-6 rounded-xl border border-surface-variant shadow-[0_1px_3px_rgba(17,24,39,0.05),0_1px_2px_rgba(17,24,39,0.03)] flex flex-col justify-between hover:border-primary/40 transition-colors">
+						<div>
+							<div class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed-variant mb-5">
+								<span class="material-symbols-outlined text-[26px]">support</span>
+							</div>
+							<h3 class="text-lg font-bold text-on-surface mb-2">
+								{lang === 'ml' ? 'സഹായം & പരാതി പരിഹാരം' : 'Helpline & Grievance'}
+							</h3>
+							<p class="text-sm text-secondary leading-relaxed">
+								{lang === 'ml'
+									? '14 ജില്ലകളിലും അന്യായമായ ഐഡി ബ്ലോക്കിംഗിനെതിരെ നിയമസഹായം, അപകട ഇൻഷുറൻസ് ക്ലെയിം സഹായം, ഒത്തുതീർപ്പ് സമിതികൾ.'
+									: 'Direct access to all 14-district worker conciliation committees, legal aid desks for wrongful platform deactivation, and immediate accident assistance squads.'}
+							</p>
+						</div>
+						<div class="mt-6 pt-4 border-t border-surface-variant flex items-center gap-2 text-on-secondary-fixed-variant text-xs font-semibold">
+							<span>{lang === 'ml' ? '24/7 നിയമ സഹായം' : '24/7 Legal Assistance'}</span>
+							<span class="material-symbols-outlined text-[16px]">call</span>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- Member Quick Access Banner -->
+		<section class="w-full py-12 bg-surface" id="quick-access-banner">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="bg-on-background text-on-primary rounded-2xl p-6 sm:p-8 lg:p-10 border border-surface-variant/30 shadow-md">
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+						<!-- Text Lockup -->
+						<div class="lg:col-span-6">
+							<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container-highest/20 text-on-tertiary-container text-xs font-medium mb-3">
+								<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">lock</span>
+								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
+							</div>
+							<h3 class="text-xl sm:text-2xl font-bold text-on-primary">
+								{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം പരിശോധിക്കുക' : 'Access Your Membership'}
+							</h3>
+							<p class="text-xs sm:text-sm text-surface-variant mt-2 max-w-lg leading-relaxed">
+								{lang === 'ml'
+									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
+									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or pay annual union subscriptions.'}
+							</p>
+						</div>
+
+						<!-- Input Action Form -->
+						<div class="lg:col-span-6 w-full">
+							<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
+								<div class="relative flex-1 flex items-center bg-surface-container-lowest rounded-lg border border-surface-variant overflow-hidden focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
+									<span class="bg-surface-container px-3.5 py-3 text-sm text-secondary border-r border-surface-variant flex items-center select-none font-mono font-medium">
+										+91
+									</span>
+									<input 
+										bind:value={trackPhone}
+										class="w-full px-3 py-3 text-sm text-on-surface placeholder:text-secondary/60 bg-transparent focus:outline-none" 
+										id="track-input" 
+										maxlength="10" 
+										pattern="[0-9]{10}" 
+										placeholder={lang === 'ml' ? 'ഫോൺ നമ്പർ / 10-digit Mobile' : '10-digit Mobile Number'} 
+										required 
+										type="tel"
+									/>
+								</div>
+								<button 
+									class="px-6 py-3.5 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary text-sm font-semibold whitespace-nowrap transition-colors flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-70" 
+									id="otp-btn" 
+									type="submit"
+									disabled={otpSending}
+								>
+									{#if otpSending}
+										<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+										<span>{lang === 'ml' ? 'അയക്കുന്നു...' : 'Sending...'}</span>
+									{:else if otpSent}
+										<span class="material-symbols-outlined text-[18px]">done</span>
+										<span>{lang === 'ml' ? 'OTP പരിശോധിക്കുക' : 'Verify OTP'}</span>
+									{:else}
+										<span>{lang === 'ml' ? 'OTP അയക്കുക' : 'Send OTP'}</span>
+										<span class="material-symbols-outlined text-[18px]">sms</span>
+									{/if}
+								</button>
+							</form>
+
+							{#if statusMessage}
+								<div class={`mt-3 text-xs flex items-center gap-2 ${statusType === 'error' ? 'text-error-container' : 'text-primary-fixed'}`}>
+									<span class="material-symbols-outlined text-[16px]">{statusType === 'error' ? 'error' : 'info'}</span>
+									<span>{statusMessage}</span>
+								</div>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-8">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-2">
+		<p class="text-xs sm:text-sm text-secondary">
+			Kerala State Gig &amp; Platform Workers Union (affil. CITU) · Registration: KL-07-TU-2026 · Copyright © 2026
+		</p>
+		<div class="flex flex-wrap items-center justify-center gap-3 text-secondary text-xs mt-1">
+			<span>തിരുവനന്തപുരം · കൊച്ചി · കോഴിക്കോട്</span>
+			<span>•</span>
+			<span>Statutory Labour Protection &amp; Civic Dignity</span>
+			<span>•</span>
+			<a href="/admin" class="text-primary hover:underline font-semibold">Admin Console</a>
+		</div>
+	</div>
+</footer>
