@@ -56,12 +56,12 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P4 · Membership number & card
 
-- [ ] **T4.1** Per-district number sequence with row-lock counter; format `DISTCODE + 6-digit`; assigned only after payment confirmed; never reused. (FR4.1)
-- [ ] **T4.2** Typst card template: union logo, photo, name, number, working district, status, validity, in member's language; Noto Sans Malayalam. (FR4.2)
-- [ ] **T4.3** segno QR encoding an opaque random `card_token` (not member id); `card_tokens` with `revoked` flag; reissue endpoint. (FR4.3, FR4.4)
-- [ ] **T4.4** Public `GET /verify/:token` returning only {name, number, district, status}; no auth; no enumeration vector. (FR4.3)
-- [ ] **T4.5** Card download as PDF and image; correct Malayalam rendering verified in tests. (FR4.2)
-- [ ] **T4.6** Tests: number-sequence concurrency (no gaps/dupes under load), token revocation, verify-page field leakage.
+- [x] **T4.1** Per-district number sequence with row-lock counter; format `DISTCODE + 6-digit`; assigned only after payment confirmed; never reused. (FR4.1)
+- [x] **T4.2** Typst card template: union logo, photo, name, number, working district, status, validity, in member's language; Noto Sans Malayalam. (FR4.2)
+- [x] **T4.3** segno QR encoding an opaque random `card_token` (not member id); `card_tokens` with `revoked` flag; reissue endpoint. (FR4.3, FR4.4)
+- [x] **T4.4** Public `GET /verify/:token` returning only {name, number, district, status}; no auth; no enumeration vector. (FR4.3)
+- [x] **T4.5** Card download as PDF and image; correct Malayalam rendering verified in tests. (FR4.2)
+- [x] **T4.6** Tests: number-sequence concurrency (no gaps/dupes under load), token revocation, verify-page field leakage.
 
 ## P5 · Admin console
 
