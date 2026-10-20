@@ -5,6 +5,7 @@ from litestar.openapi.plugins import SwaggerRenderPlugin, YamlRenderPlugin
 
 from app.api.admin import AdminController
 from app.api.auth import AuthController
+from app.api.bulk_import import ImportController
 from app.api.cards import CardsController, VerifyController
 from app.api.health import HealthController
 from app.api.payments import PaymentsController
@@ -40,6 +41,7 @@ app = Litestar(
         CardsController,
         VerifyController,
         AdminController,
+        ImportController,
     ],
     cors_config=cors_config,
     openapi_config=openapi_config,

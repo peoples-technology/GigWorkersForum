@@ -79,16 +79,16 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P6 · Bulk paper import
 
-- [ ] **T6.1** `imports` + `import_rows` tables migration; Procrastinate job skeleton. (FR10.1, FR10.12)
-- [ ] **T6.2** `GET /admin/import/template` — generate CSV from current form version + optional `paid_up_to`, `paper_receipt_no` columns (bilingual headers). (FR10.2)
-- [ ] **T6.3** `POST /admin/import` — accept file, create `imports` job (status queued), enqueue async job; enforce admin unit scope server-side (reject out-of-scope rows). (FR10.1, FR10.9)
-- [ ] **T6.4** Async parser/validator: normalise phone (E.164), validate required fields/types, district code exists, age ≥ 18; write per-row outcome to `import_rows`. (FR10.3)
-- [ ] **T6.5** Dedup by phone: skip rows whose phone exists, outcome `skipped`/`duplicate_phone`. (FR10.4)
-- [ ] **T6.6** For accepted rows: create member (masked Aadhaar from row, `photo_pending` flag), assign membership number via per-district sequence; if `paid_up_to` provided, create offline payment entry in append-only ledger logged by admin. (FR10.5, FR10.6, FR10.7, FR10.8)
-- [ ] **T6.7** `GET /admin/import/:id` (status + counts) and `GET /admin/import/:id/report` (CSV: total, accepted, rejected w/ reasons, skipped). (FR10.10, FR10.12)
-- [ ] **T6.8** Audit-log every import job (admin, time, file, counts) and every member created by an import. (FR10.11)
-- [ ] **T6.9** Admin UI: upload, template download, job list, status, report download; scoped by role. (FR10.9)
-- [ ] **T6.10** Tests: duplicate-phone skip, out-of-scope rejection, masked-Aadhaar (no full number stored), offline-payment backfill, report accuracy, async job completion, re-run idempotency.
+- [x] **T6.1** `imports` + `import_rows` tables migration; Procrastinate job skeleton. (FR10.1, FR10.12)
+- [x] **T6.2** `GET /admin/import/template` — generate CSV from current form version + optional `paid_up_to`, `paper_receipt_no` columns (bilingual headers). (FR10.2)
+- [x] **T6.3** `POST /admin/import` — accept file, create `imports` job (status queued), enqueue async job; enforce admin unit scope server-side (reject out-of-scope rows). (FR10.1, FR10.9)
+- [x] **T6.4** Async parser/validator: normalise phone (E.164), validate required fields/types, district code exists, age ≥ 18; write per-row outcome to `import_rows`. (FR10.3)
+- [x] **T6.5** Dedup by phone: skip rows whose phone exists, outcome `skipped`/`duplicate_phone`. (FR10.4)
+- [x] **T6.6** For accepted rows: create member (masked Aadhaar from row, `photo_pending` flag), assign membership number via per-district sequence; if `paid_up_to` provided, create offline payment entry in append-only ledger logged by admin. (FR10.5, FR10.6, FR10.7, FR10.8)
+- [x] **T6.7** `GET /admin/import/:id` (status + counts) and `GET /admin/import/:id/report` (CSV: total, accepted, rejected w/ reasons, skipped). (FR10.10, FR10.12)
+- [x] **T6.8** Audit-log every import job (admin, time, file, counts) and every member created by an import. (FR10.11)
+- [x] **T6.9** Admin UI: upload, template download, job list, status, report download; scoped by role. (FR10.9)
+- [x] **T6.10** Tests: duplicate-phone skip, out-of-scope rejection, masked-Aadhaar (no full number stored), offline-payment backfill, report accuracy, async job completion, re-run idempotency.
 
 ## P7 · Member self-service
 
