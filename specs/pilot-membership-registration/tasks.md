@@ -92,11 +92,11 @@ External approvals (payment KYC, SMS DLT, VPS/domain) run in parallel from week 
 
 ## P7 · Member self-service
 
-- [ ] **T7.1** Member dashboard: own details (read-only), card download, payment history + receipts. (FR6.1)
-- [ ] **T7.2** District WhatsApp group link (replaceable by state office). (FR6.1, FR6.2)
-- [ ] **T7.3** Grievance contacts display only (per district: name, role, number); filing disabled by switch. (FR6.1, NFR7.2)
-- [ ] **T7.4** Language switch re-renders card/dashboard in chosen language. (FR9.4)
-- [ ] **T7.5** Welcome screen post-payment: number, card download, WhatsApp link; link sent by message; no false "joined" claim. (FR1.8, FR1.9)
+- [x] **T7.1** Member dashboard: own details (read-only), card download, payment history + receipts. (FR6.1)
+- [x] **T7.2** District WhatsApp group link (replaceable by state office). (FR6.1, FR6.2)
+- [x] **T7.3** Grievance contacts display only (per district: name, role, number); filing disabled by switch. (FR6.1, NFR7.2)
+- [x] **T7.4** Language switch re-renders card/dashboard in chosen language. (FR9.4)
+- [x] **T7.5** Welcome screen post-payment: number, card download, WhatsApp link; link sent by message; no false "joined" claim. (FR1.8, FR1.9)
 
 ## P8 · UI design with Google Stitch (runs in parallel with P0–P6)
 

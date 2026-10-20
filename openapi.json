@@ -2723,6 +2723,94 @@
         },
         "deprecated": false
       }
+    },
+    "/api/member/dashboard": {
+      "get": {
+        "summary": "GetDashboard",
+        "operationId": "ApiMemberDashboardGetDashboard",
+        "responses": {
+          "200": {
+            "description": "Request fulfilled, document follows",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/member/language": {
+      "post": {
+        "summary": "UpdateLanguagePreference",
+        "operationId": "ApiMemberLanguageUpdateLanguagePreference",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberLanguageUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Request fulfilled, document follows",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request syntax or unsupported method",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status_code": {
+                      "type": "integer"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "extra": {
+                      "additionalProperties": {},
+                      "type": [
+                        "null",
+                        "object",
+                        "array"
+                      ]
+                    }
+                  },
+                  "type": "object",
+                  "required": [
+                    "detail",
+                    "status_code"
+                  ],
+                  "description": "Validation Exception",
+                  "examples": [
+                    {
+                      "status_code": 400,
+                      "detail": "Bad Request",
+                      "extra": {}
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
     }
   },
   "components": {
@@ -2902,6 +2990,18 @@
         "type": "object",
         "required": [],
         "title": "MemberEditRequest"
+      },
+      "MemberLanguageUpdateRequest": {
+        "properties": {
+          "language": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "language"
+        ],
+        "title": "MemberLanguageUpdateRequest"
       },
       "MemberStatusChangeRequest": {
         "properties": {

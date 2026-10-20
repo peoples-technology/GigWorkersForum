@@ -8,6 +8,7 @@ from app.api.auth import AuthController
 from app.api.bulk_import import ImportController
 from app.api.cards import CardsController, VerifyController
 from app.api.health import HealthController
+from app.api.member_portal import MemberPortalController
 from app.api.payments import PaymentsController
 from app.api.registration import RegistrationController
 from app.api.settings import SettingsController
@@ -42,6 +43,7 @@ app = Litestar(
         VerifyController,
         AdminController,
         ImportController,
+        MemberPortalController,
     ],
     cors_config=cors_config,
     openapi_config=openapi_config,
