@@ -582,41 +582,41 @@
 
 <!-- Success Receipt Modal -->
 {#if paymentSuccess}
-	<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-		<div class="bg-surface-container-lowest max-w-md w-full rounded-2xl shadow-2xl border border-surface-variant p-6 sm:p-8 flex flex-col items-center text-center animate-in fade-in zoom-in duration-200">
+	<div class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+		<div class="bg-white max-w-md w-full rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-8 flex flex-col items-center text-center animate-in fade-in zoom-in-95 duration-200 relative z-10">
 			<!-- Success Badge -->
-			<div class="w-16 h-16 rounded-full bg-green-100 text-green-700 flex items-center justify-center mb-4 shadow-inner">
+			<div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-inner">
 				<span class="material-symbols-outlined text-4xl">check_circle</span>
 			</div>
 
-			<h3 class="text-xl font-bold text-on-surface">
+			<h3 class="text-xl font-bold text-slate-900">
 				{lang === 'ml' ? 'പേയ്മെന്റ് വിജയകരം!' : 'Payment Successful!'}
 			</h3>
-			<p class="text-xs text-secondary mt-1">
+			<p class="text-xs text-slate-500 mt-1">
 				{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം വിജയകരമായി സജീവമാക്കി.' : 'Your official union membership is now active.'}
 			</p>
 
 			<!-- Receipt Box -->
-			<div class="w-full bg-surface-container-low rounded-xl p-4 my-5 border border-surface-variant text-left text-xs space-y-2">
-				<div class="flex justify-between pb-2 border-b border-surface-variant">
-					<span class="text-secondary font-medium">{lang === 'ml' ? 'അംഗത്വ നമ്പർ' : 'Membership ID'}:</span>
+			<div class="w-full bg-slate-50 rounded-xl p-4 my-5 border border-slate-200/80 text-left text-xs space-y-2">
+				<div class="flex justify-between pb-2 border-b border-slate-200">
+					<span class="text-slate-500 font-medium">{lang === 'ml' ? 'അംഗത്വ നമ്പർ' : 'Membership ID'}:</span>
 					<span class="font-mono font-bold text-primary">{generatedMemberId}</span>
 				</div>
 				<div class="flex justify-between">
-					<span class="text-secondary">{lang === 'ml' ? 'അംഗം' : 'Member Name'}:</span>
-					<span class="font-bold text-on-surface">{memberName}</span>
+					<span class="text-slate-500">{lang === 'ml' ? 'അംഗം' : 'Member Name'}:</span>
+					<span class="font-bold text-slate-900">{memberName}</span>
 				</div>
 				<div class="flex justify-between">
-					<span class="text-secondary">{lang === 'ml' ? 'തുക' : 'Amount Paid'}:</span>
-					<span class="font-bold text-on-surface">₹160.00</span>
+					<span class="text-slate-500">{lang === 'ml' ? 'തുക' : 'Amount Paid'}:</span>
+					<span class="font-bold text-slate-900">₹160.00</span>
 				</div>
 				<div class="flex justify-between">
-					<span class="text-secondary">{lang === 'ml' ? 'ഇടപാട് ഐഡി' : 'Transaction Ref'}:</span>
-					<span class="font-mono text-secondary">{transactionId}</span>
+					<span class="text-slate-500">{lang === 'ml' ? 'ഇടപാട് ഐഡി' : 'Transaction Ref'}:</span>
+					<span class="font-mono text-slate-600">{transactionId}</span>
 				</div>
 				<div class="flex justify-between">
-					<span class="text-secondary">{lang === 'ml' ? 'സാധുത' : 'Valid Until'}:</span>
-					<span class="font-semibold text-green-700">31 October 2027</span>
+					<span class="text-slate-500">{lang === 'ml' ? 'സാധുത' : 'Valid Until'}:</span>
+					<span class="font-semibold text-emerald-700">31 October 2027</span>
 				</div>
 			</div>
 
@@ -624,7 +624,7 @@
 			<div class="w-full flex flex-col gap-2.5">
 				<a 
 					href={`/verify/${generatedMemberId}`} 
-					class="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-sm font-semibold flex items-center justify-center gap-2 shadow-sm"
+					class="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-container text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition"
 				>
 					<span class="material-symbols-outlined text-[18px]">badge</span>
 					<span>{lang === 'ml' ? 'ഡിജിറ്റൽ ഐഡി കാർഡ് കാണുക' : 'View Digital ID Card'}</span>
@@ -633,7 +633,7 @@
 				<button 
 					type="button" 
 					onclick={() => window.print()}
-					class="w-full py-2.5 px-4 rounded-xl border border-surface-variant bg-surface-container-lowest text-secondary text-xs font-semibold hover:bg-surface-container flex items-center justify-center gap-1.5"
+					class="w-full py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 flex items-center justify-center gap-1.5 transition"
 				>
 					<span class="material-symbols-outlined text-[16px]">print</span>
 					<span>{lang === 'ml' ? 'രസീത് പ്രിന്റ് ചെയ്യുക' : 'Print Form-II Receipt'}</span>

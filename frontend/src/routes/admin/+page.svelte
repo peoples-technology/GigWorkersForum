@@ -176,13 +176,13 @@
 {#if !isLoggedIn}
 	<!-- Login Screen with 2FA Gate -->
 	<div class="min-h-screen bg-[#0F172A] flex items-center justify-center p-4">
-		<div class="max-w-md w-full bg-surface-container-lowest rounded-2xl shadow-2xl border border-slate-700 p-8">
+		<div class="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-slate-700/50 p-8">
 			<div class="text-center mb-6">
-				<div class="w-14 h-14 rounded-xl bg-primary text-on-primary mx-auto flex items-center justify-center text-2xl font-bold shadow-md mb-3">
+				<div class="w-14 h-14 rounded-xl bg-primary text-white mx-auto flex items-center justify-center text-2xl font-bold shadow-md mb-3">
 					★
 				</div>
-				<h2 class="text-xl font-bold text-on-surface">KSGPWU · CITU Admin</h2>
-				<p class="text-xs text-secondary mt-1">State Executive & District Council Secure Console</p>
+				<h2 class="text-xl font-bold text-slate-900">KSGPWU · CITU Admin</h2>
+				<p class="text-xs text-slate-500 mt-1">State Executive & District Council Secure Console</p>
 			</div>
 
 			{#if authError}
@@ -195,66 +195,66 @@
 			{#if authStep === 'cred'}
 				<div class="space-y-4">
 					<div>
-						<label for="admin-username-input" class="block text-xs font-bold uppercase tracking-wider text-secondary mb-1">Username / ഐഡി</label>
+						<label for="admin-username-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Username / ഐഡി</label>
 						<input 
 							id="admin-username-input"
 							type="text" 
 							bind:value={username} 
-							class="w-full px-3 py-2.5 rounded-lg border border-surface-variant text-sm bg-surface-container-lowest focus:ring-2 focus:ring-primary"
+							class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
 						/>
 					</div>
 
 					<div>
-						<label for="admin-password-input" class="block text-xs font-bold uppercase tracking-wider text-secondary mb-1">Password / പാസ്‌വേഡ്</label>
+						<label for="admin-password-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password / പാസ്‌വേഡ്</label>
 						<input 
 							id="admin-password-input"
 							type="password" 
 							bind:value={password} 
-							class="w-full px-3 py-2.5 rounded-lg border border-surface-variant text-sm bg-surface-container-lowest focus:ring-2 focus:ring-primary"
+							class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
 						/>
 					</div>
 
 					<button 
 						type="button" 
 						onclick={handleLogin}
-						class="w-full py-3 bg-primary hover:bg-primary-container text-on-primary font-bold rounded-lg text-sm shadow transition flex items-center justify-center gap-2"
+						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2"
 					>
 						<span>Continue to 2FA</span>
 						<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 					</button>
 
-					<div class="p-2.5 bg-slate-100 rounded text-[11px] text-slate-600">
+					<div class="p-2.5 bg-slate-100 rounded-lg text-[11px] text-slate-600 border border-slate-200">
 						Demo credentials: <strong>state_gs</strong> / <strong>CITUSolidarity@2026</strong>
 					</div>
 				</div>
 			{:else}
 				<div class="space-y-4">
-					<div class="p-3 bg-emerald-50 border border-emerald-200 rounded text-xs text-emerald-800 flex items-center gap-2">
+					<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 flex items-center gap-2">
 						<span class="material-symbols-outlined text-[16px]">lock</span>
 						<span>Step 2: Enter 2FA TOTP hardware or authenticator code</span>
 					</div>
 
 					<div>
-						<label for="admin-totp-input" class="block text-xs font-bold uppercase tracking-wider text-secondary mb-1">TOTP Code / ബാക്കപ്പ് കോഡ്</label>
+						<label for="admin-totp-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">TOTP Code / ബാക്കപ്പ് കോഡ്</label>
 						<input 
 							id="admin-totp-input"
 							type="text" 
 							bind:value={totp} 
 							placeholder="REC001AA"
-							class="w-full px-3 py-2.5 rounded-lg border border-surface-variant text-sm text-center font-mono font-bold tracking-widest bg-surface-container-lowest focus:ring-2 focus:ring-primary"
+							class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm text-center font-mono font-bold tracking-widest bg-white text-slate-900 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
 						/>
 					</div>
 
 					<button 
 						type="button" 
 						onclick={handleLogin}
-						class="w-full py-3 bg-primary hover:bg-primary-container text-on-primary font-bold rounded-lg text-sm shadow transition flex items-center justify-center gap-2"
+						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2"
 					>
 						<span class="material-symbols-outlined text-[18px]">verified_user</span>
 						<span>Verify & Authenticate</span>
 					</button>
 
-					<div class="p-2.5 bg-slate-100 rounded text-[11px] text-slate-600">
+					<div class="p-2.5 bg-slate-100 rounded-lg text-[11px] text-slate-600 border border-slate-200">
 						Demo TOTP bypass key: <strong>REC001AA</strong>
 					</div>
 				</div>
@@ -939,33 +939,39 @@
 
 <!-- Bulk Import Modal -->
 {#if showImportModal}
-	<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-		<div class="bg-surface-container-lowest max-w-lg w-full rounded-2xl shadow-2xl border border-surface-variant p-6">
-			<div class="flex items-center justify-between pb-3 border-b border-surface-variant mb-4">
-				<div class="flex items-center gap-2">
-					<span class="material-symbols-outlined text-primary text-2xl">upload_file</span>
-					<h3 class="text-base font-bold text-on-surface">പേപ്പർ ഫോമുകൾ ബൾക്ക് ഇംപോർട്ട് (CSV)</h3>
+	<div class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+		<div class="bg-white max-w-lg w-full rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-7 relative z-10">
+			<div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+				<div class="flex items-center gap-2.5">
+					<div class="w-9 h-9 rounded-xl bg-red-50 text-primary flex items-center justify-center">
+						<span class="material-symbols-outlined text-2xl">upload_file</span>
+					</div>
+					<div>
+						<h3 class="text-base font-bold text-slate-900">പേപ്പർ ഫോമുകൾ ബൾക്ക് ഇംപോർട്ട് (CSV)</h3>
+						<p class="text-[11px] text-slate-500">Offline Membership Forms Bulk Ingestion</p>
+					</div>
 				</div>
 				<button 
 					type="button" 
 					onclick={() => showImportModal = false}
-					class="p-1 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container"
+					class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors"
+					aria-label="Close modal"
 				>
-					<span class="material-symbols-outlined">close</span>
+					<span class="material-symbols-outlined text-[20px]">close</span>
 				</button>
 			</div>
 
 			<div class="space-y-4 text-xs">
-				<p class="text-secondary leading-relaxed">
-					യൂണിയൻ ക്യാമ്പുകളിൽ നിന്നും ശേഖരിച്ച പേപ്പർ രജിസ്ട്രേഷൻ അപേക്ഷകൾ CSV ഫയൽ വഴി അപ്‌ലോഡ് ചെയ്യുക. ഡ്യൂപ്ലിക്കേഷൻ സ്വയമേവ പരിശോധിക്കും.
+				<p class="text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+					യൂണിയൻ ക്യാമ്പുകളിൽ നിന്നും ശേഖരിച്ച പേപ്പർ രജിസ്ട്രേഷൻ അപേക്ഷകൾ CSV ഫയൽ വഴി അപ്‌ലോഡ് ചെയ്യുക. ഡ്യൂപ്ലിക്കേഷൻ സ്വയമേവ പരിശോധിച്ച് റിപ്പോർട്ട് ലഭ്യമാക്കും.
 				</p>
 
 				<div>
-					<label for="import-district-select" class="block font-bold uppercase text-secondary mb-1">ജില്ല / District Unit</label>
+					<label for="import-district-select" class="block font-bold uppercase text-[11px] tracking-wider text-slate-600 mb-1.5">ജില്ല / District Unit</label>
 					<select 
 						id="import-district-select"
 						bind:value={importDistrict} 
-						class="w-full h-10 px-3 rounded-lg border border-surface-variant bg-surface-container-lowest"
+						class="w-full h-10 px-3 rounded-xl border border-slate-300 bg-white text-slate-800 font-medium focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
 					>
 						<option value="KLERN">Ernakulam (എറണാകുളം) [KLERN]</option>
 						<option value="KLTVC">Thiruvananthapuram (തിരുവനന്തപുരം) [KLTVC]</option>
@@ -975,23 +981,26 @@
 				</div>
 
 				<div>
-					<label for="import-collector-input" class="block font-bold uppercase text-secondary mb-1">ശേഖരിച്ച ഭാരവാഹിയുടെ പേര്</label>
+					<label for="import-collector-input" class="block font-bold uppercase text-[11px] tracking-wider text-slate-600 mb-1.5">ശേഖരിച്ച ഭാരവാഹിയുടെ പേര് / Unit Collector</label>
 					<input 
 						id="import-collector-input"
 						type="text" 
 						bind:value={importCollector} 
-						class="w-full h-10 px-3 rounded-lg border border-surface-variant bg-surface-container-lowest"
+						placeholder="ഉദാ: Com. K. Balakrishnan"
+						class="w-full h-10 px-3 rounded-xl border border-slate-300 bg-white text-slate-800 font-medium focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
 					/>
 				</div>
 
-				<div class="p-4 border-2 border-dashed border-surface-variant rounded-xl text-center bg-surface-container-low">
-					<span class="material-symbols-outlined text-3xl text-primary mb-1">file_upload</span>
-					<div class="font-semibold text-on-surface">CSV ഫയൽ തിരഞ്ഞെടുക്കുക</div>
-					<div class="text-[11px] text-secondary mt-0.5">Columns: FullName, Phone, DOB, Gender, Platform, Last4ID</div>
+				<div class="p-6 border-2 border-dashed border-slate-300 rounded-2xl text-center bg-slate-50 hover:bg-slate-100/70 transition-colors">
+					<div class="w-12 h-12 rounded-full bg-red-50 text-primary mx-auto flex items-center justify-center mb-2 shadow-xs">
+						<span class="material-symbols-outlined text-2xl">file_upload</span>
+					</div>
+					<div class="font-bold text-slate-900 text-sm">CSV ഫയൽ തിരഞ്ഞെടുക്കുക</div>
+					<div class="text-[11px] text-slate-500 mt-1">Columns: FullName, Phone, DOB, Gender, Platform, Last4ID</div>
 					<input 
 						type="file" 
 						accept=".csv" 
-						class="mt-2 text-xs" 
+						class="mt-3 text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-white hover:file:bg-primary-container cursor-pointer" 
 						onchange={(e) => {
 							const t = e.target as HTMLInputElement;
 							if (t.files) importFile = t.files[0];
@@ -999,18 +1008,18 @@
 					/>
 				</div>
 
-				<div class="flex justify-end gap-2 pt-2 border-t border-surface-variant">
+				<div class="flex justify-end gap-2.5 pt-3 border-t border-slate-100">
 					<button 
 						type="button" 
 						onclick={() => showImportModal = false}
-						class="px-4 py-2 border border-surface-variant rounded-lg text-secondary hover:bg-surface-container font-semibold"
+						class="px-4 py-2.5 border border-slate-300 rounded-xl text-slate-600 hover:bg-slate-100 font-semibold transition"
 					>
 						റദ്ദാക്കുക
 					</button>
 					<button 
 						type="button" 
 						onclick={handleImportSubmit}
-						class="px-5 py-2 bg-primary hover:bg-primary-container text-on-primary font-bold rounded-lg shadow-sm"
+						class="px-5 py-2.5 bg-primary hover:bg-primary-container text-white font-bold rounded-xl shadow-md transition"
 					>
 						ഇംപോർട്ട് ആരംഭിക്കുക
 					</button>
@@ -1022,63 +1031,69 @@
 
 <!-- Member Detail Modal -->
 {#if selectedMemberForModal}
-	<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-		<div class="bg-surface-container-lowest max-w-md w-full rounded-2xl shadow-2xl border border-surface-variant p-6">
-			<div class="flex items-center justify-between pb-3 border-b border-surface-variant mb-4">
-				<div class="flex items-center gap-2">
-					<span class="material-symbols-outlined text-primary text-2xl">badge</span>
-					<h3 class="text-base font-bold text-on-surface">അംഗത്വ വിവരങ്ങൾ (Member Record)</h3>
+	<div class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+		<div class="bg-white max-w-md w-full rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-7 relative z-10">
+			<div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+				<div class="flex items-center gap-2.5">
+					<div class="w-9 h-9 rounded-xl bg-red-50 text-primary flex items-center justify-center">
+						<span class="material-symbols-outlined text-2xl">badge</span>
+					</div>
+					<div>
+						<h3 class="text-base font-bold text-slate-900">അംഗത്വ വിവരങ്ങൾ</h3>
+						<p class="text-[11px] text-slate-500">Official Member Record</p>
+					</div>
 				</div>
 				<button 
 					type="button" 
 					onclick={() => selectedMemberForModal = null}
-					class="p-1 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container"
+					class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors"
+					aria-label="Close modal"
 				>
-					<span class="material-symbols-outlined">close</span>
+					<span class="material-symbols-outlined text-[20px]">close</span>
 				</button>
 			</div>
 
-			<div class="space-y-3 text-xs">
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">അംഗത്വ നമ്പർ:</span>
+			<div class="space-y-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-100">
+				<div class="flex justify-between py-1.5 border-b border-slate-200/60">
+					<span class="text-slate-500 font-medium">അംഗത്വ നമ്പർ:</span>
 					<span class="font-mono font-bold text-primary">{selectedMemberForModal.id}</span>
 				</div>
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">പേര്:</span>
-					<span class="font-bold text-on-surface">{selectedMemberForModal.name}</span>
+				<div class="flex justify-between py-1.5 border-b border-slate-200/60">
+					<span class="text-slate-500 font-medium">പേര്:</span>
+					<span class="font-bold text-slate-900">{selectedMemberForModal.name}</span>
 				</div>
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">മൊബൈൽ നമ്പർ:</span>
-					<span class="font-mono text-on-surface">{selectedMemberForModal.phone}</span>
+				<div class="flex justify-between py-1.5 border-b border-slate-200/60">
+					<span class="text-slate-500 font-medium">മൊബൈൽ നമ്പർ:</span>
+					<span class="font-mono text-slate-800">{selectedMemberForModal.phone}</span>
 				</div>
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">ജില്ല:</span>
-					<span class="text-on-surface">{selectedMemberForModal.district}</span>
+				<div class="flex justify-between py-1.5 border-b border-slate-200/60">
+					<span class="text-slate-500 font-medium">ജില്ല:</span>
+					<span class="text-slate-800">{selectedMemberForModal.district}</span>
 				</div>
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">പ്ലാറ്റ്‌ഫോം:</span>
+				<div class="flex justify-between py-1.5 border-b border-slate-200/60">
+					<span class="text-slate-500 font-medium">പ്ലാറ്റ്‌ഫോം:</span>
 					<span class="font-semibold text-primary">{selectedMemberForModal.platform}</span>
 				</div>
-				<div class="flex justify-between py-1 border-b border-surface-variant">
-					<span class="text-secondary font-medium">വരിസംഖ്യ സാധുത:</span>
-					<span class="text-green-700 font-bold">{selectedMemberForModal.paidUpTo}</span>
+				<div class="flex justify-between py-1.5">
+					<span class="text-slate-500 font-medium">വരിസംഖ്യ സാധുത:</span>
+					<span class="text-emerald-700 font-bold">{selectedMemberForModal.paidUpTo}</span>
 				</div>
+			</div>
 
-				<div class="pt-3 flex gap-2">
-					<a 
-						href={`/verify/${selectedMemberForModal.id}`} 
-						class="flex-1 py-2.5 rounded-lg bg-primary text-on-primary text-center font-bold text-xs shadow-sm hover:bg-primary-container"
-					>
-						ഡിജിറ്റൽ കാർഡ് കാണുക
-					</a>
-					<button 
-						type="button" 
-						onclick={() => selectedMemberForModal = null}
-						class="px-4 py-2.5 rounded-lg border border-surface-variant text-secondary text-xs font-semibold hover:bg-surface-container"
-					>
-						അടയ്ക്കുക
-					</button>
-				</div>
+			<div class="pt-4 flex gap-2.5">
+				<a 
+					href={`/verify/${selectedMemberForModal.id}`} 
+					class="flex-1 py-2.5 rounded-xl bg-primary text-white text-center font-bold text-xs shadow-md hover:bg-primary-container transition"
+				>
+					ഡിജിറ്റൽ കാർഡ് കാണുക
+				</a>
+				<button 
+					type="button" 
+					onclick={() => selectedMemberForModal = null}
+					class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition"
+				>
+					അടയ്ക്കുക
+				</button>
 			</div>
 		</div>
 	</div>
