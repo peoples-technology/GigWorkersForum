@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let activeStep = $state(1);
@@ -139,20 +139,48 @@
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
+	$effect(() => {
+		if (cameraActive && videoElement && videoStream && videoElement.srcObject !== videoStream) {
+			videoElement.srcObject = videoStream;
+			videoElement.muted = true;
+			videoElement.play().catch((e) => console.warn('Camera autoplay prevented:', e));
+		}
+	});
+
 	async function startCamera() {
 		try {
-			videoStream = await navigator.mediaDevices.getUserMedia({
-				video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 480 } },
-				audio: false
-			});
+			stopCamera();
+			try {
+				videoStream = await navigator.mediaDevices.getUserMedia({
+					video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 640 } },
+					audio: false
+				});
+			} catch (constraintErr) {
+				console.warn('FacingMode constraint fallback:', constraintErr);
+				videoStream = await navigator.mediaDevices.getUserMedia({
+					video: true,
+					audio: false
+				});
+			}
+
 			cameraActive = true;
-			if (videoElement) {
+			await tick();
+
+			if (videoElement && videoStream) {
 				videoElement.srcObject = videoStream;
+				videoElement.muted = true;
+				try {
+					await videoElement.play();
+				} catch (playErr) {
+					console.warn('Direct play error:', playErr);
+				}
 			}
 		} catch (err) {
+			console.error('Camera access error:', err);
+			cameraActive = false;
 			alert(lang === 'ml' 
-				? 'ക്യാമറ ആക്സസ് ചെയ്യാൻ സാധിച്ചില്ല. ബ്രൗസർ അനുമതി നൽകുക അല്ലെങ്കിൽ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക.' 
-				: 'Camera access denied or unavailable. Please grant camera permission.');
+				? 'ക്യാമറ ആക്സസ് ചെയ്യാൻ സാധിച്ചില്ല. ബ്രൗസറിലെ പെർമിഷൻ അനുവദിച്ച് പേജ് റീലോഡ് ചെയ്യുക (Reload), അല്ലെങ്കിൽ താഴെയുള്ള ഫോട്ടോ അപ്‌ലോഡ് ഓപ്ഷൻ ഉപയോഗിക്കുക.' 
+				: 'Camera access denied or unavailable. Please grant camera permission and reload the page, or use the photo upload option.');
 		}
 	}
 
@@ -163,16 +191,23 @@
 		canvas.height = 400;
 		const ctx = canvas.getContext('2d');
 		if (ctx) {
+			// Mirror horizontal so selfie matches the viewfinder preview
+			ctx.translate(400, 0);
+			ctx.scale(-1, 1);
 			ctx.drawImage(videoElement, 0, 0, 400, 400);
-			capturedPhoto = canvas.toDataURL('image/jpeg', 0.85);
+			capturedPhoto = canvas.toDataURL('image/jpeg', 0.88);
+			triggerAutoSave();
 		}
 		stopCamera();
 	}
 
 	function stopCamera() {
 		if (videoStream) {
-			videoStream.getTracks().forEach(track => track.stop());
+			videoStream.getTracks().forEach((track) => track.stop());
 			videoStream = null;
+		}
+		if (videoElement) {
+			videoElement.srcObject = null;
 		}
 		cameraActive = false;
 	}
@@ -188,6 +223,7 @@
 			const reader = new FileReader();
 			reader.onload = (event) => {
 				capturedPhoto = event.target?.result as string;
+				triggerAutoSave();
 			};
 			reader.readAsDataURL(target.files[0]);
 		}
@@ -195,6 +231,7 @@
 
 	function triggerAutoSave() {
 		const draft = {
+			activeStep,
 			mobile,
 			fullName,
 			dob,
@@ -210,7 +247,8 @@
 			vehicleNumber,
 			licenceNumber,
 			idDocType,
-			idLastDigits
+			idLastDigits,
+			capturedPhoto
 		};
 		try {
 			localStorage.setItem('ksgpwu_reg_draft', JSON.stringify(draft));
@@ -271,6 +309,10 @@
 			const saved = localStorage.getItem('ksgpwu_reg_draft');
 			if (saved) {
 				const d = JSON.parse(saved);
+				if (d.activeStep && d.activeStep > 1) {
+					activeStep = d.activeStep;
+				}
+				if (d.capturedPhoto) capturedPhoto = d.capturedPhoto;
 				if (d.mobile) mobile = d.mobile;
 				if (d.fullName) fullName = d.fullName;
 				if (d.dob) {
@@ -909,17 +951,24 @@
 
 				<!-- Camera Viewfinder & Preview -->
 				<div class="flex flex-col items-center justify-center p-6 bg-surface-container-low border-2 border-dashed border-surface-variant rounded-xl space-y-4">
-					{#if cameraActive}
-						<div class="relative w-64 h-64 bg-black rounded-xl overflow-hidden shadow-inner">
-							<!-- svelte-ignore a11y_media_has_caption -->
-							<video bind:this={videoElement} autoplay playsinline class="w-full h-full object-cover"></video>
-							<div class="absolute inset-0 border-2 border-white/60 rounded-full m-6 pointer-events-none border-dashed animate-pulse"></div>
-						</div>
-					{:else if capturedPhoto}
+					<!-- Live camera feed (stays mounted in DOM when Step 4 is rendered to ensure videoElement binding) -->
+					<div class="relative w-64 h-64 bg-black rounded-xl overflow-hidden shadow-inner {cameraActive ? 'block' : 'hidden'}">
+						<!-- svelte-ignore a11y_media_has_caption -->
+						<video 
+							bind:this={videoElement} 
+							autoplay 
+							playsinline 
+							muted 
+							class="w-full h-full object-cover -scale-x-100"
+						></video>
+						<div class="absolute inset-0 border-2 border-white/60 rounded-full m-6 pointer-events-none border-dashed animate-pulse"></div>
+					</div>
+
+					{#if !cameraActive && capturedPhoto}
 						<div class="w-64 h-64 bg-surface-container rounded-xl overflow-hidden shadow-md border-2 border-primary">
 							<img src={capturedPhoto} alt="Captured selfie" class="w-full h-full object-cover" />
 						</div>
-					{:else}
+					{:else if !cameraActive && !capturedPhoto}
 						<div class="text-center py-6">
 							<div class="w-16 h-16 rounded-full bg-primary-fixed text-primary mx-auto flex items-center justify-center mb-3">
 								<span class="material-symbols-outlined text-3xl">photo_camera</span>
