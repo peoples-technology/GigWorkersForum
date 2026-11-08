@@ -36,13 +36,24 @@ def render_membership_card_image(
     # Gold Accent Stripe
     draw.rectangle([(0, header_height - 6), (width, header_height)], fill=(245, 158, 11, 255))
 
-    # Standard fonts (fallback to default if system fonts not found)
+    # Fonts (Anek Malayalam for native Malayalam + Latin support, falling back to system DejaVu)
     try:
-        font_title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
-        font_sub = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 20)
-        font_bold = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
-        font_text = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 22)
-        font_id = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 34)
+        from pathlib import Path
+        repo_root = Path(__file__).resolve().parents[3]
+        anek_bold = repo_root / "frontend" / "static" / "fonts" / "Anek_Malayalam" / "static" / "AnekMalayalam-Bold.ttf"
+        anek_regular = repo_root / "frontend" / "static" / "fonts" / "Anek_Malayalam" / "static" / "AnekMalayalam-Regular.ttf"
+        if anek_bold.is_file() and anek_regular.is_file():
+            font_title = ImageFont.truetype(str(anek_bold), 30)
+            font_sub = ImageFont.truetype(str(anek_regular), 20)
+            font_bold = ImageFont.truetype(str(anek_bold), 24)
+            font_text = ImageFont.truetype(str(anek_regular), 22)
+            font_id = ImageFont.truetype(str(anek_bold), 34)
+        else:
+            font_title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
+            font_sub = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 20)
+            font_bold = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
+            font_text = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 22)
+            font_id = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 34)
     except Exception:
         font_title = font_sub = font_bold = font_text = font_id = ImageFont.load_default()
 
@@ -55,10 +66,27 @@ def render_membership_card_image(
     )
     draw.text(
         (40, 68),
-        "CITU/KL/GIG/2026/04 • Registered Under Trade Unions Act",
+        "Reg. No: Tu19965 • Registered Under Trade Unions Act",
         fill=(254, 243, 199),
         font=font_sub,
     )
+
+    # Official Union Logo in Header Banner
+    try:
+        from pathlib import Path
+        for logo_path in [
+            Path(__file__).resolve().parent.parent / "static" / "gigLogo.png",
+            Path(__file__).resolve().parents[2] / "gigLogo.png",
+            Path("gigLogo.png"),
+        ]:
+            if logo_path.is_file():
+                union_logo = Image.open(logo_path).convert("RGBA")
+                resample = getattr(Image, "Resampling", Image).LANCZOS
+                union_logo = union_logo.resize((100, 100), resample)
+                card.paste(union_logo, (width - 125, 15), union_logo)
+                break
+    except Exception:
+        pass
 
     # 2. Member Photo
     photo_box = (40, 160, 240, 410)  # x1, y1, x2, y2
@@ -106,9 +134,9 @@ def render_membership_card_image(
     )
 
     # 5. Footer Watermark
-    footer_text = "Workers of All Lands, Unite! • CITU Kerala State Committee"
+    footer_text = "E Balananda Smaraka Office, Mele Thampanoor • Ph: 9846063666, 9447695655 • Reg. No: Tu19965"
     draw.rectangle([(0, height - 44), (width, height)], fill=(15, 23, 42))
-    draw.text((width // 4, height - 32), footer_text, fill=(203, 213, 225), font=font_sub)
+    draw.text((40, height - 32), footer_text, fill=(203, 213, 225), font=font_sub)
 
     out = io.BytesIO()
     card.save(out, format="PNG")

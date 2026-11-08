@@ -90,9 +90,14 @@
 	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
 		<!-- Union Logo & Header Title -->
 		<a href="/" class="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
-			<div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary-container rounded flex items-center justify-center text-on-primary font-bold text-base sm:text-lg shadow-sm shrink-0">
-				★
-			</div>
+			<img
+				src="/gigLogo.png"
+				alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+				class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-contain drop-shadow-sm shrink-0"
+				onerror={(e) => {
+					(e.currentTarget as HTMLImageElement).src = '/images/gigLogo.png';
+				}}
+			/>
 			<div class="flex flex-col min-w-0">
 				<div class="flex items-center gap-1.5 sm:gap-2">
 					<span class="text-sm sm:text-base tracking-tight text-on-surface uppercase font-bold truncate">GigWorkers.Online</span>
@@ -355,7 +360,7 @@
 				<div class="mt-5 px-6 py-3 bg-surface-container-high flex flex-wrap items-center justify-between text-secondary text-xs gap-y-1">
 					<div class="flex items-center gap-1">
 						<span class="material-symbols-outlined text-[15px] text-primary">policy</span>
-						<span>Reg. Trade Union No: <strong class="text-on-surface">KL-07-TU-2026</strong></span>
+						<span>Reg. Trade Union No: <strong class="text-on-surface">Tu19965</strong></span>
 					</div>
 					<div>Govt. of Kerala Labour Dept. Recognized</div>
 				</div>
@@ -384,7 +389,7 @@
 				<div class="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-secondary">
 					<span class="flex items-center gap-1">
 						<span class="material-symbols-outlined text-[15px] text-primary">call</span>
-						<span>ഹെൽപ്പ്‌ലൈൻ: <a class="text-primary font-semibold hover:underline" href="tel:04712300000">0471-2300000</a></span>
+						<span>{lang === 'ml' ? 'ഹെൽപ്പ്‌ലൈൻ' : 'Helpline'}: <a class="text-primary font-semibold hover:underline" href="tel:9846063666">9846063666</a>, <a class="text-primary font-semibold hover:underline" href="tel:9447695655">9447695655</a></span>
 					</span>
 					<span>•</span>
 					<span class="flex items-center gap-1">
@@ -393,8 +398,10 @@
 					</span>
 				</div>
 
-				<div class="text-[11px] text-secondary mt-1">
-					CITU State Centre, AKG Mandiram, Thiruvananthapuram - 695034
+				<div class="text-[11px] text-secondary mt-1 text-center">
+					{lang === 'ml'
+						? 'ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ.'
+						: 'E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.'}
 				</div>
 			</div>
 		</div>
@@ -405,13 +412,19 @@
 <footer class="w-full bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] py-6 mt-8 border-t border-surface-variant">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center gap-1 text-xs text-secondary">
 		<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-			<span class="font-semibold text-primary">Kerala Gig &amp; Platform Workers Union (CITU)</span>
+			<div class="flex items-center gap-1.5 font-semibold text-primary">
+				<img src="/gigLogo.png" alt="CITU Logo" class="w-4 h-4 object-contain" />
+				<span>Kerala Gig &amp; Platform Workers Union (CITU)</span>
+			</div>
 			<span>•</span>
-			<span>Reg. Trade Union, Kerala</span>
+			<span>Reg. No: <strong class="text-on-surface">Tu19965</strong></span>
 			<span>•</span>
-			<span>Support Helpline: 0471-2300000</span>
+			<span>Support Helpline: <a href="tel:9846063666" class="hover:underline font-semibold text-primary">9846063666</a>, <a href="tel:9447695655" class="hover:underline font-semibold text-primary">9447695655</a></span>
 		</div>
 		<div class="text-[11px] text-secondary mt-1">
+			E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.
+		</div>
+		<div class="text-[11px] text-secondary mt-0.5">
 			Statutory Labour Protection &amp; Dignity · Kerala Platform Workers Welfare Registry
 		</div>
 	</div>

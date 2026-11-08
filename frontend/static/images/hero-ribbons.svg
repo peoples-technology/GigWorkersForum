@@ -1,0 +1,54 @@
+<svg viewBox="0 0 1200 640" preserveAspectRatio="none" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Architectural grid pattern in upper right -->
+    <pattern id="trGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#cbd5e1" stroke-width="0.8" stroke-opacity="0.45" />
+    </pattern>
+
+    <!-- Gradients -->
+    <linearGradient id="cg" x1="0.9" y1="0.1" x2="0.2" y2="0.9">
+      <stop offset="0%" stop-color="#881337" />
+      <stop offset="30%" stop-color="#b91c1c" />
+      <stop offset="70%" stop-color="#c81e2b" />
+      <stop offset="100%" stop-color="#991b1b" />
+    </linearGradient>
+
+    <linearGradient id="mg" x1="0.9" y1="0.1" x2="0.3" y2="0.9">
+      <stop offset="0%" stop-color="#3b0525" />
+      <stop offset="40%" stop-color="#4e0d37" />
+      <stop offset="100%" stop-color="#5d0c41" />
+    </linearGradient>
+
+    <linearGradient id="og" x1="0.9" y1="0.2" x2="0.3" y2="0.8">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="50%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#fb923c" />
+    </linearGradient>
+
+    <linearGradient id="pg" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#3f0c75" />
+      <stop offset="100%" stop-color="#28054d" />
+    </linearGradient>
+  </defs>
+
+  <!-- Upper right architectural grid -->
+  <rect x="580" y="0" width="620" height="260" fill="url(#trGrid)" opacity="0.55" />
+
+  <!-- Diagonal translucent coral streak -->
+  <path d="M 1200 90 Q 960 180 680 290 L 620 290 Q 900 180 1140 40 Z" fill="#e11d48" opacity="0.05" />
+
+  <!-- Crimson Wave (broad background wave) -->
+  <path d="M 1200 120 C 1040 120, 800 215, 540 360 C 380 455, 240 550, 120 640 L 1200 640 Z" fill="url(#cg)" />
+
+  <!-- Maroon Ribbon -->
+  <path d="M 1200 175 C 1045 175, 820 265, 600 410 C 640 410, 850 300, 1200 230 Z" fill="url(#mg)" />
+
+  <!-- Vibrant Orange Ribbon -->
+  <path d="M 1200 230 C 1050 230, 840 315, 650 450 C 690 450, 880 365, 1200 310 Z" fill="url(#og)" />
+
+  <!-- Deep Purple Base Stage (sweeps under workers) -->
+  <path d="M 1200 430 C 1040 420, 820 460, 480 640 L 1200 640 Z" fill="url(#pg)" />
+
+  <!-- Lime accent rim along purple base -->
+  <path d="M 1200 430 C 1040 420, 820 460, 480 640" stroke="#c6e007" stroke-width="5" stroke-linecap="round" fill="none" />
+</svg>

@@ -45,9 +45,14 @@
 	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
 		<!-- Union Logo & Title -->
 		<a href="/" class="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-shrink group">
-			<div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-md shadow-red-700/20 group-hover:scale-105 transition-transform flex-shrink-0">
-				★
-			</div>
+			<img
+				src="/gigLogo.png"
+				alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+				class="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform flex-shrink-0"
+				onerror={(e) => {
+					(e.currentTarget as HTMLImageElement).src = '/images/gigLogo.png';
+				}}
+			/>
 			<div class="flex flex-col min-w-0">
 				<div class="flex items-center gap-1.5 sm:gap-2">
 					<span class="font-extrabold text-sm sm:text-lg text-slate-900 tracking-tight group-hover:text-primary transition-colors truncate">
@@ -125,7 +130,7 @@
 				onclick={() => mobileMenuOpen = false} 
 				class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
 			>
-				{lang === 'ml' ? 'അംഗത്വം · Membership' : 'Membership Track'}
+				{lang === 'ml' ? 'അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക' : 'Download Membership Card'}
 			</a>
 			<a 
 				href="/register" 
@@ -148,48 +153,78 @@
 <main class="w-full pt-16 sm:pt-20 min-h-[calc(100vh-80px)] overflow-x-hidden">
 	<div class="flex flex-col w-full">
 		<!-- Top Statutory Notification Ticker -->
-		<aside aria-label="Statutory Notice" class="w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white border-b border-red-900/40">
+		<aside aria-label="Statutory Notice" class="w-full bg-[#990000] text-white border-b border-[#7d000d]">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
 				<div class="flex items-center gap-2.5 min-w-0">
-					<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-600 text-white font-bold text-[10px] uppercase tracking-wider shadow-xs">
-						★ CITU Affiliated
+					<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold text-[10px] uppercase tracking-wider shadow-xs flex-shrink-0">
+						<span class="text-amber-300">★</span>
+						<span>CITU AFFILIATED</span>
 					</span>
-					<span class="truncate font-medium text-slate-200">
+					<span class="truncate font-medium text-white/95 text-xs">
 						{lang === 'ml' 
-							? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളി യൂണിയൻ · രജിസ്ട്രേഷൻ നമ്പർ: KL-07-TU-2026' 
-							: 'GigWorkers.Online · Kerala Gig Workers Union · Reg No: KL-07-TU-2026'}
+							? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളി യൂണിയൻ - രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
+							: 'Kerala Gig & Platform Workers Union - Reg No: Tu19965'}
 					</span>
 				</div>
-				<div class="hidden sm:flex items-center gap-4 text-slate-300 font-medium text-xs">
+				<div class="hidden sm:flex items-center gap-4 text-white/90 font-medium text-xs">
+					<a href="tel:9846063666" class="flex items-center gap-1.5 hover:text-white hover:underline transition">
+						<span class="material-symbols-outlined text-[15px] text-amber-300">call</span>
+						<span>Ph: 9846063666, 9447695655</span>
+					</a>
+					<span class="text-white/40">•</span>
 					<span class="flex items-center gap-1.5">
-						<span class="material-symbols-outlined text-[16px] text-amber-400">verified_user</span>
-						<span>Statutory Legal Cell</span>
-					</span>
-					<span class="text-slate-600">•</span>
-					<span class="flex items-center gap-1.5">
-						<span class="material-symbols-outlined text-[16px] text-blue-400">support_agent</span>
-						<span>{lang === 'ml' ? '14 ജില്ലാ സമിതികൾ' : '14 District Committees'}</span>
+						<span class="material-symbols-outlined text-[15px] text-blue-200">location_on</span>
+						<span>{lang === 'ml' ? 'മേലെ തമ്പാനൂർ, തിരുവനന്തപുരം' : 'Mele Thampanoor, TVM'}</span>
 					</span>
 				</div>
 			</div>
 		</aside>
 
 		<!-- Hero Section -->
-		<section class="w-full bg-white py-8 sm:py-12 lg:py-20 relative overflow-hidden">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+		<section class="w-full bg-[#faf8f5] relative overflow-hidden flex items-center min-h-[580px] lg:min-h-[640px] xl:min-h-[720px] 2xl:min-h-[760px]">
+			<!-- Full-Bleed Desktop Hero Background with Kerala Countryside & Gig Workers (Desktop View) -->
+			<div class="hidden lg:block absolute inset-0 w-full h-full select-none pointer-events-none overflow-hidden z-0">
+				<img
+					src="/images/HeroBgDesktop.webp"
+					alt="Kerala gig and platform workers united across Kerala"
+					class="w-full h-full object-cover object-right-bottom select-none"
+					onerror={(e) => {
+						(e.currentTarget as HTMLImageElement).src = "/HeroBgDesktop.webp";
+					}}
+				/>
+				<!-- Subtle Soft Sunset Gradient Overlay on the left (gentle fade for readability) -->
+				<div 
+					class="absolute inset-0 bg-gradient-to-r from-[#faf8f5]/45 via-[#faf8f5]/20 via-30% to-transparent pointer-events-none"
+				></div>
+				<!-- Decorative Union Architectural Grid on Left Edge (Subtle) -->
+				<div
+					class="absolute left-0 top-0 w-80 xl:w-96 h-full opacity-10 pointer-events-none"
+					style="background-image: linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px); background-size: 34px 34px;"
+				></div>
+			</div>
+
+			<!-- Decorative Architectural Grid on Left (Mobile/Tablet) -->
+			<div
+				class="lg:hidden absolute left-0 top-0 w-72 sm:w-88 h-full pointer-events-none opacity-30 select-none overflow-hidden"
+				style="background-image: linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px); background-size: 34px 34px;"
+			></div>
+			<!-- Ambient Soft Red Glow on Left Edge (Mobile/Tablet) -->
+			<div class="lg:hidden absolute -left-20 top-1/4 w-80 h-80 rounded-full bg-red-500/10 blur-3xl pointer-events-none select-none"></div>
+
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 py-10 lg:py-16 xl:py-20">
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
 					<!-- Left Column: Copy & Actions -->
-					<div class="flex flex-col items-start w-full">
+					<div class="lg:col-span-7 xl:col-span-6 flex flex-col items-start w-full max-w-xl">
 
 						<!-- Union Affiliation Badge -->
-						<div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 rounded-sm bg-primary text-white mb-6 sm:mb-7 shadow-sm max-w-full">
+						<div class="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 py-2 rounded-md bg-[#8b0000] text-white mb-6 shadow-sm max-w-full">
 							<div class="flex flex-col leading-tight min-w-0">
-								<span class="text-[10px] sm:text-[11px] font-black tracking-wider sm:tracking-widest uppercase truncate">Kerala Gig &amp; Platform Workers Union</span>
-								<span class="text-[9px] sm:text-[10px] font-medium opacity-90">(Affiliated to CITU)</span>
+								<span class="text-[10px] sm:text-[11px] font-black tracking-widest uppercase truncate">Kerala Gig &amp; Platform Workers Union</span>
+								<span class="text-[9px] sm:text-[10px] font-medium opacity-85">(Affiliated to CITU)</span>
 							</div>
 							<!-- Hammer & Sickle -->
-							<svg class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							<svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<!-- Hammer handle -->
 								<rect x="10" y="50" width="55" height="9" rx="3" transform="rotate(-45 37 54)"/>
 								<!-- Hammer head -->
@@ -201,82 +236,90 @@
 							</svg>
 						</div>
 
-						<!-- Bilingual Headline -->
-						<h1 class="font-black text-slate-900 mb-4 leading-tight tracking-tight w-full break-words">
+						<!-- Bilingual Headline Matching Reference Mockup -->
+						<h1 class="font-black text-slate-900 mb-5 tracking-tight w-full break-words">
 							{#if lang === 'ml'}
-								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem]" style="font-family: 'Noto Sans Malayalam', sans-serif; line-height: 1.25;">
-									ശക്തമായ<br/>നാളെക്കായി ഒന്നിച്ച്
+								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.3] sm:leading-[1.35] lg:leading-[1.38]" style="font-family: 'Anek Malayalam', sans-serif;">
+									<span class="block">ശക്തമായ</span>
+									<span class="block mt-1 sm:mt-2">നാളെക്കായി</span>
+									<span class="block mt-1 sm:mt-2">ഒന്നിച്ച്</span>
 								</span>
 							{:else}
-								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem] leading-tight">
-									United for a
-								</span>
-								<span class="block text-3xl sm:text-5xl lg:text-[3.5rem] text-primary font-black italic leading-tight">
-									stronger tomorrow
+								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.15]">
+									United for a<br/>
+									<span class="text-primary italic font-black">Stronger Tomorrow</span>
 								</span>
 							{/if}
 						</h1>
 
-						<!-- Subtitle -->
-						<p class="text-sm sm:text-base lg:text-lg text-slate-500 leading-relaxed mb-7 sm:mb-9 max-w-xl">
+						<!-- Subtitle Matching Reference Mockup -->
+						<p class={`text-sm sm:text-base lg:text-lg text-slate-600 mb-8 max-w-xl font-normal ${lang === 'ml' ? 'leading-[1.85] sm:leading-[1.9]' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
 							{lang === 'ml'
 								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളികളെ സംഘടിപ്പിക്കുന്നു'
-								: "Organising Kerala's Gig & Platform Workers"}
+								: 'Organizing and protecting Kerala’s delivery, transport, and digital platform workers.'}
 						</p>
 
-						<!-- CTA Buttons -->
-						<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+						<!-- CTA Buttons Matching Reference Mockup -->
+						<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-10 w-full sm:w-auto">
 							<a
 								href="/register"
-								class="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 rounded-md bg-primary hover:bg-[#80000f] text-white text-sm font-bold tracking-wide shadow-md transition-colors text-center"
+								class="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#990000] to-[#7d000d] hover:from-[#880000] hover:to-[#6d000b] text-white text-sm font-bold tracking-wide shadow-lg shadow-red-950/20 transition-all text-center group"
 							>
-								<span style="font-family: 'Noto Sans Malayalam', sans-serif;">അംഗമാകുക</span>
-								<span class="opacity-50">|</span>
-								<span class="uppercase tracking-wider text-xs font-black">Join the Union</span>
-								<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+								<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗമാകുക</span>
+								<span class="opacity-40">|</span>
+								<span class="uppercase tracking-wider text-xs font-black">JOIN THE UNION</span>
+								<span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
 							</a>
 
 							<a
 								href="#quick-access-banner"
-								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-md bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-sm text-center"
+								class="inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-xs text-center"
 							>
-								<span style="font-family: 'Noto Sans Malayalam', sans-serif;">{lang === 'ml' ? 'തിരച്ചിൽ' : 'തിരച്ചിൽ'}</span>
-								<span class="opacity-40">|</span>
-								<span>Track Membership</span>
+								{#if lang === 'ml'}
+									<span style="font-family: 'Anek Malayalam', sans-serif;">തിരച്ചിൽ</span>
+									<span class="text-slate-300">|</span>
+									<span class="text-slate-600 text-xs font-bold">Track Membership</span>
+								{:else}
+									<span class="material-symbols-outlined text-[18px] text-slate-500">search</span>
+									<span>Track Membership Status</span>
+								{/if}
 							</a>
 						</div>
 
-						<!-- Stats strip -->
-						<div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-100 w-full grid grid-cols-3 gap-2 sm:gap-6 text-center sm:text-left">
+						<!-- Floating Stats Strip Matching Reference Mockup -->
+						<div class="grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-md pt-2">
 							<div>
-								<p class="text-xl sm:text-3xl font-black text-slate-900">14</p>
-								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-none">14</p>
+								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'ജില്ലകൾ' : 'Districts'}
 								</p>
 							</div>
 							<div>
-								<p class="text-xl sm:text-3xl font-black text-primary">₹100</p>
-								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-primary leading-none">₹100</p>
+								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'രജിസ്ട്രേഷൻ ഫീസ്' : 'Registration Fee'}
 								</p>
 							</div>
 							<div>
-								<p class="text-xl sm:text-3xl font-black text-emerald-600">100%</p>
-								<p class="text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5 sm:mt-1 uppercase tracking-wider sm:tracking-widest">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-600 leading-none">100%</p>
+								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'നിയമ സുരക്ഷ' : 'Legal Cover'}
 								</p>
 							</div>
 						</div>
 					</div>
 
-					<!-- Right Column: Hero Illustration -->
-					<div class="relative flex items-center justify-center w-full lg:justify-end overflow-hidden">
+					<!-- Desktop Spacer Column (Allows HeroBgDesktop.webp workers to shine through cleanly) -->
+					<div class="hidden lg:block lg:col-span-5 xl:col-span-6 pointer-events-none"></div>
+
+					<!-- Mobile Stage Graphic -->
+					<div class="lg:hidden flex items-end justify-center w-full mt-6">
 						<img
-							src="/images/HomePage-HeroAsset.png"
-							alt="Kerala gig workers — delivery partners, cab drivers, and platform workers standing united with a CITU flag"
-							class="w-full max-w-md sm:max-w-lg lg:max-w-none h-auto object-contain select-none"
+							src="/images/HeroBg.png"
+							alt="Kerala gig and platform workers from Zomato, Swiggy, Instamart, Blinkit, and Zepto standing united in solidarity"
+							class="w-full max-w-md sm:max-w-lg h-auto object-contain select-none"
 							onerror={(e) => {
-								(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuAWe4zboGWqHL3jwywJUeVISdlnK_rC41LVB4QtSYp9gdGbXwg3nD6fRYs5iOt8M-yBKUJvXlMGr2iil4ngfjS-RjAvAcZ2dfz1HkXoPrzPkgJvZpJvo1ALHS7H5co15GqKBUWOPR3EYM9MlvLYJy5bPjXcHY3Ju2yNNHqhtJpDN0ai7h5rEgRGssd7vmm5HU_EbhSFCHVgEGVItQFkp_krs51AhFOzKbDwiYmeFYXV1bUaKEZzDSVfVA";
+								(e.currentTarget as HTMLImageElement).src = "/HeroBg.png";
 							}}
 						/>
 					</div>
@@ -316,7 +359,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സ്വയം രജിസ്ട്രേഷൻ' : 'Instant Registration'}
 							</h3>
-							<p class="text-sm text-slate-600 leading-relaxed">
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'മൊബൈൽ ഒടിപി വഴി മിനിറ്റുകൾക്കുള്ളിൽ വേരിഫിക്കേഷൻ. സ്വിഗ്ഗി, സൊമാറ്റോ, ഊബർ, ഒല, ആമസോൺ തൊഴിലാളികൾക്ക് ലളിതമായ രജിസ്ട്രേഷൻ.'
 									: 'Verified instantly via secure mobile SMS OTP. Enter your vehicle or delivery partner ID for automated activation across Zomato, Swiggy, Uber, Ola, and courier platforms.'}
@@ -338,7 +381,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'ഡിജിറ്റൽ അംഗത്വ കാർഡ്' : 'Digital Membership ID Card'}
 							</h3>
-							<p class="text-sm text-slate-600 leading-relaxed">
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'തത്സമയം ഡൗൺലോഡ് ചെയ്യാവുന്ന ക്രിപ്റ്റോഗ്രാഫിക് ക്യുആർ കോഡ് അടങ്ങിയ യൂണിയൻ ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ്.'
 									: 'Instantly generate an authenticated digital union membership ID card carrying a dynamic cryptographically verified QR seal for roadside verification and labour claims.'}
@@ -360,7 +403,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സഹായം & പരാതി പരിഹാരം' : 'Helpline & Grievance'}
 							</h3>
-							<p class="text-sm text-slate-600 leading-relaxed">
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? '14 ജില്ലകളിലും അന്യായമായ ഐഡി ബ്ലോക്കിംഗിനെതിരെ നിയമസഹായം, അപകട ഇൻഷുറൻസ് ക്ലെയിം സഹായം, ഒത്തുതീർപ്പ് സമിതികൾ.'
 									: 'Direct access to all 14-district worker conciliation committees, legal aid desks for wrongful platform deactivation, and immediate accident assistance squads.'}
@@ -392,7 +435,7 @@
 							<h3 class="text-xl sm:text-3xl font-black text-white">
 								{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം പരിശോധിക്കുക' : 'Access Your Membership'}
 							</h3>
-							<p class="text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg leading-relaxed">
+							<p class={`text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
 									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or renew your membership.'}
@@ -453,14 +496,24 @@
 <!-- Modern Clean Footer -->
 <footer class="w-full bg-slate-900 text-slate-400 border-t border-slate-800 py-10">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-3">
-		<div class="flex items-center gap-2 text-white font-bold text-sm">
-			<span class="text-primary text-xl">★</span>
+		<div class="flex items-center gap-2.5 text-white font-bold text-sm">
+			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-6 h-6 object-contain" />
 			<span>GigWorkers<span class="text-primary">.Online</span> · Kerala Gig &amp; Platform Workers Union (affil. CITU)</span>
 		</div>
-		<p class="text-xs text-slate-400">
-			Registration: KL-07-TU-2026 · Statutory Labour Protection &amp; Civic Dignity · Copyright © 2026
+		<p class="text-xs text-slate-300 font-medium max-w-2xl">
+			{lang === 'ml' 
+				? 'രജിസ്ട്രേഷൻ നമ്പർ: Tu19965 · ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ.' 
+				: 'Reg. No: Tu19965 · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.'}
 		</p>
-		<div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 mt-2">
+		<div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-400">
+			<span class="flex items-center gap-1.5">
+				<span class="material-symbols-outlined text-[15px] text-amber-400">call</span>
+				<span>{lang === 'ml' ? 'ഫോൺ' : 'Ph'}: <a href="tel:9846063666" class="text-slate-200 hover:text-white hover:underline font-semibold">9846063666</a>, <a href="tel:9447695655" class="text-slate-200 hover:text-white hover:underline font-semibold">9447695655</a></span>
+			</span>
+			<span class="text-slate-600 hidden sm:inline">•</span>
+			<span>Statutory Labour Protection &amp; Civic Dignity · Copyright © 2026</span>
+		</div>
+		<div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-2">
 			<span>തിരുവനന്തപുരം (TVM)</span>
 			<span>•</span>
 			<span>കൊച്ചി (EKM)</span>

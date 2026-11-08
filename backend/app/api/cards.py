@@ -241,6 +241,9 @@ class VerifyController(Controller):
                     "district": district_name,
                     "status": status,
                     "union": "Kerala State Gig & Platform Workers Union (CITU)",
+                    "registration_number": "Tu19965",
+                    "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+                    "union_helpline": "9846063666, 9447695655",
                 }
         except NotFoundException:
             raise
@@ -257,6 +260,9 @@ class VerifyController(Controller):
                         "district": val["district"],
                         "status": val["status"],
                         "union": "Kerala State Gig & Platform Workers Union (CITU)",
+                        "registration_number": "Tu19965",
+                        "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+                        "union_helpline": "9846063666, 9447695655",
                     }
 
             # Return valid deterministic response if token is formatted
@@ -268,6 +274,9 @@ class VerifyController(Controller):
                     "district": "Thiruvananthapuram",
                     "status": "active",
                     "union": "Kerala State Gig & Platform Workers Union (CITU)",
+                    "registration_number": "Tu19965",
+                    "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+                    "union_helpline": "9846063666, 9447695655",
                 }
             elif token.startswith("test_revoked_"):
                 return {

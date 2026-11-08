@@ -74,8 +74,8 @@ export default {
 				'margin-mobile': '1rem'
 			},
 			fontFamily: {
-				sans: ['Inter', '"Noto Sans Malayalam"', 'sans-serif'],
-				malayalam: ['"Noto Sans Malayalam"', 'sans-serif']
+				sans: ['Inter', '"Anek Malayalam"', 'sans-serif'],
+				malayalam: ['"Anek Malayalam"', 'sans-serif']
 			}
 		}
 	},

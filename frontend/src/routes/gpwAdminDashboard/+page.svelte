@@ -252,7 +252,7 @@
 	<!-- Session check in progress — show minimal splash to avoid flash -->
 	<div class="min-h-screen bg-[#0F172A] flex items-center justify-center">
 		<div class="flex flex-col items-center gap-4 text-white">
-			<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-2xl font-bold shadow-md animate-pulse">★</div>
+			<img src="/gigLogo.png" alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo" class="w-14 h-14 object-contain animate-pulse" />
 			<span class="text-sm text-slate-400 font-medium">Verifying session…</span>
 		</div>
 	</div>
@@ -261,9 +261,11 @@
 	<div class="min-h-screen bg-[#0F172A] flex items-center justify-center p-4">
 		<div class="max-w-md w-full bg-white rounded-2xl shadow-2xl border border-slate-700/50 p-8">
 			<div class="text-center mb-6">
-				<div class="w-14 h-14 rounded-xl bg-primary text-white mx-auto flex items-center justify-center text-2xl font-bold shadow-md mb-3">
-					★
-				</div>
+				<img
+					src="/gigLogo.png"
+					alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+					class="w-16 h-16 object-contain mx-auto mb-3 drop-shadow-md"
+				/>
 				<h2 class="text-xl font-bold text-slate-900">GigWorkers.Online Admin</h2>
 				<p class="text-xs text-slate-500 mt-1">State Executive & District Council Secure Console</p>
 			</div>
@@ -359,12 +361,15 @@
 				<!-- Union Title & Officer Pill -->
 				<div class="p-4 border-b border-slate-800">
 					<a href="/" class="flex items-center gap-2.5 group">
-						<div class="w-9 h-9 rounded bg-primary-container flex items-center justify-center text-on-primary font-bold text-lg shadow-sm">
-							★
-						</div>
+						<img
+							src="/gigLogo.png"
+							alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+							class="w-9 h-9 rounded-full object-contain drop-shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform"
+						/>
 						<div>
 							<div class="text-sm font-bold tracking-tight text-white leading-tight">GigWorkers.Online</div>
 							<div class="text-[11px] text-slate-400 leading-tight mt-0.5">സംസ്ഥാന കമ്മിറ്റി / State HQ</div>
+							<div class="text-[10px] text-slate-500 leading-tight">Reg: Tu19965 · തമ്പാനൂർ, തിരുവനന്തപുരം</div>
 						</div>
 					</a>
 

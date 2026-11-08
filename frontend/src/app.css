@@ -2,6 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Anek Malayalam Font Declarations (Ek Type)
+   ========================================================================== */
+
+/* Static Font Weights */
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-Thin.ttf') format('truetype');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-ExtraLight.ttf') format('truetype');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-ExtraBold.ttf') format('truetype');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/static/AnekMalayalam-ExtraBold.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Variable Font (Weights 100-800, Widths 75%-125%) */
+@font-face {
+	font-family: 'Anek Malayalam';
+	src: url('/fonts/Anek_Malayalam/AnekMalayalam-VariableFont_wdth,wght.ttf') format('truetype-variations'),
+	     url('/fonts/Anek_Malayalam/AnekMalayalam-VariableFont_wdth,wght.ttf') format('truetype');
+	font-weight: 100 900;
+	font-stretch: 75% 125%;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Backward compatibility alias: route any Noto Sans Malayalam requests to Anek Malayalam */
+@font-face {
+	font-family: 'Noto Sans Malayalam';
+	src: url('/fonts/Anek_Malayalam/AnekMalayalam-VariableFont_wdth,wght.ttf') format('truetype-variations'),
+	     url('/fonts/Anek_Malayalam/static/AnekMalayalam-Regular.ttf') format('truetype');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
 @layer base {
 	:root {
 		--primary-red: #a10014;
@@ -15,7 +113,7 @@
 	}
 
 	body {
-		font-family: 'Inter', 'Noto Sans Malayalam', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-family: 'Inter', 'Anek Malayalam', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		-webkit-tap-highlight-color: transparent;
 		color: #0f172a;
 		background-color: #f8fafc;
@@ -29,6 +127,10 @@
 	}
 }
 
+.font-malayalam {
+	font-family: 'Anek Malayalam', sans-serif;
+}
+
 /* Touch targets for mobile gig workers */
 .touch-target {
 	min-height: 48px;
@@ -36,6 +138,15 @@
 }
 
 /* Custom luxury gradients and mesh styles */
+/* Enhanced line height for Malayalam script ascenders and descenders */
+.leading-malayalam-heading {
+	line-height: 1.45 !important;
+}
+
+.leading-malayalam-body {
+	line-height: 1.85 !important;
+}
+
 .hero-gradient-mesh {
 	background: 
 		radial-gradient(at 0% 0%, rgba(161, 0, 20, 0.08) 0px, transparent 50%),

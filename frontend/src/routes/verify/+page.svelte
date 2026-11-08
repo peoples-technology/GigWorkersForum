@@ -19,9 +19,14 @@
 <header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80">
 	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
 		<a href="/" class="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
-			<div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-sm shrink-0">
-				★
-			</div>
+			<img
+				src="/gigLogo.png"
+				alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+				class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-contain drop-shadow-sm shrink-0"
+				onerror={(e) => {
+					(e.currentTarget as HTMLImageElement).src = '/images/gigLogo.png';
+				}}
+			/>
 			<div class="flex flex-col min-w-0">
 				<div class="flex items-center gap-1.5 sm:gap-2">
 					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black truncate">GigWorkers.Online</span>
@@ -122,6 +127,12 @@
 	</div>
 </main>
 
-<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary">
-	GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)
+<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary flex flex-col items-center justify-center gap-2">
+	<div class="flex items-center gap-2">
+		<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-4 h-4 object-contain" />
+		<span>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</span>
+	</div>
+	<div class="text-[11px] text-secondary">
+		Reg. No: <strong>Tu19965</strong> · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: <a href="tel:9846063666" class="hover:underline text-primary font-semibold">9846063666</a>, <a href="tel:9447695655" class="hover:underline text-primary font-semibold">9447695655</a>
+	</div>
 </footer>

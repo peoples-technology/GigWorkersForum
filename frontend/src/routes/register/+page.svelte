@@ -308,9 +308,14 @@
 	<div class="max-w-5xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
 		<!-- Union Logo & Identity -->
 		<a href="/" class="flex items-center space-x-2 sm:space-x-3 group min-w-0 flex-shrink">
-			<div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 text-white flex items-center justify-center font-bold text-base sm:text-lg shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
-				★
-			</div>
+			<img
+				src="/gigLogo.png"
+				alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+				class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform flex-shrink-0"
+				onerror={(e) => {
+					(e.currentTarget as HTMLImageElement).src = '/images/gigLogo.png';
+				}}
+			/>
 			<div class="min-w-0">
 				<span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 block group-hover:text-primary transition truncate">GigWorkers.Online</span>
 				<span class="text-[10px] sm:text-xs text-slate-500 font-medium block truncate">
@@ -1030,7 +1035,9 @@
 	<div class="mt-8 card-gloss rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-3 shadow-sm">
 		<div class="flex items-center gap-2">
 			<span class="material-symbols-outlined text-[20px] text-primary shrink-0">help</span>
-			<span>{lang === 'ml' ? 'രജിസ്ട്രേഷനിൽ സഹായം വേണമോ? ജില്ലാ യൂണിയൻ പ്രതിനിധിയുമായി ബന്ധപ്പെടുക.' : 'Need assistance with registration? Contact your district union representative.'}</span>
+			<span>{lang === 'ml' ? 'രജിസ്ട്രേഷനിൽ സഹായം വേണമോ? യൂണിയൻ ഹെൽപ്പ്‌ലൈനുമായി ബന്ധപ്പെടുക:' : 'Need assistance with registration? Contact union helpline:'}</span>
+			<a href="tel:9846063666" class="text-primary font-bold hover:underline">9846063666</a> / 
+			<a href="tel:9447695655" class="text-primary font-bold hover:underline">9447695655</a>
 		</div>
 		<a href="/#quick-access-banner" class="text-primary font-bold hover:underline flex items-center gap-1 shrink-0">
 			<span>{lang === 'ml' ? '14 ജില്ലാ ഹെൽപ്പ്‌ലൈനുകൾ' : 'View 14 District Helplines'}</span>
@@ -1042,8 +1049,16 @@
 
 <!-- Footer -->
 <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-8">
-	<div class="max-w-5xl mx-auto px-4 text-center text-xs">
-		<p class="font-bold text-white">Kerala Gig & Platform Workers Union (affiliated to CITU)</p>
-		<p class="mt-1 text-slate-400">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
+	<div class="max-w-5xl mx-auto px-4 text-center text-xs flex flex-col items-center gap-2">
+		<div class="flex items-center gap-2 font-bold text-white">
+			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-5 h-5 object-contain" />
+			<span>Kerala Gig &amp; Platform Workers Union (affiliated to CITU)</span>
+		</div>
+		<p class="text-slate-300 font-medium">
+			{lang === 'ml' 
+				? 'രജിസ്ട്രേഷൻ നമ്പർ: Tu19965 · ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ. · ഫോൺ: 9846063666, 9447695655' 
+				: 'Reg. No: Tu19965 · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: 9846063666, 9447695655'}
+		</p>
+		<p class="text-slate-500 text-[11px]">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
 	</div>
 </footer>

@@ -177,7 +177,10 @@ async def seed_database(session: AsyncSession) -> None:
         org = Organisation(
             name="Kerala State Gig & Platform Workers Union (CITU)",
             name_ml="കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ (സി.ഐ.ടി.യു)",
-            registration_number="CITU/KL/GIG/2026/04",
+            registration_number="Tu19965",
+            address="E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O., Thiruvananthapuram, Kerala",
+            phone="9846063666, 9447695655",
+            logo_url="/gigLogo.png",
             default_language="ml",
         )
         session.add(org)

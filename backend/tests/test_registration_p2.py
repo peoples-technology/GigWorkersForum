@@ -145,7 +145,7 @@ async def test_full_registration_submission():
     phone = "+919847033333"
     valid_answers = {
         "full_name": "Com. Rahul Krishnan",
-        "current_address": "CITU Bhavan, High Court Road, Ernakulam",
+        "current_address": "E Balananda Smaraka Office, Mele Thampanoor, Thampanoor P.O.",
         "permanent_address": "",
         "working_district": "KLEKM",
         "mobile_number": phone,

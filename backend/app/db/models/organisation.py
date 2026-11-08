@@ -14,6 +14,8 @@ class Organisation(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     name_ml: Mapped[str] = mapped_column(String(255), nullable=False)
     registration_number: Mapped[str] = mapped_column(String(100), nullable=False)
+    address: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    phone: Mapped[str | None] = mapped_column(String(100), nullable=True)
     logo_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
     default_language: Mapped[str] = mapped_column(String(10), default="ml")
     created_at: Mapped[datetime] = mapped_column(

@@ -68,9 +68,14 @@
 	<div class="h-16 sm:h-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
 		<!-- Union Logo -->
 		<a href="/" class="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-shrink hover:opacity-95 transition-opacity">
-			<div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-red-600 via-primary to-red-900 flex items-center justify-center text-white shadow-md flex-shrink-0 font-bold text-lg sm:text-xl">
-				★
-			</div>
+			<img
+				src="/gigLogo.png"
+				alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
+				class="w-9 h-9 sm:w-11 sm:h-11 rounded-full object-contain drop-shadow-sm flex-shrink-0"
+				onerror={(e) => {
+					(e.currentTarget as HTMLImageElement).src = '/images/gigLogo.png';
+				}}
+			/>
 			<div class="flex flex-col min-w-0">
 				<span class="text-sm sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight truncate">GigWorkers<span class="text-primary">.Online</span></span>
 				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium truncate">Kerala Gig &amp; Platform Workers Union</span>
@@ -517,7 +522,7 @@
 								<span class="px-2 py-0.5 rounded bg-surface-container font-mono font-bold">Mastercard</span>
 							</div>
 							<p class="text-[11px] text-secondary max-w-lg">
-								Kerala Gig and Platform Workers Union — GigWorkers.Online (Registration: KL-07-TU-2026). All registration fees are deposited directly to the Union Welfare Reserve Account.
+								Kerala Gig and Platform Workers Union — GigWorkers.Online (Registration: Tu19965). All registration fees are deposited directly to the Union Welfare Reserve Account.
 							</p>
 						</div>
 					</div>
@@ -533,10 +538,10 @@
 							<span class="font-bold text-on-surface">
 								{lang === 'ml' ? 'പേയ്മെന്റ് സഹായം ആവശ്യമുണ്ടോ?' : 'Need Payment Assistance?'}
 							</span>
-							<span class="text-secondary">Union Helpline (8 AM - 8 PM): 0471-2334567 / 9447012345</span>
+							<span class="text-secondary">Union Helpline (8 AM - 8 PM): <a href="tel:9846063666" class="hover:underline font-semibold text-primary">9846063666</a> / <a href="tel:9447695655" class="hover:underline font-semibold text-primary">9447695655</a></span>
 						</div>
 					</div>
-					<a href="tel:04712334567" class="px-3.5 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1">
+					<a href="tel:9846063666" class="px-3.5 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1">
 						<span>Call Helpline</span>
 						<span class="material-symbols-outlined text-[15px]">call</span>
 					</a>
@@ -611,11 +616,19 @@
 
 <!-- Footer -->
 <footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-secondary">
-		<p>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</p>
-		<div class="flex items-center gap-2">
-			<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
-			<span class="font-semibold">Secure Payment Gateway</span>
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-2 text-xs text-secondary">
+		<div class="flex flex-col sm:flex-row items-center justify-between w-full gap-3">
+			<div class="flex items-center gap-2">
+				<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-4 h-4 object-contain" />
+				<p>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</p>
+			</div>
+			<div class="flex items-center gap-2">
+				<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+				<span class="font-semibold">Secure Payment Gateway</span>
+			</div>
+		</div>
+		<div class="text-[11px] text-secondary mt-1">
+			Reg. No: <strong>Tu19965</strong> · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: <a href="tel:9846063666" class="hover:underline text-primary font-semibold">9846063666</a>, <a href="tel:9447695655" class="hover:underline text-primary font-semibold">9447695655</a>
 		</div>
 	</div>
 </footer>

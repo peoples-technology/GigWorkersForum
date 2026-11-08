@@ -53,7 +53,10 @@ export const translations = {
 		downloadCardPdf: 'കാർഡ് ഡൗൺലോഡ് (PDF)',
 		joinWhatsApp: 'ജില്ലാ വാട്സ്ആപ്പ് ഗ്രൂപ്പിൽ ചേരുക',
 		grievanceHelp: 'തൊഴിലാളി സഹായ കേന്ദ്രം & നിയമ സഹായം',
-		viewReceipt: 'രസീത് ഡൗൺലോഡ്'
+		viewReceipt: 'രസീത് ഡൗൺലോഡ്',
+		regNo: 'രജിസ്ട്രേഷൻ നമ്പർ: Tu19965',
+		unionAddress: 'ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ.',
+		helplineNumbers: '9846063666, 9447695655'
 	},
 	en: {
 		unionTitle: 'Kerala Gig & Platform Workers Union (CITU)',
@@ -93,6 +96,9 @@ export const translations = {
 		downloadCardPdf: 'Download Card (PDF)',
 		joinWhatsApp: 'Join District WhatsApp Group',
 		grievanceHelp: 'Worker Helpdesk & Legal Cell',
-		viewReceipt: 'Download Receipt'
+		viewReceipt: 'Download Receipt',
+		regNo: 'Reg. No: Tu19965',
+		unionAddress: 'E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.',
+		helplineNumbers: '9846063666, 9447695655'
 	}
 };

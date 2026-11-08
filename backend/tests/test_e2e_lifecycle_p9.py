@@ -50,7 +50,7 @@ async def test_full_worker_onboarding_to_card_verification_lifecycle():
         # Step 4: Submit registration answers
         valid_answers = {
             "full_name": "Com. Vineeth Vijayan",
-            "current_address": "CITU Bhavan, High Court Road, Ernakulam",
+            "current_address": "E Balananda Smaraka Office, Mele Thampanoor, Thampanoor P.O.",
             "permanent_address": "",
             "working_district": "KLKKD",
             "mobile_number": worker_phone,
