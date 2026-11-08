@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	let lang = $state<'ml' | 'en'>('ml');
 	let mobileMenuOpen = $state(false);
 
@@ -11,6 +13,38 @@
 	let statusMessage = $state('');
 	let statusType = $state<'info' | 'error' | 'success'>('info');
 	let matchedMemberId = $state('');
+
+	onMount(() => {
+		// Background sync of locally registered members with photo to backend API
+		try {
+			const regStr = localStorage.getItem('ksgpwu_members_registry');
+			if (regStr) {
+				const reg = JSON.parse(regStr);
+				for (const key of Object.keys(reg)) {
+					const item = reg[key];
+					if (item && item.photo && typeof item.photo === 'string' && item.photo.startsWith('data:image')) {
+						fetch('/api/cards/sync-member', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({
+								id: item.id || key,
+								name: item.name || 'CITU MEMBER',
+								name_ml: item.nameMl || item.name || '',
+								district_code: item.districtCode || 'KLTVC',
+								district_name: item.districtNameEn || 'Thiruvananthapuram',
+								primary_sector: item.primarySector || 'Food Delivery & Hyperlocal Logistics',
+								primary_platform: item.primaryPlatform || 'Swiggy',
+								vehicle_number: item.vehicleNumber || '',
+								status: item.status || 'Active & Paid-Up',
+								valid_until: item.validUntil || '31 October 2027',
+								photo: item.photo
+							})
+						}).catch(() => {});
+					}
+				}
+			}
+		} catch (e) {}
+	});
 
 	function toggleLang(newLang: 'ml' | 'en') {
 		lang = newLang;

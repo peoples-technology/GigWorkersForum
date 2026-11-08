@@ -145,6 +145,27 @@
 				console.error(e);
 			}
 
+			// Sync card and photo to backend API so cross-device verification works instantly
+			try {
+				fetch('/api/cards/sync-member', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						id: generatedMemberId,
+						name: registeredMember.name,
+						name_ml: registeredMember.nameMl,
+						district_code: distObj.code,
+						district_name: distObj.en,
+						primary_sector: registeredMember.primarySector,
+						primary_platform: registeredMember.primaryPlatform,
+						vehicle_number: registeredMember.vehicleNumber,
+						status: registeredMember.status,
+						valid_until: registeredMember.validUntil,
+						photo: registeredMember.photo
+					})
+				}).catch((err) => console.warn('Background sync failed:', err));
+			} catch (e) {}
+
 			paymentSuccess = true;
 		}, 1300);
 	}

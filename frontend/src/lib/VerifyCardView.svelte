@@ -90,8 +90,8 @@
 
 	function getPublicVerifyUrl(m: any): string {
 		const memberId = m?.id || memberToken;
-		let baseUrl = 'https://gigworkerscitu.online';
-		if (typeof window !== 'undefined') {
+		let baseUrl = 'https://citu-gigworkers-web.onrender.com';
+		if (typeof window !== 'undefined' && window.location.origin) {
 			if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
 				baseUrl = window.location.origin;
 			}
@@ -108,11 +108,81 @@
 		return `${baseUrl}/verify?${qs}`;
 	}
 
+	function getDefaultPhoto(name: string, memberId: string): string {
+		const initial = (name || 'C').trim().charAt(0).toUpperCase();
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 245" width="200" height="245">
+			<rect width="200" height="245" fill="#0F172A"/>
+			<circle cx="100" cy="85" r="45" fill="#334155"/>
+			<path d="M30 220 C30 155 60 145 100 145 C140 145 170 155 170 220 Z" fill="#334155"/>
+			<circle cx="100" cy="85" r="32" fill="#E11D48"/>
+			<text x="100" y="96" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle">${initial}</text>
+			<rect x="25" y="195" width="150" height="30" rx="6" fill="#E11D48"/>
+			<text x="100" y="215" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">CITU UNION ID</text>
+		</svg>`;
+		return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+	}
+
 	function findMemberData(tok: string) {
 		if (typeof window === 'undefined') return null;
 		let cleanToken = (tok || '').trim().toUpperCase();
 
-		// 0. Check URL search parameters (handles cross-device QR code scanning seamlessly!)
+		// Helper to look up any locally stored photo for this member or name
+		function lookupStoredPhoto(searchId: string, searchName?: string): string {
+			try {
+				const curStr = sessionStorage.getItem('currentMember');
+				if (curStr) {
+					const cur = JSON.parse(curStr);
+					if (cur?.photo) {
+						if (cur.id?.toUpperCase() === searchId || searchId.includes(cur.id?.toUpperCase()) || cur.id?.toUpperCase().includes(searchId)) {
+							return cur.photo;
+						}
+						if (searchName && cur.name?.toUpperCase() === searchName.toUpperCase()) {
+							return cur.photo;
+						}
+					}
+				}
+			} catch (e) {}
+
+			try {
+				const mStr = localStorage.getItem(`member_${searchId}`);
+				if (mStr) {
+					const m = JSON.parse(mStr);
+					if (m?.photo) return m.photo;
+				}
+			} catch (e) {}
+
+			try {
+				const regStr = localStorage.getItem('ksgpwu_members_registry');
+				if (regStr) {
+					const reg = JSON.parse(regStr);
+					if (reg[searchId]?.photo) return reg[searchId].photo;
+					for (const k in reg) {
+						const it = reg[k];
+						if (it?.photo) {
+							if (it.id?.toUpperCase() === searchId || (searchName && it.name?.toUpperCase() === searchName.toUpperCase())) {
+								return it.photo;
+							}
+						}
+					}
+				}
+			} catch (e) {}
+
+			try {
+				const lastStr = localStorage.getItem('lastRegisteredMember');
+				if (lastStr) {
+					const last = JSON.parse(lastStr);
+					if (last?.photo) {
+						if (last.id?.toUpperCase() === searchId || (searchName && last.name?.toUpperCase() === searchName.toUpperCase())) {
+							return last.photo;
+						}
+					}
+				}
+			} catch (e) {}
+
+			return '';
+		}
+
+		// 0. Check URL search parameters (handles cross-device QR code scanning)
 		try {
 			if (window.location.search) {
 				const params = new URLSearchParams(window.location.search);
@@ -122,6 +192,7 @@
 				const paramDist = params.get('dist');
 				if (paramName || paramDist || paramToken) {
 					const distObj = getDistrictInfo(paramDist || '');
+					const existingPhoto = lookupStoredPhoto(cleanToken, paramName || undefined);
 					const record = {
 						id: cleanToken || 'KL-TVC-2026-0001',
 						name: (paramName || 'CITU MEMBER').toUpperCase(),
@@ -130,15 +201,23 @@
 						districtName: `${distObj.ml} / ${distObj.en}`,
 						districtNameEn: distObj.en,
 						districtNameMl: distObj.ml,
-						primarySector: params.get('sec') || 'Delivery',
+						primarySector: params.get('sec') || 'Food Delivery & Hyperlocal Logistics',
 						primaryPlatform: params.get('plat') || 'Swiggy',
 						vehicleNumber: params.get('veh') || '',
 						status: 'Active & Paid-Up',
 						validUntil: '31 October 2027',
-						tokenHash: `SHA256-${distObj.code.toLowerCase()}_verified`
+						tokenHash: `SHA256-${distObj.code.toLowerCase()}_verified`,
+						photo: existingPhoto || ''
 					};
 					try {
-						localStorage.setItem(`member_${cleanToken}`, JSON.stringify(record));
+						const oldStored = localStorage.getItem(`member_${cleanToken}`);
+						let hasOldPhoto = false;
+						if (oldStored) {
+							try { hasOldPhoto = !!JSON.parse(oldStored)?.photo; } catch (e) {}
+						}
+						if (existingPhoto || !hasOldPhoto) {
+							localStorage.setItem(`member_${cleanToken}`, JSON.stringify(record));
+						}
 					} catch (e) {}
 					return record;
 				}
@@ -223,19 +302,47 @@
 			fetch(`/api/verify/${encodeURIComponent(memberToken)}`)
 				.then(r => r.ok ? r.json() : null)
 				.then(data => {
-					if (data && data.valid && data.name) {
-						if (!dynamicRecord || dynamicRecord.name === 'CITU MEMBER' || dynamicRecord.name === 'CITU REGISTERED MEMBER') {
-							dynamicRecord = {
-								id: data.membership_number || memberToken,
-								name: data.name,
-								nameMl: data.name,
-								districtName: data.district,
-								status: data.status,
-								validUntil: '31 October 2027'
-							};
-						}
+					if (data && data.valid) {
+						dynamicRecord = {
+							...(dynamicRecord || {}),
+							id: data.membership_number || dynamicRecord?.id || memberToken,
+							name: (data.name && data.name !== 'CITU MEMBER' && data.name !== 'CITU REGISTERED MEMBER') 
+								? data.name 
+								: (dynamicRecord?.name || 'CITU MEMBER'),
+							nameMl: (data.name && data.name !== 'CITU MEMBER' && data.name !== 'CITU REGISTERED MEMBER') 
+								? data.name 
+								: (dynamicRecord?.nameMl || 'യൂണിയൻ അംഗം'),
+							districtName: data.district || dynamicRecord?.districtName,
+							status: data.status || dynamicRecord?.status || 'Active & Paid-Up',
+							photo: data.photo || dynamicRecord?.photo || '',
+							validUntil: '31 October 2027'
+						};
 					}
 				}).catch(() => {});
+		} catch (e) {}
+
+		// Sync local record & photo to backend if we have a photo
+		try {
+			const recToSync = dynamicRecord || findMemberData(memberToken);
+			if (recToSync && recToSync.photo && recToSync.photo.startsWith('data:image')) {
+				fetch('/api/cards/sync-member', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						id: recToSync.id || memberToken,
+						name: recToSync.name || 'CITU MEMBER',
+						name_ml: recToSync.nameMl || recToSync.name || '',
+						district_code: recToSync.districtCode || 'KLTVC',
+						district_name: recToSync.districtNameEn || 'Thiruvananthapuram',
+						primary_sector: recToSync.primarySector || 'Food Delivery & Hyperlocal Logistics',
+						primary_platform: recToSync.primaryPlatform || 'Swiggy',
+						vehicle_number: recToSync.vehicleNumber || '',
+						status: recToSync.status || 'Active & Paid-Up',
+						valid_until: recToSync.validUntil || '31 October 2027',
+						photo: recToSync.photo
+					})
+				}).catch(() => {});
+			}
 		} catch (e) {}
 
 		const now = new Date();
@@ -281,17 +388,18 @@
 				vehicleNumber: rec.vehicleNumber || '',
 				status: rec.status || 'Active & Paid-Up',
 				validUntil: rec.validUntil || '31 October 2027',
-				photo: rec.photo || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYyEu0qaQ2w1WiZP9iWtGjRuf2bZDkOpwgqz4ESsoieX_F7_jXg2jQ7Z5RTdMXXFEwaPkQvAjvu6dqW1P3GVAWU7AfOTZO3Tm0Q3iAEGqNcQxvvi0EGTen8-ymjqNmHp-A6UGwYcBKMQXCB9nuj6KtyXtYRjkpI-Jdho5SaWPaY26TAH8e9G0xl1bWzxHVhvsSxkyHNNiQbPyV6vD2vdLy0R9AwN7hD1p8rB-otH7tgdWaFNA4KQUrMA'
+				photo: rec.photo || getDefaultPhoto(rec.name, rec.id || memberToken)
 			};
 		}
 
 		// Fallback for static demo tokens
 		const isFZ = memberToken.includes('FZ') || memberToken.includes('000142');
 		const isRN = memberToken.includes('RN') || memberToken.includes('000219');
+		const demoName = isFZ ? 'FATHIMA ZAHRA' : isRN ? 'RAHUL V. NAIR' : 'ANANDHU K. S.';
 		return {
 			id: memberToken.toUpperCase(),
 			tokenHash: `SHA256-${memberToken.slice(0, 4).toLowerCase()}_${Math.random().toString(36).substring(2, 8)}`,
-			name: isFZ ? 'FATHIMA ZAHRA' : isRN ? 'RAHUL V. NAIR' : 'ANANDHU K. S.',
+			name: demoName,
 			nameMl: isFZ ? 'ഫാത്തിമ സഹ്റ' : isRN ? 'രാഹുൽ വി. നായർ' : 'ആനന്ദു കെ. എസ്.',
 			roleEn: isFZ ? 'Taxi Cab Driver · Airport Fleet' : isRN ? 'Courier Pilot · Hyperlocal' : 'Food Delivery Partner',
 			roleMl: isFZ ? 'ക്യാബ് ഡ്രൈവർ' : isRN ? 'കൊറിയർ പൈലറ്റ്' : 'ഭക്ഷ്യവിതരണ തൊഴിലാളി',
@@ -306,7 +414,7 @@
 			vehicleNumber: isFZ ? 'KL 07 CD 7890' : isRN ? 'KL 01 BB 2424' : 'KL 01 CB 1234',
 			status: 'Active & Paid-Up',
 			validUntil: '31 October 2027',
-			photo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYyEu0qaQ2w1WiZP9iWtGjRuf2bZDkOpwgqz4ESsoieX_F7_jXg2jQ7Z5RTdMXXFEwaPkQvAjvu6dqW1P3GVAWU7AfOTZO3Tm0Q3iAEGqNcQxvvi0EGTen8-ymjqNmHp-A6UGwYcBKMQXCB9nuj6KtyXtYRjkpI-Jdho5SaWPaY26TAH8e9G0xl1bWzxHVhvsSxkyHNNiQbPyV6vD2vdLy0R9AwN7hD1p8rB-otH7tgdWaFNA4KQUrMA'
+			photo: getDefaultPhoto(demoName, memberToken)
 		};
 	});
 
@@ -639,7 +747,7 @@
 									alt={member.name}
 									class="w-full h-full object-cover rounded-lg"
 									onerror={(e) => {
-										(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCYyEu0qaQ2w1WiZP9iWtGjRuf2bZDkOpwgqz4ESsoieX_F7_jXg2jQ7Z5RTdMXXFEwaPkQvAjvu6dqW1P3GVAWU7AfOTZO3Tm0Q3iAEGqNcQxvvi0EGTen8-ymjqNmHp-A6UGwYcBKMQXCB9nuj6KtyXtYRjkpI-Jdho5SaWPaY26TAH8e9G0xl1bWzxHVhvsSxkyHNNiQbPyV6vD2vdLy0R9AwN7hD1p8rB-otH7tgdWaFNA4KQUrMA";
+										(e.currentTarget as HTMLImageElement).src = getDefaultPhoto(member.name, member.id);
 									}}
 								/>
 							</div>
@@ -789,7 +897,7 @@
 							alt={member.name} 
 							src={member.photo}
 							onerror={(e) => {
-								(e.currentTarget as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuCYyEu0qaQ2w1WiZP9iWtGjRuf2bZDkOpwgqz4ESsoieX_F7_jXg2jQ7Z5RTdMXXFEwaPkQvAjvu6dqW1P3GVAWU7AfOTZO3Tm0Q3iAEGqNcQxvvi0EGTen8-ymjqNmHp-A6UGwYcBKMQXCB9nuj6KtyXtYRjkpI-Jdho5SaWPaY26TAH8e9G0xl1bWzxHVhvsSxkyHNNiQbPyV6vD2vdLy0R9AwN7hD1p8rB-otH7tgdWaFNA4KQUrMA";
+								(e.currentTarget as HTMLImageElement).src = getDefaultPhoto(member.name, member.id);
 							}}
 						/>
 						<div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-white">

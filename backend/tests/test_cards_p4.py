@@ -191,3 +191,42 @@ async def test_public_verification_privacy_and_security():
         # Invalid token returns 404
         bad_resp = await client.get("/verify/totally_invalid_nonexistent_token_12345")
         assert bad_resp.status_code == HTTP_404_NOT_FOUND
+
+
+@pytest.mark.asyncio
+async def test_sync_member_card_and_photo():
+    """Verify cross-device member syncing and photo verification."""
+    sample_photo = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
+    sync_payload = {
+        "id": "KL-TVC-2026-6746",
+        "name": "ROHITH VIJAYAN",
+        "name_ml": "രോഹിത് വിജയൻ",
+        "district_code": "KLTVC",
+        "district_name": "Thiruvananthapuram",
+        "primary_sector": "Food Delivery & Hyperlocal Logistics",
+        "primary_platform": "Swiggy",
+        "vehicle_number": "kl-74-c703",
+        "status": "Active & Paid-Up",
+        "valid_until": "31 October 2027",
+        "photo": sample_photo,
+    }
+
+    async with AsyncTestClient(app=app) as client:
+        # 1. Sync member card & photo
+        sync_res = await client.post("/api/cards/sync-member", json=sync_payload)
+        assert sync_res.status_code == HTTP_200_OK
+        assert sync_res.json()["success"] is True
+
+        # 2. Verify via /api/verify returns the synced photo
+        verify_res = await client.get("/api/verify/KL-TVC-2026-6746", headers={"accept": "application/json"})
+        assert verify_res.status_code == HTTP_200_OK
+        data = verify_res.json()
+        assert data["valid"] is True
+        assert data["name"] == "ROHITH VIJAYAN"
+        assert data["photo"] == sample_photo
+
+        # 3. Verify photo binary retrieval
+        photo_res = await client.get("/api/cards/photo/KL-TVC-2026-6746")
+        assert photo_res.status_code == HTTP_200_OK
+        assert photo_res.headers["content-type"] == "image/jpeg"
+        assert len(photo_res.content) > 0

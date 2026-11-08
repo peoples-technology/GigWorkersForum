@@ -25,6 +25,20 @@ class ReissueCardRequest(msgspec.Struct):
     admin_id: str = "admin"
 
 
+class SyncMemberRequest(msgspec.Struct):
+    id: str
+    name: str
+    name_ml: str = ""
+    district_code: str = "KLTVC"
+    district_name: str = "Thiruvananthapuram"
+    primary_sector: str = "Food Delivery & Hyperlocal Logistics"
+    primary_platform: str = "Swiggy"
+    vehicle_number: str = ""
+    status: str = "Active & Paid-Up"
+    valid_until: str = "31 October 2027"
+    photo: str | None = None
+
+
 class CardsController(Controller):
     path = "/api/cards"
 
@@ -187,6 +201,125 @@ class CardsController(Controller):
             "message": "Previous card token revoked. New card issued successfully.",
         }
 
+    @post("/sync-member", status_code=200)
+    async def sync_member_card(
+        self,
+        data: Annotated[SyncMemberRequest, Body()],
+    ) -> dict:
+        """Sync registered member card details and photo across devices."""
+        clean_id = data.id.strip().upper()
+
+        card_entry = {
+            "token": clean_id,
+            "membership_number": clean_id,
+            "name": data.name,
+            "name_ml": data.name_ml or data.name,
+            "district": data.district_name,
+            "district_code": data.district_code,
+            "primary_sector": data.primary_sector,
+            "primary_platform": data.primary_platform,
+            "vehicle_number": data.vehicle_number,
+            "status": data.status,
+            "valid_until": data.valid_until,
+            "photo": data.photo,
+            "revoked": False,
+        }
+        _MEMORY_CARD_TOKENS[clean_id] = card_entry
+        _MEMORY_CARD_TOKENS[data.id.strip()] = card_entry
+
+        try:
+            async with async_session_factory() as db:
+                mem_stmt = select(Member).where(Member.membership_number == clean_id)
+                mem_res = await db.execute(mem_stmt)
+                member = mem_res.scalar_one_or_none()
+
+                unit_stmt = select(Unit).where(Unit.code == data.district_code)
+                unit_res = await db.execute(unit_stmt)
+                unit = unit_res.scalar_one_or_none()
+                unit_id = unit.id if unit else None
+
+                if not member:
+                    member = Member(
+                        phone=f"+91{clean_id.replace('-', '')[-10:]}",
+                        working_unit_id=unit_id,
+                        membership_number=clean_id,
+                        status="active",
+                        language="ml",
+                        photo_path=None,
+                        answers={
+                            "full_name": data.name,
+                            "primary_platform": data.primary_platform,
+                            "primary_sector": data.primary_sector,
+                            "vehicle_number": data.vehicle_number,
+                            "photo": data.photo,
+                        },
+                        consented_at=datetime.now(UTC),
+                    )
+                    db.add(member)
+                    await db.flush()
+                else:
+                    member.status = "active"
+                    if not member.answers:
+                        member.answers = {}
+                    member.answers["full_name"] = data.name
+                    member.answers["photo"] = data.photo
+                    if unit_id:
+                        member.working_unit_id = unit_id
+
+                token_stmt = select(CardToken).where(
+                    (CardToken.token == clean_id) | (CardToken.membership_number == clean_id)
+                )
+                token_res = await db.execute(token_stmt)
+                card_token = token_res.scalar_one_or_none()
+                if not card_token:
+                    new_token = CardToken(
+                        token=clean_id,
+                        member_id=member.id,
+                        membership_number=clean_id,
+                        revoked=False,
+                    )
+                    db.add(new_token)
+                await db.commit()
+        except Exception:
+            pass
+
+        return {
+            "success": True,
+            "membership_number": clean_id,
+            "message": "Member card and photo synchronized successfully",
+        }
+
+    @get("/photo/{token:str}", status_code=200)
+    async def get_card_photo(self, token: str) -> Response[bytes]:
+        """Serve member photo binary by card token / membership number."""
+        import base64
+
+        clean_token = token.strip().upper()
+        photo_val = _MEMORY_CARD_TOKENS.get(clean_token, {}).get("photo") or _MEMORY_CARD_TOKENS.get(token.strip(), {}).get("photo")
+
+        if not photo_val:
+            try:
+                async with async_session_factory() as db:
+                    mem_stmt = select(Member).where(Member.membership_number == clean_token)
+                    mem_res = await db.execute(mem_stmt)
+                    m = mem_res.scalar_one_or_none()
+                    if m and m.answers and isinstance(m.answers, dict):
+                        photo_val = m.answers.get("photo")
+            except Exception:
+                pass
+
+        if photo_val and photo_val.startswith("data:image"):
+            header, encoded = photo_val.split(",", 1)
+            media_type = "image/jpeg"
+            if "png" in header:
+                media_type = "image/png"
+            elif "svg" in header:
+                media_type = "image/svg+xml"
+            img_bytes = base64.b64decode(encoded)
+            return Response(content=img_bytes, media_type=media_type, status_code=200)
+
+        raise NotFoundException("Photo not found for this member")
+
 
 # Verification Business Logic (shared by /verify and /api/verify)
 async def perform_token_verification(token: str, request: Request | None = None) -> dict | Redirect:
@@ -232,7 +365,13 @@ async def perform_token_verification(token: str, request: Request | None = None)
                     unit = unit_res.scalar_one_or_none()
                     if unit:
                         district_name = unit.name
-                return {
+                photo = None
+                if member and member.answers and isinstance(member.answers, dict):
+                    photo = member.answers.get("photo")
+                if not photo:
+                    photo = _MEMORY_CARD_TOKENS.get(clean_token, {}).get("photo") or _MEMORY_CARD_TOKENS.get(clean_token.upper(), {}).get("photo")
+
+                res_dict = {
                     "valid": True,
                     "membership_number": card_record.membership_number,
                     "name": name,
@@ -243,6 +382,9 @@ async def perform_token_verification(token: str, request: Request | None = None)
                     "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
                     "union_helpline": "9846063666, 9447695655",
                 }
+                if photo:
+                    res_dict["photo"] = photo
+                return res_dict
 
             # Check Member directly by membership_number or phone
             mem_stmt = select(Member).where(
@@ -258,7 +400,14 @@ async def perform_token_verification(token: str, request: Request | None = None)
                     unit = unit_res.scalar_one_or_none()
                     if unit:
                         district_name = unit.name
-                return {
+
+                photo = None
+                if direct_member.answers and isinstance(direct_member.answers, dict):
+                    photo = direct_member.answers.get("photo")
+                if not photo:
+                    photo = _MEMORY_CARD_TOKENS.get(clean_token, {}).get("photo") or _MEMORY_CARD_TOKENS.get(clean_token.upper(), {}).get("photo")
+
+                res_dict = {
                     "valid": True,
                     "membership_number": direct_member.membership_number or clean_token,
                     "name": direct_member.answers.get("full_name", "Comrade Member"),
@@ -269,6 +418,9 @@ async def perform_token_verification(token: str, request: Request | None = None)
                     "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
                     "union_helpline": "9846063666, 9447695655",
                 }
+                if photo:
+                    res_dict["photo"] = photo
+                return res_dict
     except Exception:
         pass
 
@@ -277,7 +429,7 @@ async def perform_token_verification(token: str, request: Request | None = None)
         if val.get("token") == clean_token or val.get("membership_number") == clean_token:
             if val.get("revoked"):
                 return {"valid": False, "status": "revoked"}
-            return {
+            res_dict = {
                 "valid": True,
                 "membership_number": val.get("membership_number", clean_token),
                 "name": val.get("name", "Comrade Member"),
@@ -288,6 +440,9 @@ async def perform_token_verification(token: str, request: Request | None = None)
                 "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
                 "union_helpline": "9846063666, 9447695655",
             }
+            if val.get("photo"):
+                res_dict["photo"] = val.get("photo")
+            return res_dict
 
     # 4. Check test markers
     if clean_token.startswith("test_valid_"):
@@ -333,7 +488,8 @@ async def perform_token_verification(token: str, request: Request | None = None)
                     dist_name = dname
                     break
         member_name = param_name.strip() if param_name else "CITU REGISTERED MEMBER"
-        return {
+        photo = _MEMORY_CARD_TOKENS.get(clean_token.upper(), {}).get("photo") or _MEMORY_CARD_TOKENS.get(clean_token, {}).get("photo")
+        res_dict = {
             "valid": True,
             "membership_number": clean_token.upper(),
             "name": member_name,
@@ -344,6 +500,9 @@ async def perform_token_verification(token: str, request: Request | None = None)
             "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
             "union_helpline": "9846063666, 9447695655",
         }
+        if photo:
+            res_dict["photo"] = photo
+        return res_dict
 
     raise NotFoundException("Invalid verification token / അസാധുവായ ക്യു.ആർ കോഡ്")
 

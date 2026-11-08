@@ -190,4 +190,21 @@ describe('Verification & Dynamic ID Card Resolution', () => {
 		expect(url.searchParams.get('plat')).toBe('Swiggy');
 		expect(url.searchParams.get('veh')).toBe('kl-74-c703');
 	});
+
+	it('should preserve and attach user selfie from local storage and not revert to stock photo', () => {
+		const savedSelfie = 'data:image/jpeg;base64,rohithActualSelfieBytes12345';
+		const registeredRecord = {
+			id: 'KL-TVC-2026-6746',
+			name: 'ROHITH VIJAYAN',
+			photo: savedSelfie
+		};
+		localStorage.setItem('member_KL-TVC-2026-6746', JSON.stringify(registeredRecord));
+
+		const scanToken = 'KL-TVC-2026-6746';
+		const localStr = localStorage.getItem(`member_${scanToken}`);
+		expect(localStr).not.toBeNull();
+		const parsed = JSON.parse(localStr!);
+		expect(parsed.photo).toBe(savedSelfie);
+		expect(parsed.photo).not.toContain('lh3.googleusercontent.com');
+	});
 });
