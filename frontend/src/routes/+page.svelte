@@ -2,7 +2,9 @@
 	let lang = $state<'ml' | 'en'>('ml');
 	let mobileMenuOpen = $state(false);
 
-	// Tracking / OTP Form state
+	// Quick Access Card Download State
+	let accessMode = $state<'id' | 'otp'>('id'); // 'id' = Enter Membership ID (Active), 'otp' = Mobile OTP (Locked)
+	let memberIdInput = $state('');
 	let trackPhone = $state('');
 	let otpSending = $state(false);
 	let otpSent = $state(false);
@@ -14,70 +16,60 @@
 		lang = newLang;
 	}
 
-	function handleSendOtp() {
-		if (!trackPhone || trackPhone.length < 10) {
+	function handleLookupMemberId() {
+		const rawInput = memberIdInput.trim();
+		if (!rawInput) {
 			statusType = 'error';
 			statusMessage = lang === 'ml' 
-				? 'ദയവായി സാധുവായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.' 
-				: 'Please enter a valid 10-digit mobile number.';
+				? 'ദയവായി നിങ്ങളുടെ അംഗത്വ നമ്പർ നൽകുക (ഉദാ: KL-TVC-2026-3103).' 
+				: 'Please enter your Membership ID (e.g. KL-TVC-2026-3103).';
 			return;
 		}
 
-		otpSending = true;
-		statusMessage = '';
-		matchedMemberId = '';
-
-		setTimeout(() => {
-			otpSending = false;
-			otpSent = true;
-			statusType = 'success';
-
-			// Check if phone matches any registered member in local registry
+		// Check if user entered a 10-digit mobile number in the ID box
+		const cleanDigits = rawInput.replace(/\D/g, '');
+		if (cleanDigits.length === 10 || (cleanDigits.length === 12 && cleanDigits.startsWith('91'))) {
+			const phone10 = cleanDigits.length === 12 ? cleanDigits.slice(2) : cleanDigits;
 			try {
-				let cleanInput = (trackPhone || '').replace(/\D/g, '');
-				if (cleanInput.length === 12 && cleanInput.startsWith('91')) {
-					cleanInput = cleanInput.slice(2);
-				}
-
 				const regStr = localStorage.getItem('ksgpwu_members_registry');
 				if (regStr) {
 					const reg = JSON.parse(regStr);
-					if (reg[cleanInput]) {
-						matchedMemberId = reg[cleanInput].memberId || reg[cleanInput].id || cleanInput;
-					} else {
-						for (const k in reg) {
-							const m = reg[k];
-							const mPhone = (m.mobile || m.phone || '').replace(/\D/g, '');
-							if (mPhone && (mPhone === cleanInput || mPhone.endsWith(cleanInput))) {
-								matchedMemberId = m.memberId || m.id || k;
-								break;
-							}
+					if (reg[phone10]?.id) {
+						window.location.href = `/verify?token=${encodeURIComponent(reg[phone10].id)}`;
+						return;
+					}
+					for (const k in reg) {
+						const m = reg[k];
+						const mPhone = (m.mobile || m.phone || '').replace(/\D/g, '');
+						if (mPhone === phone10) {
+							const idToUse = m.id || m.memberId || k;
+							window.location.href = `/verify?token=${encodeURIComponent(idToUse)}`;
+							return;
 						}
 					}
 				}
-				if (!matchedMemberId) {
-					const directStr = localStorage.getItem(`member_${cleanInput}`);
-					if (directStr) {
-						const direct = JSON.parse(directStr);
-						matchedMemberId = direct.memberId || direct.id || cleanInput;
-					}
-				}
-				if (!matchedMemberId) {
-					const lastStr = localStorage.getItem('lastRegisteredMember');
-					if (lastStr) {
-						const last = JSON.parse(lastStr);
-						const lastPhone = (last.mobile || last.phone || '').replace(/\D/g, '');
-						if (lastPhone && (lastPhone === cleanInput || lastPhone.endsWith(cleanInput))) {
-							matchedMemberId = last.memberId || last.id;
-						}
+				const directStr = localStorage.getItem(`member_${phone10}`);
+				if (directStr) {
+					const d = JSON.parse(directStr);
+					if (d?.id) {
+						window.location.href = `/verify?token=${encodeURIComponent(d.id)}`;
+						return;
 					}
 				}
 			} catch (e) {}
+		}
 
-			statusMessage = lang === 'ml'
-				? `OTP +91 ${trackPhone} എന്ന നമ്പറിലേക്ക് അയച്ചിട്ടുണ്ട്. Verification window activated.`
-				: `OTP has been dispatched to +91 ${trackPhone}. Verification window activated.`;
-		}, 900);
+		// Navigate directly to verify page with token
+		const cleanId = rawInput.toUpperCase();
+		window.location.href = `/verify?token=${encodeURIComponent(cleanId)}`;
+	}
+
+	function handleSendOtp() {
+		// Locked feature notification
+		statusType = 'info';
+		statusMessage = lang === 'ml'
+			? '🔒 മൊബൈൽ ഒടിപി ഫീച്ചർ താൽക്കാലികമായി ലോക്ക് ചെയ്തിരിക്കുന്നു. കാർഡ് ഡൗൺലോഡ് ചെയ്യാൻ "Option 1: അംഗത്വ നമ്പർ" ഉപയോഗിക്കുക.'
+			: '🔒 Mobile OTP is currently locked for telecom gateway maintenance. Please use "Option 1: Membership ID" to download your card.';
 	}
 </script>
 
@@ -460,75 +452,131 @@
 
 					<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center relative z-10">
 						<!-- Text Lockup -->
-						<div class="lg:col-span-6">
+						<div class="lg:col-span-5">
 							<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 text-red-300 border border-red-500/30 text-[11px] sm:text-xs font-bold mb-3 sm:mb-4">
-								<span class="material-symbols-outlined text-[15px] sm:text-[16px]">lock</span>
+								<span class="material-symbols-outlined text-[15px] sm:text-[16px]">badge</span>
 								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
 							</div>
 							<h3 class="text-xl sm:text-3xl font-black text-white">
 								{lang === 'ml' ? 'അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക' : 'Download Membership Card'}
 							</h3>
 							<p class={`text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg ${lang === 'ml' ? 'leading-[2.05] sm:leading-[2.1]' : 'leading-relaxed'}`}>
-								{lang === 'ml'
-									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
-									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or renew your membership.'}
+								{#if accessMode === 'id'}
+									{lang === 'ml'
+										? 'നിങ്ങളുടെ ഔദ്യോഗിക അംഗത്വ നമ്പർ (ഉദാ: KL-TVC-2026-3103 അല്ലെങ്കിൽ KLTVC000009) നൽകി ഔദ്യോഗിക ഡിജിറ്റൽ കാർഡ് നേരിട്ട് ഡൗൺലോഡ് ചെയ്യുക.'
+										: 'Enter your official Membership ID (e.g. KL-TVC-2026-3103 or KLTVC000009) to instantly view and download your verified union ID card.'}
+								{:else}
+									{lang === 'ml'
+										? 'മൊബൈൽ ഒടിപി ഫീച്ചർ ടെലികോം ഡിഎൽടി (DLT) എസ്എംഎസ് സുരക്ഷാ പരിശോധനയിലാണ്. ഈ ഫീച്ചർ താൽക്കാലികമായി ലോക്ക് ചെയ്തിരിക്കുന്നു.'
+										: 'Direct SMS OTP verification is undergoing telecom DLT gateway compliance provisioning. This feature is currently locked.'}
+								{/if}
 							</p>
 						</div>
 
-						<!-- Input Action Form -->
-						<div class="lg:col-span-6 w-full">
-							<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
-								<div class="relative flex-1 flex items-center bg-white/95 rounded-xl border border-slate-300 overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary focus-within:border-primary w-full">
-									<span class="bg-slate-100 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-700 border-r border-slate-300 flex items-center select-none font-mono font-bold flex-shrink-0">
-										+91
-									</span>
-									<input 
-										bind:value={trackPhone}
-										class="w-full min-w-0 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-medium" 
-										id="track-input" 
-										maxlength="10" 
-										pattern="[0-9]{10}" 
-										placeholder={lang === 'ml' ? 'ഫോൺ നമ്പർ / 10-digit Mobile' : '10-digit Mobile Number'} 
-										required 
-										type="tel"
-									/>
-								</div>
-								<button 
-									class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg flex-shrink-0" 
-									id="otp-btn" 
-									type="submit"
-									disabled={otpSending}
+						<!-- Two Options Segmented Switcher & Forms -->
+						<div class="lg:col-span-7 w-full flex flex-col gap-3">
+							<!-- 2 Options Mode Selector -->
+							<div class="flex items-center gap-2 p-1 bg-slate-900/90 rounded-xl border border-slate-700/80 w-full sm:w-auto self-start">
+								<button
+									type="button"
+									onclick={() => { accessMode = 'id'; statusMessage = ''; }}
+									class={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${accessMode === 'id' ? 'bg-primary text-white shadow-sm ring-1 ring-red-400/30' : 'text-slate-400 hover:text-white'}`}
 								>
-									{#if otpSending}
-										<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
-										<span>{lang === 'ml' ? 'അയക്കുന്നു...' : 'Sending...'}</span>
-									{:else if otpSent}
-										<span class="material-symbols-outlined text-[18px]">done</span>
-										<span>{lang === 'ml' ? 'OTP പരിശോധിക്കുക' : 'Verify OTP'}</span>
-									{:else}
-										<span>{lang === 'ml' ? 'OTP അയക്കുക' : 'Send OTP'}</span>
-										<span class="material-symbols-outlined text-[18px]">sms</span>
-									{/if}
+									<span class="material-symbols-outlined text-[16px]">badge</span>
+									<span>{lang === 'ml' ? '1. അംഗത്വ നമ്പർ' : '1. Enter Membership ID'}</span>
 								</button>
-							</form>
+								<button
+									type="button"
+									onclick={() => { accessMode = 'otp'; statusMessage = ''; }}
+									class={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${accessMode === 'otp' ? 'bg-amber-900/60 text-amber-200 border border-amber-600/40' : 'text-slate-400 hover:text-white'}`}
+								>
+									<span class="material-symbols-outlined text-[16px]">lock</span>
+									<span>{lang === 'ml' ? '2. മൊബൈൽ OTP' : '2. Mobile OTP'}</span>
+									<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold uppercase tracking-wider">Locked</span>
+								</button>
+							</div>
 
-							{#if statusMessage}
-								<div class={`mt-3 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : 'bg-emerald-950/80 text-emerald-200 border border-emerald-800'}`}>
-									<span class="material-symbols-outlined text-[16px] flex-shrink-0">{statusType === 'error' ? 'error' : 'check_circle'}</span>
-									<span class="font-medium break-words">{statusMessage}</span>
+							<!-- OPTION 1: Enter Membership ID (Active) -->
+							{#if accessMode === 'id'}
+								<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full" onsubmit={(e) => { e.preventDefault(); handleLookupMemberId(); }}>
+									<div class="relative flex-1 flex items-center bg-white rounded-xl border border-slate-300 overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-primary focus-within:border-primary w-full">
+										<span class="bg-slate-100 px-3 py-2.5 sm:px-3.5 sm:py-3 text-xs sm:text-sm text-slate-700 border-r border-slate-300 flex items-center font-mono font-bold flex-shrink-0">
+											ID
+										</span>
+										<input 
+											bind:value={memberIdInput}
+											class="w-full min-w-0 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-mono font-bold uppercase tracking-wide" 
+											id="member-id-input" 
+											placeholder={lang === 'ml' ? 'അംഗത്വ നമ്പർ (ഉദാ: KL-TVC-2026-3103)' : 'Membership ID (e.g. KL-TVC-2026-3103)'} 
+											type="text"
+											autocomplete="off"
+										/>
+									</div>
+									<button 
+										class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 shadow-lg flex-shrink-0 transition active:scale-95" 
+										type="submit"
+									>
+										<span class="material-symbols-outlined text-[18px]">badge</span>
+										<span>{lang === 'ml' ? 'കാർഡ് ഡൗൺലോഡ്' : 'Download Card'}</span>
+									</button>
+								</form>
+
+							<!-- OPTION 2: Enter Mobile Num for OTP Verification (Locked Feature) -->
+							{:else}
+								<div class="space-y-3 w-full">
+									<!-- Locked notification notice -->
+									<div class="p-3.5 rounded-xl bg-amber-950/70 border border-amber-500/40 text-amber-200 text-xs flex items-start gap-2.5">
+										<span class="material-symbols-outlined text-amber-400 text-[18px] shrink-0 mt-0.5">lock</span>
+										<div class="space-y-1 text-left">
+											<p class="font-bold text-amber-300">
+												{lang === 'ml' ? 'മൊബൈൽ OTP വെരിഫിക്കേഷൻ താൽക്കാലികമായി ലോക്ക് ചെയ്തിരിക്കുന്നു' : 'Mobile OTP Verification is Currently Locked'}
+											</p>
+											<p class="text-amber-200/90 leading-relaxed text-[11px] sm:text-xs">
+												{lang === 'ml'
+													? 'ടെലികോം ഡിഎൽടി (DLT) ഒടിപി ഗേറ്റ്‌വേ സുരക്ഷാ നവീകരണത്തിലാണ്. നിങ്ങളുടെ കാർഡ് ഉടനടി കാണാനും ഡൗൺലോഡ് ചെയ്യാനും മുകളിലുള്ള "Option 1: അംഗത്വ നമ്പർ" ഉപയോഗിക്കുക.'
+													: 'Direct SMS OTP verification is undergoing telecom gateway compliance provisioning. To download your card immediately, please switch to Option 1 (Enter Membership ID).'}
+											</p>
+										</div>
+									</div>
+
+									<!-- Disabled / Preview Mobile Input -->
+									<form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full opacity-60" onsubmit={(e) => { e.preventDefault(); handleSendOtp(); }}>
+										<div class="relative flex-1 flex items-center bg-slate-100 rounded-xl border border-slate-700 overflow-hidden w-full cursor-not-allowed">
+											<span class="bg-slate-200 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-500 border-r border-slate-300 font-mono font-bold flex-shrink-0 select-none">
+												+91
+											</span>
+											<input 
+												bind:value={trackPhone}
+												disabled
+												class="w-full min-w-0 px-3 py-2.5 sm:px-3.5 sm:py-3 text-sm text-slate-500 placeholder:text-slate-400 bg-transparent focus:outline-none cursor-not-allowed font-medium" 
+												placeholder={lang === 'ml' ? 'ഫോൺ നമ്പർ / 10-digit Mobile (Locked)' : '10-digit Mobile Number (Locked)'} 
+												type="tel"
+											/>
+										</div>
+										<button 
+											class="px-5 py-3 sm:py-3.5 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 cursor-not-allowed flex-shrink-0" 
+											type="submit"
+										>
+											<span class="material-symbols-outlined text-[16px]">lock</span>
+											<span>{lang === 'ml' ? 'Send OTP (ലോക്ക്ഡ്)' : 'Send OTP (Locked)'}</span>
+										</button>
+									</form>
+
+									<button 
+										type="button" 
+										onclick={() => { accessMode = 'id'; statusMessage = ''; }} 
+										class="text-xs text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-1 pt-0.5"
+									>
+										<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+										<span>{lang === 'ml' ? 'അംഗത്വ നമ്പർ ഉപയോഗിക്കാൻ Option 1 ലേക്ക് മാറുക' : 'Switch back to Option 1: Enter Membership ID'}</span>
+									</button>
 								</div>
 							{/if}
 
-							{#if matchedMemberId}
-								<div class="mt-3 flex">
-									<a 
-										href={`/verify/${matchedMemberId}`}
-										class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
-									>
-										<span class="material-symbols-outlined text-[18px]">badge</span>
-										<span>{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വ കാർഡ് കാണുക / ഡൗൺലോഡ് ചെയ്യുക' : 'View & Download Membership Card'}</span>
-										<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-									</a>
+							{#if statusMessage}
+								<div class={`mt-2 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : statusType === 'success' ? 'bg-emerald-950/80 text-emerald-200 border border-emerald-800' : 'bg-amber-950/80 text-amber-200 border border-amber-800'}`}>
+									<span class="material-symbols-outlined text-[16px] flex-shrink-0">{statusType === 'error' ? 'error' : statusType === 'success' ? 'check_circle' : 'info'}</span>
+									<span class="font-medium break-words">{statusMessage}</span>
 								</div>
 							{/if}
 						</div>

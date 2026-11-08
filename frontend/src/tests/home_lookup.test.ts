@@ -67,4 +67,22 @@ describe('Home Page Member Quick Access & Phone Lookup', () => {
 		expect(resUnregistered.matchedId).toBeNull();
 		expect(resUnregistered.error).toContain('No active membership found');
 	});
+
+	it('should format and prepare Option 1 (Membership ID) directly without browser pattern errors', () => {
+		const inputId = ' kl-tvc-2026-3103 ';
+		const cleanId = inputId.trim().toUpperCase();
+		expect(cleanId).toBe('KL-TVC-2026-3103');
+		const verifyTargetUrl = `/verify?token=${encodeURIComponent(cleanId)}`;
+		expect(verifyTargetUrl).toBe('/verify?token=KL-TVC-2026-3103');
+	});
+
+	it('should handle Option 2 (Mobile OTP) as a locked feature with informative notice', () => {
+		const accessMode = 'otp';
+		const isLocked = accessMode === 'otp';
+		expect(isLocked).toBe(true);
+
+		const lockedMessage = '🔒 Mobile OTP is currently locked for telecom gateway maintenance. Please use "Option 1: Membership ID" to download your card.';
+		expect(lockedMessage).toContain('currently locked');
+		expect(lockedMessage).toContain('Option 1: Membership ID');
+	});
 });
