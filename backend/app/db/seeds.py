@@ -173,7 +173,8 @@ async def seed_database(session: AsyncSession) -> None:
     # 1. Seed Organisation
     org_stmt = select(Organisation).limit(1)
     org_res = await session.execute(org_stmt)
-    if not org_res.scalar_one_or_none():
+    existing_org = org_res.scalar_one_or_none()
+    if not existing_org:
         org = Organisation(
             name="Kerala State Gig & Platform Workers Union (CITU)",
             name_ml="കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ (സി.ഐ.ടി.യു)",
@@ -184,6 +185,15 @@ async def seed_database(session: AsyncSession) -> None:
             default_language="ml",
         )
         session.add(org)
+    else:
+        # Update statutory union registration details if missing or outdated
+        if not existing_org.address:
+            existing_org.address = "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O., Thiruvananthapuram, Kerala"
+        if not existing_org.phone:
+            existing_org.phone = "9846063666, 9447695655"
+        if not existing_org.logo_url:
+            existing_org.logo_url = "/gigLogo.png"
+        existing_org.registration_number = "Tu19965"
 
     # 2. Seed State Unit
     state_stmt = select(Unit).where(Unit.code == "KLSTATE")
