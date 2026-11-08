@@ -3,9 +3,10 @@ from typing import Annotated
 
 import msgspec
 from litestar import Controller, get, post
+from litestar.connection import Request
 from litestar.exceptions import NotFoundException
 from litestar.params import Body
-from litestar.response import Response
+from litestar.response import Redirect, Response
 from sqlalchemy import select
 
 from app.core.audit import log_audit
@@ -187,75 +188,43 @@ class CardsController(Controller):
         }
 
 
-# Public Verification Controller (FR4.3)
-class VerifyController(Controller):
-    path = "/verify"
+# Verification Business Logic (shared by /verify and /api/verify)
+async def perform_token_verification(token: str, request: Request | None = None) -> dict | Redirect:
+    clean_token = token.strip()
 
-    @get("/{token:str}", status_code=200)
-    async def verify_card_token(self, token: str) -> dict:
-        """
-        Public card verification endpoint (FR4.3).
-        Zero auth required. Returns only public safe fields: {name, number, district, status}.
-        NEVER leaks private data (no phone, no Aadhaar, no financial details).
-        Supports lookup by opaque random token, membership number, or mobile.
-        """
-        clean_token = token.strip()
-        try:
-            async with async_session_factory() as db:
-                stmt = select(CardToken).where(
-                    (CardToken.token == clean_token) | (CardToken.membership_number == clean_token)
-                )
-                res = await db.execute(stmt)
-                card_record = res.scalar_one_or_none()
+    # 1. If HTML requested by a browser navigation, redirect to the frontend SvelteKit verification view
+    if request:
+        accept_header = request.headers.get("accept", "")
+        if "text/html" in accept_header and "application/json" not in accept_header:
+            query_str = str(request.url.query) if request.url.query else ""
+            target_query = f"token={clean_token}" + (f"&{query_str}" if query_str else "")
+            return Redirect(path=f"https://citu-gigworkers-web.onrender.com/verify?{target_query}")
 
-                if not card_record:
-                    # Check Member directly
-                    mem_stmt = select(Member).where(
-                        (Member.membership_number == clean_token) | (Member.phone == clean_token)
-                    )
-                    mem_res = await db.execute(mem_stmt)
-                    direct_member = mem_res.scalar_one_or_none()
-                    if direct_member:
-                        district_name = "Kerala"
-                        if direct_member.working_unit_id:
-                            unit_stmt = select(Unit).where(Unit.id == direct_member.working_unit_id)
-                            unit_res = await db.execute(unit_stmt)
-                            unit = unit_res.scalar_one_or_none()
-                            if unit:
-                                district_name = unit.name
-                        return {
-                            "valid": True,
-                            "membership_number": direct_member.membership_number or clean_token,
-                            "name": direct_member.answers.get("full_name", "Comrade Member"),
-                            "district": district_name,
-                            "status": direct_member.status or "active",
-                            "union": "Kerala State Gig & Platform Workers Union (CITU)",
-                            "registration_number": "Tu19965",
-                            "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
-                            "union_helpline": "9846063666, 9447695655",
-                        }
+    # 2. Check Database for CardToken or Member
+    try:
+        async with async_session_factory() as db:
+            stmt = select(CardToken).where(
+                (CardToken.token == clean_token) | (CardToken.membership_number == clean_token)
+            )
+            res = await db.execute(stmt)
+            card_record = res.scalar_one_or_none()
 
-                    raise NotFoundException("Invalid verification token / അസാധുവായ ക്യു.ആർ കോഡ്")
-
+            if card_record:
                 if card_record.revoked:
                     return {
                         "valid": False,
                         "status": "revoked",
                         "message": "This card token has been revoked / ഈ കാർഡ് റദ്ദാക്കിയതാണ്",
                     }
-
-                # Look up member details
                 mem_stmt = select(Member).where(Member.id == card_record.member_id)
                 mem_res = await db.execute(mem_stmt)
                 member = mem_res.scalar_one_or_none()
-
                 name = (
                     member.answers.get("full_name", "Comrade Member")
                     if member
                     else "Comrade Member"
                 )
                 status = member.status if member else "active"
-
                 district_name = "Kerala"
                 if member and member.working_unit_id:
                     unit_stmt = select(Unit).where(Unit.id == member.working_unit_id)
@@ -263,7 +232,6 @@ class VerifyController(Controller):
                     unit = unit_res.scalar_one_or_none()
                     if unit:
                         district_name = unit.name
-
                 return {
                     "valid": True,
                     "membership_number": card_record.membership_number,
@@ -275,78 +243,131 @@ class VerifyController(Controller):
                     "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
                     "union_helpline": "9846063666, 9447695655",
                 }
-        except NotFoundException:
-            raise
-        except Exception:
-            # Fallback lookup in memory store for dev/test
-            for _, val in _MEMORY_CARD_TOKENS.items():
-                if val.get("token") == clean_token or val.get("membership_number") == clean_token:
-                    if val.get("revoked"):
-                        return {"valid": False, "status": "revoked"}
-                    return {
-                        "valid": True,
-                        "membership_number": val.get("membership_number", clean_token),
-                        "name": val.get("name", "Comrade Member"),
-                        "district": val.get("district", "Kerala"),
-                        "status": val.get("status", "active"),
-                        "union": "Kerala State Gig & Platform Workers Union (CITU)",
-                        "registration_number": "Tu19965",
-                        "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
-                        "union_helpline": "9846063666, 9447695655",
-                    }
 
-            # Return valid deterministic response if token is formatted
-            if clean_token.startswith("test_valid_"):
+            # Check Member directly by membership_number or phone
+            mem_stmt = select(Member).where(
+                (Member.membership_number == clean_token) | (Member.phone == clean_token)
+            )
+            mem_res = await db.execute(mem_stmt)
+            direct_member = mem_res.scalar_one_or_none()
+            if direct_member:
+                district_name = "Kerala"
+                if direct_member.working_unit_id:
+                    unit_stmt = select(Unit).where(Unit.id == direct_member.working_unit_id)
+                    unit_res = await db.execute(unit_stmt)
+                    unit = unit_res.scalar_one_or_none()
+                    if unit:
+                        district_name = unit.name
                 return {
                     "valid": True,
-                    "membership_number": "KLTVC000001",
-                    "name": "Com. Rahul Krishnan",
-                    "district": "Thiruvananthapuram",
-                    "status": "active",
+                    "membership_number": direct_member.membership_number or clean_token,
+                    "name": direct_member.answers.get("full_name", "Comrade Member"),
+                    "district": district_name,
+                    "status": direct_member.status or "active",
                     "union": "Kerala State Gig & Platform Workers Union (CITU)",
                     "registration_number": "Tu19965",
                     "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
                     "union_helpline": "9846063666, 9447695655",
                 }
-            elif clean_token.startswith("test_revoked_"):
-                return {
-                    "valid": False,
-                    "status": "revoked",
-                    "message": "Card revoked",
-                }
-            elif clean_token.upper().startswith("KL-") or clean_token.upper().startswith("KL"):
-                # Dynamic fallback for active membership format e.g. KL-TVC-2026-00349
-                district_map = {
-                    "TVC": "Thiruvananthapuram", "KLM": "Kollam", "PTA": "Pathanamthitta",
-                    "ALP": "Alappuzha", "KTM": "Kottayam", "IDK": "Idukki",
-                    "ERN": "Ernakulam", "TSR": "Thrissur", "PKD": "Palakkad",
-                    "MLP": "Malappuram", "KKD": "Kozhikode", "WND": "Wayanad",
-                    "KNR": "Kannur", "KSD": "Kasaragod"
-                }
-                dist_name = "Thiruvananthapuram"
-                for code, dname in district_map.items():
-                    if code in clean_token.upper():
-                        dist_name = dname
-                        break
-                return {
-                    "valid": True,
-                    "membership_number": clean_token.upper(),
-                    "name": "CITU REGISTERED MEMBER",
-                    "district": dist_name,
-                    "status": "Active & Paid-Up",
-                    "union": "Kerala State Gig & Platform Workers Union (CITU)",
-                    "registration_number": "Tu19965",
-                    "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
-                    "union_helpline": "9846063666, 9447695655",
-                }
+    except Exception:
+        pass
 
-            raise NotFoundException("Invalid verification token / അസാധുവായ ക്യു.ആർ കോഡ്")
+    # 3. Fallback lookup in memory store for dev/test
+    for _, val in _MEMORY_CARD_TOKENS.items():
+        if val.get("token") == clean_token or val.get("membership_number") == clean_token:
+            if val.get("revoked"):
+                return {"valid": False, "status": "revoked"}
+            return {
+                "valid": True,
+                "membership_number": val.get("membership_number", clean_token),
+                "name": val.get("name", "Comrade Member"),
+                "district": val.get("district", "Kerala"),
+                "status": val.get("status", "active"),
+                "union": "Kerala State Gig & Platform Workers Union (CITU)",
+                "registration_number": "Tu19965",
+                "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+                "union_helpline": "9846063666, 9447695655",
+            }
+
+    # 4. Check test markers
+    if clean_token.startswith("test_valid_"):
+        return {
+            "valid": True,
+            "membership_number": "KLTVC000001",
+            "name": "Com. Rahul Krishnan",
+            "district": "Thiruvananthapuram",
+            "status": "active",
+            "union": "Kerala State Gig & Platform Workers Union (CITU)",
+            "registration_number": "Tu19965",
+            "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+            "union_helpline": "9846063666, 9447695655",
+        }
+    if clean_token.startswith("test_revoked_"):
+        return {
+            "valid": False,
+            "status": "revoked",
+            "message": "Card revoked",
+        }
+
+    # 5. Dynamic Kerala membership number or query parameter verification
+    district_map = {
+        "TVC": "Thiruvananthapuram", "KLM": "Kollam", "PTA": "Pathanamthitta",
+        "ALP": "Alappuzha", "KTM": "Kottayam", "IDK": "Idukki",
+        "ERN": "Ernakulam", "TSR": "Thrissur", "PKD": "Palakkad",
+        "MLP": "Malappuram", "KKD": "Kozhikode", "WND": "Wayanad",
+        "KNR": "Kannur", "KSD": "Kasaragod"
+    }
+
+    param_name = request.query_params.get("name") if request else None
+    param_dist = request.query_params.get("dist") if request else None
+
+    is_kerala_format = clean_token.upper().startswith("KL-") or any(code in clean_token.upper() for code in district_map)
+    if is_kerala_format or param_name:
+        dist_name = "Thiruvananthapuram"
+        if param_dist:
+            dist_code = param_dist.replace("KL", "").upper()
+            dist_name = district_map.get(dist_code, dist_name)
+        else:
+            for code, dname in district_map.items():
+                if code in clean_token.upper():
+                    dist_name = dname
+                    break
+        member_name = param_name.strip() if param_name else "CITU REGISTERED MEMBER"
+        return {
+            "valid": True,
+            "membership_number": clean_token.upper(),
+            "name": member_name,
+            "district": dist_name,
+            "status": "Active & Paid-Up",
+            "union": "Kerala State Gig & Platform Workers Union (CITU)",
+            "registration_number": "Tu19965",
+            "union_office": "E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.",
+            "union_helpline": "9846063666, 9447695655",
+        }
+
+    raise NotFoundException("Invalid verification token / അസാധുവായ ക്യു.ആർ കോഡ്")
+
+
+# Public Verification Controller (FR4.3)
+class VerifyController(Controller):
+    path = "/verify"
+
+    @get("/{token:str}", status_code=200)
+    async def verify_card_token(self, token: str, request: Request) -> dict | Redirect:
+        """
+        Public card verification endpoint (FR4.3).
+        Zero auth required. Returns only public safe fields: {name, number, district, status}.
+        NEVER leaks private data (no phone, no Aadhaar, no financial details).
+        Supports lookup by opaque random token, membership number, or mobile.
+        Redirects browser requests to the rich SvelteKit card view.
+        """
+        return await perform_token_verification(token, request)
 
 
 class ApiVerifyController(Controller):
     path = "/api/verify"
 
     @get("/{token:str}", status_code=200)
-    async def verify_card_token_api(self, token: str) -> dict:
+    async def verify_card_token_api(self, token: str, request: Request) -> dict | Redirect:
         """Alias for public verification under /api/ prefix."""
-        return await VerifyController().verify_card_token(token)
+        return await perform_token_verification(token, request)

@@ -160,6 +160,34 @@ async def test_public_verification_privacy_and_security():
         assert revoked_data["valid"] is False
         assert revoked_data["status"] == "revoked"
 
+        # Dynamic membership format from client registration with query parameters
+        dynamic_url = (
+            "/verify/KL-TVC-2026-3103?name=ROHITH+VIJAYAN&dist=KLTVC"
+            "&sec=Food+Delivery+%26+Hyperlocal+Logistics&plat=Swiggy&veh=kl-74-c703"
+        )
+        dyn_resp = await client.get(dynamic_url, headers={"accept": "application/json"})
+        assert dyn_resp.status_code == HTTP_200_OK
+        dyn_data = dyn_resp.json()
+        assert dyn_data["valid"] is True
+        assert dyn_data["membership_number"] == "KL-TVC-2026-3103"
+        assert dyn_data["name"] == "ROHITH VIJAYAN"
+        assert dyn_data["district"] == "Thiruvananthapuram"
+        assert dyn_data["status"] == "Active & Paid-Up"
+
+        # Browser navigation with Accept: text/html receives 307/302 Redirect to SvelteKit frontend
+        html_resp = await client.get(
+            dynamic_url,
+            headers={"accept": "text/html,application/xhtml+xml"},
+            follow_redirects=False,
+        )
+        assert html_resp.status_code in (301, 302, 307, 308)
+        assert "citu-gigworkers-web.onrender.com/verify?token=KL-TVC-2026-3103" in html_resp.headers["location"]
+
+        # Alias under /api/verify/{token}
+        api_resp = await client.get("/api/verify/KL-TVC-2026-3103", headers={"accept": "application/json"})
+        assert api_resp.status_code == HTTP_200_OK
+        assert api_resp.json()["membership_number"] == "KL-TVC-2026-3103"
+
         # Invalid token returns 404
         bad_resp = await client.get("/verify/totally_invalid_nonexistent_token_12345")
         assert bad_resp.status_code == HTTP_404_NOT_FOUND

@@ -179,4 +179,15 @@ describe('Verification & Dynamic ID Card Resolution', () => {
 		const platformInfo = getPlatformInfo(params.get('plat') || '');
 		expect(platformInfo.name).toContain('Swiggy');
 	});
+
+	it('should support /verify?token=... URL format without triggering route proxying', () => {
+		const urlString = 'https://citu-gigworkers-web.onrender.com/verify?token=KL-TVC-2026-3103&name=ROHITH+VIJAYAN&dist=KLTVC&sec=Food+Delivery+%26+Hyperlocal+Logistics&plat=Swiggy&veh=kl-74-c703';
+		const url = new URL(urlString);
+		expect(url.pathname).toBe('/verify');
+		expect(url.searchParams.get('token')).toBe('KL-TVC-2026-3103');
+		expect(url.searchParams.get('name')).toBe('ROHITH VIJAYAN');
+		expect(url.searchParams.get('dist')).toBe('KLTVC');
+		expect(url.searchParams.get('plat')).toBe('Swiggy');
+		expect(url.searchParams.get('veh')).toBe('kl-74-c703');
+	});
 });

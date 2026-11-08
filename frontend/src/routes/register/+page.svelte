@@ -106,8 +106,8 @@
 			alert(lang === 'ml' ? 'ദയവായി 6 അക്ക OTP കോഡ് നൽകുക.' : 'Please enter a valid 6-digit OTP code.');
 			return;
 		}
-		triggerAutoSave();
 		activeStep = 2;
+		triggerAutoSave();
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
@@ -120,8 +120,8 @@
 			alert(lang === 'ml' ? 'യൂണിയൻ അംഗത്വത്തിന് കുറഞ്ഞത് 18 വയസ്സ് പൂർത്തിയാകണം.' : 'Workers must be at least 18 years old to join the union.');
 			return;
 		}
-		triggerAutoSave();
 		activeStep = 3;
+		triggerAutoSave();
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
@@ -134,8 +134,8 @@
 			alert(lang === 'ml' ? 'തിരിച്ചറിയൽ കാർഡിന്റെ അവസാന 4 അക്കങ്ങൾ മാത്രം നൽകുക.' : 'Please enter exactly 4 digits for your government ID proof.');
 			return;
 		}
-		triggerAutoSave();
 		activeStep = 4;
+		triggerAutoSave();
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
@@ -169,6 +169,10 @@
 			if (videoElement && videoStream) {
 				videoElement.srcObject = videoStream;
 				videoElement.muted = true;
+				videoElement.playsInline = true;
+				videoElement.onloadedmetadata = () => {
+					videoElement?.play().catch((playErr) => console.warn('Metadata play error:', playErr));
+				};
 				try {
 					await videoElement.play();
 				} catch (playErr) {
@@ -1014,6 +1018,11 @@
 							>
 								{lang === 'ml' ? 'റദ്ദാക്കുക' : 'Cancel'}
 							</button>
+							<label class="px-4 py-2.5 border border-surface-variant bg-surface-container-lowest text-secondary text-xs font-semibold rounded-lg hover:bg-surface-container flex items-center gap-1.5 cursor-pointer">
+								<span class="material-symbols-outlined text-[16px]">upload</span>
+								<span>{lang === 'ml' ? 'ഫോട്ടോ അപ്‌ലോഡ്' : 'Upload Photo'}</span>
+								<input type="file" accept="image/*" class="hidden" onchange={handleFileUpload} />
+							</label>
 						{:else if capturedPhoto}
 							<button 
 								type="button" 
@@ -1025,6 +1034,30 @@
 							</button>
 						{/if}
 					</div>
+
+					{#if cameraActive}
+						<div class="text-[11px] text-secondary text-center max-w-sm space-y-1 bg-surface-container-lowest/80 p-2.5 rounded-lg border border-surface-variant/50 mt-1">
+							<p class="font-semibold text-on-surface flex items-center justify-center gap-1">
+								<span class="material-symbols-outlined text-[14px] text-amber-600">info</span>
+								<span>{lang === 'ml' ? 'ക്യാമറ സ്ക്രീൻ കറുത്തു കാണുന്നുണ്ടോ?' : 'Camera screen completely black?'}</span>
+							</p>
+							<p class="leading-relaxed">
+								{lang === 'ml' 
+									? '1. ബ്രൗസറിൻ്റെ മുകളിലെ "Reload" ബട്ടൺ അമർത്തുക (പെർമിഷൻ പ്രാബല്യത്തിൽ വരാൻ).' 
+									: '1. Click the "Reload" button in the Chrome banner at top of page.'}
+							</p>
+							<p class="leading-relaxed">
+								{lang === 'ml' 
+									? '2. ലാപ്‌ടോപ്പ് ക്യാമറയുടെ പ്രൈവസി ഷട്ടർ / സ്ലൈഡർ തുറന്നിട്ടുണ്ടോ എന്ന് പരിശോധിക്കുക.' 
+									: '2. Slide open your laptop camera physical privacy shutter.'}
+							</p>
+							<p class="leading-relaxed">
+								{lang === 'ml'
+									? '3. അല്ലെങ്കിൽ മുകളിലെ "ഫോട്ടോ അപ്‌ലോഡ്" ഓപ്ഷൻ ഉപയോഗിക്കുക.'
+									: '3. Or simply tap "Upload Photo" to choose an existing image.'}
+							</p>
+						</div>
+					{/if}
 				</div>
 
 				<!-- Statutory Consent & Declaration -->
