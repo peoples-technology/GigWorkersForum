@@ -61,9 +61,6 @@ services:
         source: /api/*
         destination: https://citu-gigworkers-api.onrender.com/api/*
       - type: rewrite
-        source: /verify/*
-        destination: https://citu-gigworkers-api.onrender.com/verify/*
-      - type: rewrite
         source: /health
         destination: https://citu-gigworkers-api.onrender.com/health
       # SPA fallback routing

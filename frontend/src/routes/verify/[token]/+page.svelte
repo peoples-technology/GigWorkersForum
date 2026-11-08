@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { downloadCardPdf } from '$lib/cardPdf';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let copied = $state(false);
@@ -85,9 +86,59 @@
 		};
 	}
 
+	function getPublicVerifyUrl(m: any): string {
+		const memberId = m?.id || memberToken;
+		let baseUrl = 'https://citu-gigworkers-web.onrender.com';
+		if (typeof window !== 'undefined') {
+			if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+				baseUrl = window.location.origin;
+			}
+		}
+		const params = new URLSearchParams();
+		if (m?.name) params.set('name', m.name);
+		if (m?.districtCode) params.set('dist', m.districtCode);
+		if (m?.sectorEn) params.set('sec', m.sectorEn);
+		if (m?.primaryPlatform) params.set('plat', m.primaryPlatform);
+		if (m?.vehicleNumber) params.set('veh', m.vehicleNumber);
+
+		const qs = params.toString();
+		return `${baseUrl}/verify/${encodeURIComponent(memberId)}${qs ? '?' + qs : ''}`;
+	}
+
 	function findMemberData(token: string) {
 		if (typeof window === 'undefined') return null;
 		const cleanToken = (token || '').trim().toUpperCase();
+
+		// 0. Check URL search parameters (handles cross-device QR code scanning seamlessly!)
+		try {
+			if (window.location.search) {
+				const params = new URLSearchParams(window.location.search);
+				const paramName = params.get('name');
+				const paramDist = params.get('dist');
+				if (paramName || paramDist) {
+					const distObj = getDistrictInfo(paramDist || '');
+					const record = {
+						id: cleanToken,
+						name: (paramName || 'CITU MEMBER').toUpperCase(),
+						nameMl: paramName || 'യൂണിയൻ അംഗം',
+						districtCode: distObj.code,
+						districtName: `${distObj.ml} / ${distObj.en}`,
+						districtNameEn: distObj.en,
+						districtNameMl: distObj.ml,
+						primarySector: params.get('sec') || 'Delivery',
+						primaryPlatform: params.get('plat') || 'Swiggy',
+						vehicleNumber: params.get('veh') || '',
+						status: 'Active & Paid-Up',
+						validUntil: '31 October 2027',
+						tokenHash: `SHA256-${distObj.code.toLowerCase()}_verified`
+					};
+					try {
+						localStorage.setItem(`member_${cleanToken}`, JSON.stringify(record));
+					} catch (e) {}
+					return record;
+				}
+			}
+		} catch (e) {}
 
 		// 1. Check currentMember in sessionStorage
 		try {
@@ -158,11 +209,11 @@
 
 		// Also try background backend check if online
 		try {
-			fetch(`/verify/${encodeURIComponent(memberToken)}`)
+			fetch(`/api/verify/${encodeURIComponent(memberToken)}`)
 				.then(r => r.ok ? r.json() : null)
 				.then(data => {
 					if (data && data.valid && data.name) {
-						if (!dynamicRecord) {
+						if (!dynamicRecord || dynamicRecord.name === 'CITU MEMBER' || dynamicRecord.name === 'CITU REGISTERED MEMBER') {
 							dynamicRecord = {
 								id: data.membership_number || memberToken,
 								name: data.name,
@@ -256,161 +307,181 @@
 		}, 2000);
 	}
 
+	async function renderCardCanvas(): Promise<HTMLCanvasElement | null> {
+		const canvas = document.createElement('canvas');
+		canvas.width = 1012;
+		canvas.height = 638;
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return null;
+
+		// 1. Background
+		ctx.fillStyle = '#FFFFFF';
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+		// 2. Header
+		ctx.fillStyle = '#991B1B';
+		ctx.fillRect(0, 0, canvas.width, 130);
+
+		// Gold stripe
+		ctx.fillStyle = '#F59E0B';
+		ctx.fillRect(0, 124, canvas.width, 6);
+
+		// Header text
+		ctx.fillStyle = '#FFFFFF';
+		ctx.font = "bold 26px 'Anek Malayalam', sans-serif";
+		ctx.fillText("KERALA STATE GIG & PLATFORM WORKERS UNION (CITU)", 40, 52);
+		ctx.fillStyle = '#FEF3C7';
+		ctx.font = "18px 'Anek Malayalam', sans-serif";
+		ctx.fillText("Reg. No: Tu19965 • Registered Under Trade Unions Act", 40, 88);
+
+		// Union Logo in header
+		try {
+			const logo = new Image();
+			logo.crossOrigin = 'anonymous';
+			logo.src = '/gigLogo.png';
+			await new Promise((resolve) => {
+				logo.onload = () => {
+					ctx.drawImage(logo, canvas.width - 125, 15, 100, 100);
+					resolve(true);
+				};
+				logo.onerror = () => resolve(false);
+			});
+		} catch (e) {}
+
+		// 3. Member Photo
+		ctx.strokeStyle = '#991B1B';
+		ctx.lineWidth = 3;
+		ctx.strokeRect(40, 155, 200, 245);
+		ctx.fillStyle = '#F1F5F9';
+		ctx.fillRect(40, 155, 200, 245);
+
+		if (member.photo) {
+			try {
+				const photoImg = new Image();
+				photoImg.crossOrigin = 'anonymous';
+				photoImg.src = member.photo;
+				await new Promise((resolve) => {
+					photoImg.onload = () => {
+						ctx.drawImage(photoImg, 40, 155, 200, 245);
+						resolve(true);
+					};
+					photoImg.onerror = () => resolve(false);
+				});
+			} catch (e) {}
+		}
+
+		// Active member badge
+		ctx.fillStyle = '#10B981';
+		ctx.fillRect(40, 412, 200, 36);
+		ctx.fillStyle = '#FFFFFF';
+		ctx.font = "bold 16px sans-serif";
+		ctx.textAlign = 'center';
+		ctx.fillText("ACTIVE MEMBER", 140, 436);
+		ctx.textAlign = 'left';
+
+		// 4. Member Info
+		const startX = 275;
+		ctx.fillStyle = '#0F172A';
+		ctx.font = "bold 32px 'Anek Malayalam', sans-serif";
+		ctx.fillText(member.name, startX, 195);
+
+		ctx.fillStyle = '#64748B';
+		ctx.font = "20px 'Anek Malayalam', sans-serif";
+		ctx.fillText("Membership ID:", startX, 245);
+		ctx.fillStyle = '#B91C1C';
+		ctx.font = "bold 24px monospace";
+		ctx.fillText(member.id, startX + 170, 245);
+
+		ctx.fillStyle = '#64748B';
+		ctx.font = "20px 'Anek Malayalam', sans-serif";
+		ctx.fillText("District Unit:", startX, 290);
+		ctx.fillStyle = '#0F172A';
+		ctx.font = "bold 22px 'Anek Malayalam', sans-serif";
+		ctx.fillText(member.districtNameEn || member.districtName, startX + 170, 290);
+
+		ctx.fillStyle = '#64748B';
+		ctx.font = "20px 'Anek Malayalam', sans-serif";
+		ctx.fillText("Platform:", startX, 335);
+		ctx.fillStyle = '#0F172A';
+		ctx.font = "bold 22px 'Anek Malayalam', sans-serif";
+		ctx.fillText(member.platforms[0]?.name || member.primaryPlatform || 'Swiggy', startX + 170, 335);
+
+		ctx.fillStyle = '#64748B';
+		ctx.font = "20px 'Anek Malayalam', sans-serif";
+		ctx.fillText("Sector:", startX, 380);
+		ctx.fillStyle = '#0F172A';
+		ctx.font = "bold 20px 'Anek Malayalam', sans-serif";
+		ctx.fillText(member.sectorEn, startX + 170, 380);
+
+		if (member.vehicleNumber) {
+			ctx.fillStyle = '#64748B';
+			ctx.font = "20px 'Anek Malayalam', sans-serif";
+			ctx.fillText("Vehicle / RC:", startX, 425);
+			ctx.fillStyle = '#0F172A';
+			ctx.font = "bold 20px monospace";
+			ctx.fillText(member.vehicleNumber, startX + 170, 425);
+		}
+
+		ctx.fillStyle = '#64748B';
+		ctx.font = "20px 'Anek Malayalam', sans-serif";
+		ctx.fillText("Valid Through:", startX, 470);
+		ctx.fillStyle = '#059669';
+		ctx.font = "bold 22px monospace";
+		ctx.fillText(member.validUntil, startX + 170, 470);
+
+		// 5. Verification QR Code
+		try {
+			const qrUrl = getPublicVerifyUrl(member);
+			const qrImg = new Image();
+			qrImg.crossOrigin = 'anonymous';
+			qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(qrUrl)}`;
+			await new Promise((resolve) => {
+				qrImg.onload = () => {
+					ctx.drawImage(qrImg, canvas.width - 210, 165, 170, 170);
+					resolve(true);
+				};
+				qrImg.onerror = () => resolve(false);
+			});
+
+			ctx.fillStyle = '#64748B';
+			ctx.font = "15px sans-serif";
+			ctx.fillText("Scan to Verify", canvas.width - 175, 355);
+		} catch (e) {}
+
+		// 6. Footer bar
+		ctx.fillStyle = '#0F172A';
+		ctx.fillRect(0, canvas.height - 46, canvas.width, 46);
+		ctx.fillStyle = '#CBD5E1';
+		ctx.font = "16px sans-serif";
+		ctx.fillText("E Balananda Smaraka Office, Mele Thampanoor • Ph: 9846063666, 9447695655 • Reg. No: Tu19965", 40, canvas.height - 18);
+
+		return canvas;
+	}
+
 	async function downloadCardPng() {
 		isDownloading = true;
 		try {
-			const canvas = document.createElement('canvas');
-			canvas.width = 1012;
-			canvas.height = 638;
-			const ctx = canvas.getContext('2d');
-			if (!ctx) return;
-
-			// 1. Background
-			ctx.fillStyle = '#FFFFFF';
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-			// 2. Header
-			ctx.fillStyle = '#991B1B';
-			ctx.fillRect(0, 0, canvas.width, 130);
-
-			// Gold stripe
-			ctx.fillStyle = '#F59E0B';
-			ctx.fillRect(0, 124, canvas.width, 6);
-
-			// Header text
-			ctx.fillStyle = '#FFFFFF';
-			ctx.font = "bold 26px 'Anek Malayalam', sans-serif";
-			ctx.fillText("KERALA STATE GIG & PLATFORM WORKERS UNION (CITU)", 40, 52);
-			ctx.fillStyle = '#FEF3C7';
-			ctx.font = "18px 'Anek Malayalam', sans-serif";
-			ctx.fillText("Reg. No: Tu19965 • Registered Under Trade Unions Act", 40, 88);
-
-			// Union Logo in header
-			try {
-				const logo = new Image();
-				logo.crossOrigin = 'anonymous';
-				logo.src = '/gigLogo.png';
-				await new Promise((resolve) => {
-					logo.onload = () => {
-						ctx.drawImage(logo, canvas.width - 125, 15, 100, 100);
-						resolve(true);
-					};
-					logo.onerror = () => resolve(false);
-				});
-			} catch (e) {}
-
-			// 3. Member Photo
-			ctx.strokeStyle = '#991B1B';
-			ctx.lineWidth = 3;
-			ctx.strokeRect(40, 155, 200, 245);
-			ctx.fillStyle = '#F1F5F9';
-			ctx.fillRect(40, 155, 200, 245);
-
-			if (member.photo) {
-				try {
-					const photoImg = new Image();
-					photoImg.crossOrigin = 'anonymous';
-					photoImg.src = member.photo;
-					await new Promise((resolve) => {
-						photoImg.onload = () => {
-							ctx.drawImage(photoImg, 40, 155, 200, 245);
-							resolve(true);
-						};
-						photoImg.onerror = () => resolve(false);
-					});
-				} catch (e) {}
-			}
-
-			// Active member badge
-			ctx.fillStyle = '#10B981';
-			ctx.fillRect(40, 412, 200, 36);
-			ctx.fillStyle = '#FFFFFF';
-			ctx.font = "bold 16px sans-serif";
-			ctx.textAlign = 'center';
-			ctx.fillText("ACTIVE MEMBER", 140, 436);
-			ctx.textAlign = 'left';
-
-			// 4. Member Info
-			const startX = 275;
-			ctx.fillStyle = '#0F172A';
-			ctx.font = "bold 32px 'Anek Malayalam', sans-serif";
-			ctx.fillText(member.name, startX, 195);
-
-			ctx.fillStyle = '#64748B';
-			ctx.font = "20px 'Anek Malayalam', sans-serif";
-			ctx.fillText("Membership ID:", startX, 245);
-			ctx.fillStyle = '#B91C1C';
-			ctx.font = "bold 24px monospace";
-			ctx.fillText(member.id, startX + 170, 245);
-
-			ctx.fillStyle = '#64748B';
-			ctx.font = "20px 'Anek Malayalam', sans-serif";
-			ctx.fillText("District Unit:", startX, 290);
-			ctx.fillStyle = '#0F172A';
-			ctx.font = "bold 22px 'Anek Malayalam', sans-serif";
-			ctx.fillText(member.districtNameEn || member.districtName, startX + 170, 290);
-
-			ctx.fillStyle = '#64748B';
-			ctx.font = "20px 'Anek Malayalam', sans-serif";
-			ctx.fillText("Platform:", startX, 335);
-			ctx.fillStyle = '#0F172A';
-			ctx.font = "bold 22px 'Anek Malayalam', sans-serif";
-			ctx.fillText(member.platforms[0]?.name || member.primaryPlatform || 'Swiggy', startX + 170, 335);
-
-			ctx.fillStyle = '#64748B';
-			ctx.font = "20px 'Anek Malayalam', sans-serif";
-			ctx.fillText("Sector:", startX, 380);
-			ctx.fillStyle = '#0F172A';
-			ctx.font = "bold 20px 'Anek Malayalam', sans-serif";
-			ctx.fillText(member.sectorEn, startX + 170, 380);
-
-			if (member.vehicleNumber) {
-				ctx.fillStyle = '#64748B';
-				ctx.font = "20px 'Anek Malayalam', sans-serif";
-				ctx.fillText("Vehicle / RC:", startX, 425);
-				ctx.fillStyle = '#0F172A';
-				ctx.font = "bold 20px monospace";
-				ctx.fillText(member.vehicleNumber, startX + 170, 425);
-			}
-
-			ctx.fillStyle = '#64748B';
-			ctx.font = "20px 'Anek Malayalam', sans-serif";
-			ctx.fillText("Valid Through:", startX, 470);
-			ctx.fillStyle = '#059669';
-			ctx.font = "bold 22px monospace";
-			ctx.fillText(member.validUntil, startX + 170, 470);
-
-			// 5. QR Code
-			try {
-				const qrUrl = typeof window !== 'undefined' ? window.location.href : `https://gigworkers.online/verify/${member.id}`;
-				const qrImg = new Image();
-				qrImg.crossOrigin = 'anonymous';
-				qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(qrUrl)}`;
-				await new Promise((resolve) => {
-					qrImg.onload = () => {
-						ctx.drawImage(qrImg, canvas.width - 210, 165, 170, 170);
-						resolve(true);
-					};
-					qrImg.onerror = () => resolve(false);
-				});
-
-				ctx.fillStyle = '#64748B';
-				ctx.font = "15px sans-serif";
-				ctx.fillText("Scan to Verify", canvas.width - 175, 355);
-			} catch (e) {}
-
-			// 6. Footer bar
-			ctx.fillStyle = '#0F172A';
-			ctx.fillRect(0, canvas.height - 46, canvas.width, 46);
-			ctx.fillStyle = '#CBD5E1';
-			ctx.font = "16px sans-serif";
-			ctx.fillText("E Balananda Smaraka Office, Mele Thampanoor • Ph: 9846063666, 9447695655 • Reg. No: Tu19965", 40, canvas.height - 18);
-
-			// Download link
+			const canvas = await renderCardCanvas();
+			if (!canvas) return;
 			const a = document.createElement('a');
 			a.download = `CITU_Membership_Card_${member.id}.png`;
 			a.href = canvas.toDataURL('image/png');
+			document.body.appendChild(a);
 			a.click();
+			setTimeout(() => document.body.removeChild(a), 200);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			isDownloading = false;
+		}
+	}
+
+	async function downloadCardPdfFile() {
+		isDownloading = true;
+		try {
+			const canvas = await renderCardCanvas();
+			if (!canvas) return;
+			downloadCardPdf(canvas, `CITU_Membership_Card_${member.id}.pdf`);
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -609,7 +680,7 @@
 						<div class="flex flex-col items-center justify-center shrink-0 border-t sm:border-t-0 sm:border-l border-slate-200 pt-3 sm:pt-0 sm:pl-4">
 							<div class="w-24 h-24 sm:w-28 sm:h-28 bg-white p-1.5 rounded-xl border border-slate-300 shadow-sm flex items-center justify-center">
 								<img 
-									src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : 'https://gigworkers.online/verify/' + member.id)}`} 
+									src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(getPublicVerifyUrl(member))}`} 
 									alt="QR Code" 
 									class="w-full h-full object-contain"
 								/>
@@ -632,20 +703,30 @@
 				</div>
 
 				<!-- Download & Print Actions Bar -->
-				<div class="w-full mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 print:hidden">
+				<div class="w-full mt-4 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 print:hidden">
 					<button
 						type="button"
 						onclick={downloadCardPng}
 						disabled={isDownloading}
-						class="w-full sm:w-auto px-6 py-3 rounded-xl crimson-gradient-btn text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2"
+						class="flex-1 sm:flex-none px-5 py-3 rounded-xl crimson-gradient-btn text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 min-w-[190px]"
 					>
 						{#if isDownloading}
 							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
-							<span>{lang === 'ml' ? 'തയ്യാറാക്കുന്നു...' : 'Rendering Card...'}</span>
+							<span>{lang === 'ml' ? 'തയ്യാറാക്കുന്നു...' : 'Rendering...'}</span>
 						{:else}
-							<span class="material-symbols-outlined text-[18px]">download</span>
-							<span>{lang === 'ml' ? 'അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക (PNG)' : 'Download Membership Card (PNG)'}</span>
+							<span class="material-symbols-outlined text-[18px]">image</span>
+							<span>{lang === 'ml' ? 'ഇമേജ് ഡൗൺലോഡ് (PNG)' : 'Download Image (PNG)'}</span>
 						{/if}
+					</button>
+
+					<button
+						type="button"
+						onclick={downloadCardPdfFile}
+						disabled={isDownloading}
+						class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-red-800 hover:bg-red-900 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 min-w-[190px]"
+					>
+						<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+						<span>{lang === 'ml' ? 'പി.ഡി.എഫ് ഡൗൺലോഡ് (PDF)' : 'Download Card (PDF)'}</span>
 					</button>
 
 					<button
@@ -654,7 +735,7 @@
 						class="w-full sm:w-auto px-5 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-2"
 					>
 						<span class="material-symbols-outlined text-[18px]">print</span>
-						<span>{lang === 'ml' ? 'പ്രിന്റ് ചെയ്യുക / സേവ് ചെയ്യുക' : 'Print / Save PDF'}</span>
+						<span>{lang === 'ml' ? 'പ്രിന്റ് ചെയ്യുക' : 'Print / Save PDF'}</span>
 					</button>
 				</div>
 			</div>

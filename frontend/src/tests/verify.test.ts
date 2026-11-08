@@ -162,4 +162,21 @@ describe('Verification & Dynamic ID Card Resolution', () => {
 		expect(publicVerificationView).not.toHaveProperty('aadhaarFull');
 		expect(publicVerificationView.verified).toBe(true);
 	});
+
+	it('should support cross-device QR scanning by resolving member data from structured URL parameters', () => {
+		const urlString = 'https://citu-gigworkers-web.onrender.com/verify/KL-TVC-2026-00349?name=ANANDHU+K+S&dist=KLTVC&sec=Delivery&plat=Swiggy&veh=KL-01-CA-5566';
+		const url = new URL(urlString);
+		const params = url.searchParams;
+
+		expect(params.get('name')).toBe('ANANDHU K S');
+		expect(params.get('dist')).toBe('KLTVC');
+		expect(params.get('plat')).toBe('Swiggy');
+		expect(params.get('veh')).toBe('KL-01-CA-5566');
+
+		const distObj = getDistrictInfo(params.get('dist') || '');
+		expect(distObj.en).toBe('Thiruvananthapuram');
+
+		const platformInfo = getPlatformInfo(params.get('plat') || '');
+		expect(platformInfo.name).toContain('Swiggy');
+	});
 });
