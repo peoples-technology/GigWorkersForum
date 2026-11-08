@@ -34,17 +34,42 @@
 
 			// Check if phone matches any registered member in local registry
 			try {
+				let cleanInput = (trackPhone || '').replace(/\D/g, '');
+				if (cleanInput.length === 12 && cleanInput.startsWith('91')) {
+					cleanInput = cleanInput.slice(2);
+				}
+
 				const regStr = localStorage.getItem('ksgpwu_members_registry');
 				if (regStr) {
 					const reg = JSON.parse(regStr);
-					if (reg[trackPhone]) {
-						matchedMemberId = reg[trackPhone].id;
+					if (reg[cleanInput]) {
+						matchedMemberId = reg[cleanInput].memberId || reg[cleanInput].id || cleanInput;
+					} else {
+						for (const k in reg) {
+							const m = reg[k];
+							const mPhone = (m.mobile || m.phone || '').replace(/\D/g, '');
+							if (mPhone && (mPhone === cleanInput || mPhone.endsWith(cleanInput))) {
+								matchedMemberId = m.memberId || m.id || k;
+								break;
+							}
+						}
 					}
 				}
 				if (!matchedMemberId) {
-					const directStr = localStorage.getItem(`member_${trackPhone}`);
+					const directStr = localStorage.getItem(`member_${cleanInput}`);
 					if (directStr) {
-						matchedMemberId = JSON.parse(directStr).id;
+						const direct = JSON.parse(directStr);
+						matchedMemberId = direct.memberId || direct.id || cleanInput;
+					}
+				}
+				if (!matchedMemberId) {
+					const lastStr = localStorage.getItem('lastRegisteredMember');
+					if (lastStr) {
+						const last = JSON.parse(lastStr);
+						const lastPhone = (last.mobile || last.phone || '').replace(/\D/g, '');
+						if (lastPhone && (lastPhone === cleanInput || lastPhone.endsWith(cleanInput))) {
+							matchedMemberId = last.memberId || last.id;
+						}
 					}
 				}
 			} catch (e) {}
