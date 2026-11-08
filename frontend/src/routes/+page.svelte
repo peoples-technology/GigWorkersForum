@@ -272,15 +272,13 @@
 
 							<a
 								href="#quick-access-banner"
-								class="inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-xs text-center"
+								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-xs text-center"
 							>
+								<span class="material-symbols-outlined text-[18px] text-slate-500">download</span>
 								{#if lang === 'ml'}
-									<span style="font-family: 'Anek Malayalam', sans-serif;">തിരച്ചിൽ</span>
-									<span class="text-slate-300">|</span>
-									<span class="text-slate-600 text-xs font-bold">Track Membership</span>
+									<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക</span>
 								{:else}
-									<span class="material-symbols-outlined text-[18px] text-slate-500">search</span>
-									<span>Track Membership Status</span>
+									<span>Download Membership Card</span>
 								{/if}
 							</a>
 						</div>
@@ -432,7 +430,7 @@
 								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
 							</div>
 							<h3 class="text-xl sm:text-3xl font-black text-white">
-								{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വം പരിശോധിക്കുക' : 'Access Your Membership'}
+								{lang === 'ml' ? 'അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക' : 'Download Membership Card'}
 							</h3>
 							<p class={`text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
