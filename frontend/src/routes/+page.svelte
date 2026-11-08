@@ -203,13 +203,17 @@
 				></div>
 			</div>
 
-			<!-- Decorative Architectural Grid on Left (Mobile/Tablet) -->
-			<div
-				class="lg:hidden absolute left-0 top-0 w-72 sm:w-88 h-full pointer-events-none opacity-30 select-none overflow-hidden"
-				style="background-image: linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px); background-size: 34px 34px;"
-			></div>
-			<!-- Ambient Soft Red Glow on Left Edge (Mobile/Tablet) -->
-			<div class="lg:hidden absolute -left-20 top-1/4 w-80 h-80 rounded-full bg-red-500/10 blur-3xl pointer-events-none select-none"></div>
+			<!-- Full-Bleed Mobile Hero Background (Mobile/Tablet View: below lg) -->
+			<div class="lg:hidden absolute inset-0 w-full h-full select-none pointer-events-none overflow-hidden z-0">
+				<img
+					src="/images/heroMobileBgColorFul.webp"
+					alt="Kerala gig and platform workers united across Kerala"
+					class="w-full h-full object-cover object-top select-none"
+					onerror={(e) => {
+						(e.currentTarget as HTMLImageElement).src = "/heroMobileBgColorFul.webp";
+					}}
+				/>
+			</div>
 
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 py-10 lg:py-16 xl:py-20">
 				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -309,17 +313,8 @@
 					<!-- Desktop Spacer Column (Allows HeroBgDesktop.webp workers to shine through cleanly) -->
 					<div class="hidden lg:block lg:col-span-5 xl:col-span-6 pointer-events-none"></div>
 
-					<!-- Mobile Stage Graphic -->
-					<div class="lg:hidden flex items-end justify-center w-full mt-6">
-						<img
-							src="/images/HeroBg.png"
-							alt="Kerala gig and platform workers from Zomato, Swiggy, Instamart, Blinkit, and Zepto standing united in solidarity"
-							class="w-full max-w-md sm:max-w-lg h-auto object-contain select-none"
-							onerror={(e) => {
-								(e.currentTarget as HTMLImageElement).src = "/HeroBg.png";
-							}}
-						/>
-					</div>
+					<!-- Mobile Spacer (Showcases heroMobileBgColorFul.webp workers and slogan without overlap) -->
+					<div class="lg:hidden w-full min-h-[260px] sm:min-h-[340px] pointer-events-none"></div>
 
 				</div>
 			</div>
