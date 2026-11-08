@@ -16,6 +16,24 @@
 	// Netbanking inputs
 	let selectedBank = $state('SBI');
 
+	// Districts metadata
+	const districts = [
+		{ code: 'KLTVC', en: 'Thiruvananthapuram', ml: 'തിരുവനന്തപുരം' },
+		{ code: 'KLKLM', en: 'Kollam', ml: 'കൊല്ലം' },
+		{ code: 'KLPTA', en: 'Pathanamthitta', ml: 'പത്തനംതിട്ട' },
+		{ code: 'KLALP', en: 'Alappuzha', ml: 'ആലപ്പുഴ' },
+		{ code: 'KLKTM', en: 'Kottayam', ml: 'കോട്ടയം' },
+		{ code: 'KLIDK', en: 'Idukki', ml: 'ഇടുക്കി' },
+		{ code: 'KLERN', en: 'Ernakulam', ml: 'എറണാകുളം' },
+		{ code: 'KLTSR', en: 'Thrissur', ml: 'തൃശ്ശൂർ' },
+		{ code: 'KLPKD', en: 'Palakkad', ml: 'പാലക്കാട്' },
+		{ code: 'KLMLP', en: 'Malappuram', ml: 'മലപ്പുറം' },
+		{ code: 'KLKKD', en: 'Kozhikode', ml: 'കോഴിക്കോട്' },
+		{ code: 'KLWND', en: 'Wayanad', ml: 'വയനാട്' },
+		{ code: 'KLKNR', en: 'Kannur', ml: 'കണ്ണൂർ' },
+		{ code: 'KLKSD', en: 'Kasaragod', ml: 'കാസർഗോഡ്' }
+	];
+
 	// Applicant Info (loaded from sessionStorage or fallback)
 	let memberName = $state('ANANDHU K. S.');
 	let memberAppId = $state('APP2026-00349');
@@ -31,12 +49,18 @@
 
 	onMount(() => {
 		try {
-			const pending = sessionStorage.getItem('pendingRegistration');
-			if (pending) {
-				const p = JSON.parse(pending);
+			const saved = sessionStorage.getItem('pendingRegistration') || localStorage.getItem('pendingRegistration');
+			if (saved) {
+				const p = JSON.parse(saved);
 				if (p.fullName) memberName = p.fullName.toUpperCase();
-				if (p.district) memberDistrict = `${p.district} District`;
-				if (p.primarySector || p.primaryPlatform) {
+				const distCode = p.workingDistrict || p.district || $page.url.searchParams.get('district');
+				const distObj = districts.find(d => d.code === distCode);
+				if (distObj) {
+					memberDistrict = `${distObj.en} (${distObj.code})`;
+				} else if (distCode) {
+					memberDistrict = `${distCode} District`;
+				}
+				if (p.primaryPlatform || p.primarySector) {
 					memberSector = `${p.primaryPlatform || ''} ${p.primarySector || ''}`.trim();
 				}
 				if (p.photo) memberPhoto = p.photo;
@@ -53,7 +77,74 @@
 		setTimeout(() => {
 			isProcessing = false;
 			transactionId = 'TXN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-			generatedMemberId = `KL-${memberDistrict.includes('KL') ? memberDistrict.split('(')[1]?.replace(')', '') || 'TVC' : 'TVC'}-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+			let p: any = {};
+			try {
+				const raw = sessionStorage.getItem('pendingRegistration') || localStorage.getItem('pendingRegistration');
+				if (raw) p = JSON.parse(raw);
+			} catch (e) {}
+
+			const distCode = p.workingDistrict || p.district || $page.url.searchParams.get('district') || (memberDistrict.includes('(') ? memberDistrict.split('(')[1]?.replace(')', '') : 'KLTVC') || 'KLTVC';
+			const distObj = districts.find(d => d.code === distCode) || {
+				code: distCode,
+				en: 'Thiruvananthapuram',
+				ml: 'തിരുവനന്തപുരം'
+			};
+			const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+			const cleanCode = distObj.code.replace(/^KL/, '');
+			generatedMemberId = `KL-${cleanCode}-2026-${randomSuffix}`;
+
+			const registeredMember = {
+				id: generatedMemberId,
+				name: (p.fullName || memberName).toUpperCase(),
+				nameMl: p.fullName || memberName,
+				mobile: p.mobile || '',
+				email: p.email || '',
+				dob: p.dob || '',
+				gender: p.gender || '',
+				motherTongue: p.motherTongue || 'Malayalam',
+				currentAddress: p.currentAddress || '',
+				districtCode: distObj.code,
+				districtNameEn: distObj.en,
+				districtNameMl: distObj.ml,
+				districtName: `${distObj.ml} / ${distObj.en}`,
+				primarySector: p.primarySector || 'Delivery',
+				primaryPlatform: p.primaryPlatform || 'Swiggy',
+				customPlatform: p.customPlatform || '',
+				workingMode: p.workingMode || 'Full Time',
+				vehicleNumber: p.vehicleNumber || '',
+				licenceNumber: p.licenceNumber || '',
+				idDocType: p.idDocType || 'Aadhaar',
+				idLastDigits: p.idLastDigits || '',
+				photo: p.photo || memberPhoto,
+				transactionId,
+				amountPaid: 100,
+				paidAt: new Date().toISOString(),
+				validUntil: '31 October 2027',
+				status: 'Active & Paid-Up',
+				tokenHash: `SHA256-${distObj.code.toLowerCase()}_${Math.random().toString(36).substring(2, 8)}`
+			};
+
+			// Store in sessionStorage and persistent localStorage
+			sessionStorage.setItem('currentMember', JSON.stringify(registeredMember));
+			localStorage.setItem('lastRegisteredMember', JSON.stringify(registeredMember));
+			localStorage.setItem(`member_${generatedMemberId.toUpperCase()}`, JSON.stringify(registeredMember));
+			if (p.mobile) {
+				localStorage.setItem(`member_${p.mobile}`, JSON.stringify(registeredMember));
+			}
+
+			try {
+				const existingRegStr = localStorage.getItem('ksgpwu_members_registry');
+				const reg = existingRegStr ? JSON.parse(existingRegStr) : {};
+				reg[generatedMemberId.toUpperCase()] = registeredMember;
+				if (p.mobile) {
+					reg[p.mobile] = registeredMember;
+				}
+				localStorage.setItem('ksgpwu_members_registry', JSON.stringify(reg));
+			} catch (e) {
+				console.error(e);
+			}
+
 			paymentSuccess = true;
 		}, 1300);
 	}

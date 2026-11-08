@@ -244,8 +244,10 @@
 			email,
 			currentAddress,
 			workingDistrict,
+			district: workingDistrict,
 			primarySector,
 			primaryPlatform: primaryPlatform === 'Other' ? customPlatform : primaryPlatform,
+			customPlatform,
 			workingMode,
 			vehicleNumber,
 			licenceNumber,
@@ -256,8 +258,9 @@
 			timestamp: new Date().toISOString()
 		};
 
-		// Save payload for Screen 3 (Checkout)
+		// Save payload for Screen 3 (Checkout) in both sessionStorage and localStorage
 		sessionStorage.setItem('pendingRegistration', JSON.stringify(payload));
+		localStorage.setItem('pendingRegistration', JSON.stringify(payload));
 
 		// Navigate to checkout
 		window.location.href = `/checkout?district=${workingDistrict}&mobile=${mobile}&name=${encodeURIComponent(fullName)}`;

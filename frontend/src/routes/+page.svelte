@@ -8,6 +8,7 @@
 	let otpSent = $state(false);
 	let statusMessage = $state('');
 	let statusType = $state<'info' | 'error' | 'success'>('info');
+	let matchedMemberId = $state('');
 
 	function toggleLang(newLang: 'ml' | 'en') {
 		lang = newLang;
@@ -24,11 +25,30 @@
 
 		otpSending = true;
 		statusMessage = '';
+		matchedMemberId = '';
 
 		setTimeout(() => {
 			otpSending = false;
 			otpSent = true;
 			statusType = 'success';
+
+			// Check if phone matches any registered member in local registry
+			try {
+				const regStr = localStorage.getItem('ksgpwu_members_registry');
+				if (regStr) {
+					const reg = JSON.parse(regStr);
+					if (reg[trackPhone]) {
+						matchedMemberId = reg[trackPhone].id;
+					}
+				}
+				if (!matchedMemberId) {
+					const directStr = localStorage.getItem(`member_${trackPhone}`);
+					if (directStr) {
+						matchedMemberId = JSON.parse(directStr).id;
+					}
+				}
+			} catch (e) {}
+
 			statusMessage = lang === 'ml'
 				? `OTP +91 ${trackPhone} എന്ന നമ്പറിലേക്ക് അയച്ചിട്ടുണ്ട്. Verification window activated.`
 				: `OTP has been dispatched to +91 ${trackPhone}. Verification window activated.`;
@@ -471,6 +491,19 @@
 								<div class={`mt-3 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : 'bg-emerald-950/80 text-emerald-200 border border-emerald-800'}`}>
 									<span class="material-symbols-outlined text-[16px] flex-shrink-0">{statusType === 'error' ? 'error' : 'check_circle'}</span>
 									<span class="font-medium break-words">{statusMessage}</span>
+								</div>
+							{/if}
+
+							{#if matchedMemberId}
+								<div class="mt-3 flex">
+									<a 
+										href={`/verify/${matchedMemberId}`}
+										class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
+									>
+										<span class="material-symbols-outlined text-[18px]">badge</span>
+										<span>{lang === 'ml' ? 'നിങ്ങളുടെ അംഗത്വ കാർഡ് കാണുക / ഡൗൺലോഡ് ചെയ്യുക' : 'View & Download Membership Card'}</span>
+										<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+									</a>
 								</div>
 							{/if}
 						</div>
