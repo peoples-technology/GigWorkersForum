@@ -15,10 +15,12 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "https://gigworkerscitu.online",
+        "https://www.gigworkerscitu.online",
         "https://gigworkers.online",
         "https://www.gigworkers.online",
     ]
-    FRONTEND_BASE_URL: str = "https://gigworkers.online"
+    FRONTEND_BASE_URL: str = "https://gigworkerscitu.online"
 
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/citu_gigworkers"

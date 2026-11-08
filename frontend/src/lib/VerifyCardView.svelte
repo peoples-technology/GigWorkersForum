@@ -90,7 +90,7 @@
 
 	function getPublicVerifyUrl(m: any): string {
 		const memberId = m?.id || memberToken;
-		let baseUrl = 'https://citu-gigworkers-web.onrender.com';
+		let baseUrl = 'https://gigworkerscitu.online';
 		if (typeof window !== 'undefined') {
 			if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
 				baseUrl = window.location.origin;
