@@ -181,104 +181,100 @@
 		</aside>
 
 		<!-- Hero Section -->
-		<section class="w-full bg-[#faf8f5] relative overflow-hidden flex items-center min-h-[580px] lg:min-h-[640px] xl:min-h-[720px] 2xl:min-h-[760px]">
-			<!-- Full-Bleed Desktop Hero Background with Kerala Countryside & Gig Workers (Desktop View) -->
+		<section class="relative w-full overflow-hidden bg-zinc-950 min-h-[580px] lg:min-h-[640px] xl:min-h-[720px] 2xl:min-h-[760px] flex items-center">
+			<!-- 1. Background Illustration: Desktop vs Mobile -->
+			<!-- Desktop Artwork (lg and above) -->
 			<div class="hidden lg:block absolute inset-0 w-full h-full select-none pointer-events-none overflow-hidden z-0">
 				<img
 					src="/images/HeroBgDesktop.webp"
 					alt="Kerala gig and platform workers united across Kerala"
-					class="w-full h-full object-cover object-right-bottom select-none"
+					class="absolute inset-0 h-full w-full object-cover object-right-bottom select-none"
 					onerror={(e) => {
 						(e.currentTarget as HTMLImageElement).src = "/HeroBgDesktop.webp";
 					}}
 				/>
-				<!-- Subtle Soft Sunset Gradient Overlay on the left (gentle fade for readability) -->
-				<div 
-					class="absolute inset-0 bg-gradient-to-r from-[#faf8f5]/45 via-[#faf8f5]/20 via-30% to-transparent pointer-events-none"
-				></div>
-				<!-- Decorative Union Architectural Grid on Left Edge (Subtle) -->
-				<div
-					class="absolute left-0 top-0 w-80 xl:w-96 h-full opacity-10 pointer-events-none"
-					style="background-image: linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px); background-size: 34px 34px;"
-				></div>
+				<!-- Subtle Warm Tint (Preserves Kerala/Union branding warmth) -->
+				<div class="absolute inset-0 bg-[#821111]/15 mix-blend-multiply pointer-events-none"></div>
 			</div>
 
-			<!-- Full-Bleed Mobile Hero Background (Mobile/Tablet View: below lg) -->
+			<!-- Mobile Artwork (below lg) -->
 			<div class="lg:hidden absolute inset-0 w-full h-full select-none pointer-events-none overflow-hidden z-0">
 				<img
 					src="/images/heroMobileBgColorFul.webp"
 					alt="Kerala gig and platform workers united across Kerala"
-					class="w-full h-full object-cover object-top select-none"
+					class="absolute inset-0 h-full w-full object-cover object-top select-none"
 					onerror={(e) => {
 						(e.currentTarget as HTMLImageElement).src = "/heroMobileBgColorFul.webp";
 					}}
 				/>
 			</div>
 
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 py-10 lg:py-16 xl:py-20">
+			<!-- 2. Responsive Vignette: Top-to-Bottom for Mobile, Left-to-Right for Desktop -->
+			<!-- On mobile (default), darkens from top/middle to ensure text readability. Transitions to side vignette on lg screens. -->
+			<div class="absolute inset-0 bg-gradient-to-b from-zinc-950/90 via-zinc-950/70 to-zinc-950/40 lg:bg-gradient-to-r lg:from-zinc-950/80 lg:via-zinc-950/40 lg:to-transparent pointer-events-none z-0"></div>
+
+			<!-- 3. Architectural Grid (Scaled back for cleanliness) -->
+			<div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:20px_20px] opacity-15 pointer-events-none z-0"></div>
+
+			<!-- Content Wrapper -->
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-8 pb-12 lg:py-16 xl:py-20">
 				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-					<!-- Left Column: Copy & Actions -->
-					<div class="lg:col-span-7 xl:col-span-6 flex flex-col items-start w-full max-w-xl">
+					<!-- Left Column: Copy & Actions (Centered on Mobile, Left-aligned on Desktop) -->
+					<div class="lg:col-span-7 xl:col-span-6 flex flex-col items-center text-center lg:items-start lg:text-left w-full max-w-xl mx-auto lg:mx-0">
 
-						<!-- Union Affiliation Badge -->
-						<div class="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 py-2 rounded-md bg-[#8b0000] text-white mb-6 shadow-sm max-w-full">
-							<div class="flex flex-col leading-tight min-w-0">
-								<span class="text-[10px] sm:text-[11px] font-black tracking-widest uppercase truncate">Kerala Gig &amp; Platform Workers Union</span>
-								<span class="text-[9px] sm:text-[10px] font-medium opacity-85">(Affiliated to CITU)</span>
-							</div>
+						<!-- Top Pill Badge -->
+						<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/80 border border-red-800/50 text-red-200 text-xs font-semibold mb-4 backdrop-blur-md shadow-sm">
+							<span class="tracking-wide uppercase text-[11px] sm:text-xs font-bold">KERALA GIG &amp; PLATFORM WORKERS UNION</span>
+							<span class="text-red-400 text-[10px] font-normal">(CITU)</span>
 							<!-- Hammer & Sickle -->
-							<svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-								<!-- Hammer handle -->
+							<svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<rect x="10" y="50" width="55" height="9" rx="3" transform="rotate(-45 37 54)"/>
-								<!-- Hammer head -->
 								<rect x="2" y="12" width="30" height="16" rx="3" transform="rotate(-45 17 20)"/>
-								<!-- Sickle arc -->
-								<path d="M 55 70 A 28 28 0 1 1 83 42" stroke="white" stroke-width="9" fill="none" stroke-linecap="round"/>
-								<!-- Sickle blade tip -->
+								<path d="M 55 70 A 28 28 0 1 1 83 42" stroke="currentColor" stroke-width="9" fill="none" stroke-linecap="round"/>
 								<path d="M 78 36 L 90 30 L 87 44 Z"/>
 							</svg>
 						</div>
 
-						<!-- Bilingual Headline -->
-						<h1 class="font-black text-slate-900 mb-5 tracking-tight w-full break-words">
+						<!-- Headline with High Contrast -->
+						<h1 class="text-3xl sm:text-4xl lg:text-[3.6rem] xl:text-[4rem] font-black text-white tracking-tight drop-shadow-md leading-tight mb-3">
 							{#if lang === 'ml'}
-								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.3] sm:leading-[1.35] lg:leading-[1.38]" style="font-family: 'Anek Malayalam', sans-serif;">
+								<span class="block" style="font-family: 'Anek Malayalam', sans-serif;">
 									<span class="block">ഒറ്റക്കല്ല നാം,</span>
 									<span class="block mt-1 sm:mt-2">ഒന്നാണ് നമ്മൾ</span>
 								</span>
 							{:else}
-								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.15]">
+								<span class="block">
 									We Are Not Alone,<br/>
-									<span class="text-primary italic font-black">We Stand as One</span>
+									<span class="text-red-400 italic font-black">We Stand as One</span>
 								</span>
 							{/if}
 						</h1>
 
-						<!-- Subtitle -->
-						<p class={`text-sm sm:text-base lg:text-lg text-slate-600 mb-8 max-w-xl font-normal ${lang === 'ml' ? 'leading-[1.85] sm:leading-[1.9]' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
+						<!-- Descriptive Text with Clean Backdrop Container -->
+						<p class={`mt-1 text-sm sm:text-base lg:text-lg text-zinc-200 font-medium max-w-md lg:max-w-xl leading-relaxed drop-shadow ${lang === 'ml' ? 'leading-[1.85] sm:leading-[1.9]' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
 							{lang === 'ml'
 								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്ഫോം മേഖലയിൽ പണിയെടുക്കുന്നവർ തങ്ങളുടെ അവകാശ സംരക്ഷണത്തിനും അമിത ചൂഷണത്തിന് എതിരെയും ഒരുമിക്കുന്നു.'
 								: 'Gig and platform workers across Kerala unite to defend their rights and stand against unfair exploitation.'}
 						</p>
 
-						<!-- CTA Buttons Matching Reference Mockup -->
-						<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-10 w-full sm:w-auto">
+						<!-- Action Buttons -->
+						<div class="mt-6 flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-none justify-center lg:justify-start">
 							<a
 								href="/register"
-								class="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#990000] to-[#7d000d] hover:from-[#880000] hover:to-[#6d000b] text-white text-sm font-bold tracking-wide shadow-lg shadow-red-950/20 transition-all text-center group"
+								class="w-full sm:w-auto px-6 py-3 rounded-xl bg-red-700 hover:bg-red-600 text-white font-bold shadow-lg shadow-red-950/40 transition-all flex items-center justify-center gap-2.5 text-sm"
 							>
 								<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗമാകുക</span>
 								<span class="opacity-40">|</span>
 								<span class="uppercase tracking-wider text-xs font-black">JOIN THE UNION</span>
-								<span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+								<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 							</a>
 
 							<a
 								href="#quick-access-banner"
-								class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-xl bg-white border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 hover:border-slate-400 transition-all shadow-xs text-center"
+								class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-medium border border-white/20 transition-all flex items-center justify-center gap-2 text-sm shadow-sm"
 							>
-								<span class="material-symbols-outlined text-[18px] text-slate-500">download</span>
+								<span class="material-symbols-outlined text-[18px] text-zinc-300">download</span>
 								{#if lang === 'ml'}
 									<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക</span>
 								{:else}
@@ -288,22 +284,22 @@
 						</div>
 
 						<!-- Floating Stats Strip Matching Reference Mockup -->
-						<div class="grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-md pt-2">
+						<div class="mt-8 grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-md pt-4 border-t border-white/10">
 							<div>
-								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-none">14</p>
-								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-none">14</p>
+								<p class="text-[11px] sm:text-xs text-zinc-400 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'ജില്ലകൾ' : 'Districts'}
 								</p>
 							</div>
 							<div>
-								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-primary leading-none">₹100</p>
-								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 leading-none">₹100</p>
+								<p class="text-[11px] sm:text-xs text-zinc-400 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'രജിസ്ട്രേഷൻ ഫീസ്' : 'Registration Fee'}
 								</p>
 							</div>
 							<div>
-								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-600 leading-none">100%</p>
-								<p class="text-[11px] sm:text-xs text-slate-500 font-semibold mt-1.5 uppercase tracking-wider">
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-400 leading-none">100%</p>
+								<p class="text-[11px] sm:text-xs text-zinc-400 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'നിയമ സുരക്ഷ' : 'Legal Cover'}
 								</p>
 							</div>
