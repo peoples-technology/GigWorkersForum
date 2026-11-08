@@ -140,11 +140,11 @@
 /* Custom luxury gradients and mesh styles */
 /* Enhanced line height for Malayalam script ascenders and descenders */
 .leading-malayalam-heading {
-	line-height: 1.45 !important;
+	line-height: 1.55 !important;
 }
 
 .leading-malayalam-body {
-	line-height: 1.85 !important;
+	line-height: 2.05 !important;
 }
 
 .hero-gradient-mesh {

@@ -237,11 +237,11 @@
 						</div>
 
 						<!-- Headline with High Contrast -->
-						<h1 class="text-3xl sm:text-4xl lg:text-[3.6rem] xl:text-[4rem] font-black text-white tracking-tight drop-shadow-md leading-tight mb-3">
+						<h1 class={`text-3xl sm:text-4xl lg:text-[3.6rem] xl:text-[4rem] font-black text-white tracking-tight drop-shadow-md mb-3 ${lang === 'ml' ? 'leading-[1.45] sm:leading-[1.5]' : 'leading-tight'}`}>
 							{#if lang === 'ml'}
 								<span class="block" style="font-family: 'Anek Malayalam', sans-serif;">
 									<span class="block">ഒറ്റക്കല്ല നാം,</span>
-									<span class="block mt-1 sm:mt-2">ഒന്നാണ് നമ്മൾ</span>
+									<span class="block mt-2 sm:mt-3.5">ഒന്നാണ് നമ്മൾ</span>
 								</span>
 							{:else}
 								<span class="block">
@@ -252,7 +252,7 @@
 						</h1>
 
 						<!-- Descriptive Text with Clean Backdrop Container -->
-						<p class={`mt-1 text-sm sm:text-base lg:text-lg text-zinc-200 font-medium max-w-md lg:max-w-xl leading-relaxed drop-shadow ${lang === 'ml' ? 'leading-[1.85] sm:leading-[1.9]' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
+						<p class={`mt-1 text-sm sm:text-base lg:text-lg text-zinc-200 font-medium max-w-md lg:max-w-xl drop-shadow ${lang === 'ml' ? 'leading-[2.1] sm:leading-[2.2] tracking-wide' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
 							{lang === 'ml'
 								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്ഫോം മേഖലയിൽ പണിയെടുക്കുന്നവർ തങ്ങളുടെ അവകാശ സംരക്ഷണത്തിനും അമിത ചൂഷണത്തിന് എതിരെയും ഒരുമിക്കുന്നു.'
 								: 'Gig and platform workers across Kerala unite to defend their rights and stand against unfair exploitation.'}
@@ -329,7 +329,7 @@
 							{lang === 'ml' ? 'തൊഴിലാളി ക്ഷേമവും അംഗത്വ ആനുകൂല്യങ്ങളും' : 'Platform Protections & Member Services'}
 						</h2>
 					</div>
-					<p class="text-xs sm:text-sm text-slate-600 max-w-md">
+					<p class={`text-xs sm:text-sm text-slate-600 max-w-md ${lang === 'ml' ? 'leading-[1.9] sm:leading-[2.0]' : 'leading-relaxed'}`}>
 						{lang === 'ml' 
 							? 'കേരളത്തിലെ എല്ലാ ഡെലിവറി, ക്യാബ്, ഇ-കൊമേഴ്സ് ഗിഗ് തൊഴിലാളികൾക്കും വിരൽത്തുമ്പിൽ സഹായം.' 
 							: 'Designed for frictionless operation in Kerala’s delivery, transport, and digital work sectors.'}
@@ -347,7 +347,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സ്വയം രജിസ്ട്രേഷൻ' : 'Instant Registration'}
 							</h3>
-							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[2.05] sm:leading-[2.1]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'മൊബൈൽ ഒടിപി വഴി മിനിറ്റുകൾക്കുള്ളിൽ വേരിഫിക്കേഷൻ. സ്വിഗ്ഗി, സൊമാറ്റോ, ഊബർ, ഒല, ആമസോൺ തൊഴിലാളികൾക്ക് ലളിതമായ രജിസ്ട്രേഷൻ.'
 									: 'Verified instantly via secure mobile SMS OTP. Enter your vehicle or delivery partner ID for automated activation across Zomato, Swiggy, Uber, Ola, and courier platforms.'}
@@ -369,7 +369,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'ഡിജിറ്റൽ അംഗത്വ കാർഡ്' : 'Digital Membership ID Card'}
 							</h3>
-							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[2.05] sm:leading-[2.1]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'തത്സമയം ഡൗൺലോഡ് ചെയ്യാവുന്ന ക്രിപ്റ്റോഗ്രാഫിക് ക്യുആർ കോഡ് അടങ്ങിയ യൂണിയൻ ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ്.'
 									: 'Instantly generate an authenticated digital union membership ID card carrying a dynamic cryptographically verified QR seal for roadside verification and labour claims.'}
@@ -391,7 +391,7 @@
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സഹായം & പരാതി പരിഹാരം' : 'Helpline & Grievance'}
 							</h3>
-							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
+							<p class={`text-sm text-slate-600 ${lang === 'ml' ? 'leading-[2.05] sm:leading-[2.1]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? '14 ജില്ലകളിലും അന്യായമായ ഐഡി ബ്ലോക്കിംഗിനെതിരെ നിയമസഹായം, അപകട ഇൻഷുറൻസ് ക്ലെയിം സഹായം, ഒത്തുതീർപ്പ് സമിതികൾ.'
 									: 'Direct access to all 14-district worker conciliation committees, legal aid desks for wrongful platform deactivation, and immediate accident assistance squads.'}
@@ -423,7 +423,7 @@
 							<h3 class="text-xl sm:text-3xl font-black text-white">
 								{lang === 'ml' ? 'അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക' : 'Download Membership Card'}
 							</h3>
-							<p class={`text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg ${lang === 'ml' ? 'leading-[1.8]' : 'leading-relaxed'}`}>
+							<p class={`text-xs sm:text-sm text-slate-300 mt-2 sm:mt-2.5 max-w-lg ${lang === 'ml' ? 'leading-[2.05] sm:leading-[2.1]' : 'leading-relaxed'}`}>
 								{lang === 'ml'
 									? 'രജിസ്റ്റർ ചെയ്ത 10 അക്ക മൊബൈൽ നമ്പർ നൽകി അപേക്ഷയുടെ നില പരിശോധിക്കുക, ഡിജിറ്റൽ തിരിച്ചറിയൽ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക, അല്ലെങ്കിൽ വാർഷിക വിഹിതം അടയ്ക്കുക.'
 									: 'Enter your registered 10-digit mobile number to track application status, download your high-resolution digital ID card, or renew your membership.'}
@@ -488,7 +488,7 @@
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-6 h-6 object-contain" />
 			<span>GigWorkers<span class="text-primary">.Online</span> · Kerala Gig &amp; Platform Workers Union (affil. CITU)</span>
 		</div>
-		<p class="text-xs text-slate-300 font-medium max-w-2xl">
+		<p class={`text-xs text-slate-300 font-medium max-w-2xl ${lang === 'ml' ? 'leading-[1.9]' : 'leading-normal'}`}>
 			{lang === 'ml' 
 				? 'രജിസ്ട്രേഷൻ നമ്പർ: Tu19965 · ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ.' 
 				: 'Reg. No: Tu19965 · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O.'}
