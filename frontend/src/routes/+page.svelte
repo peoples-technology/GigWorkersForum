@@ -236,27 +236,26 @@
 							</svg>
 						</div>
 
-						<!-- Bilingual Headline Matching Reference Mockup -->
+						<!-- Bilingual Headline -->
 						<h1 class="font-black text-slate-900 mb-5 tracking-tight w-full break-words">
 							{#if lang === 'ml'}
 								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.3] sm:leading-[1.35] lg:leading-[1.38]" style="font-family: 'Anek Malayalam', sans-serif;">
-									<span class="block">ശക്തമായ</span>
-									<span class="block mt-1 sm:mt-2">നാളെക്കായി</span>
-									<span class="block mt-1 sm:mt-2">ഒന്നിച്ച്</span>
+									<span class="block">ഒറ്റക്കല്ല നാം,</span>
+									<span class="block mt-1 sm:mt-2">ഒന്നാണ് നമ്മൾ</span>
 								</span>
 							{:else}
 								<span class="block text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] leading-[1.15]">
-									United for a<br/>
-									<span class="text-primary italic font-black">Stronger Tomorrow</span>
+									We Are Not Alone,<br/>
+									<span class="text-primary italic font-black">We Stand as One</span>
 								</span>
 							{/if}
 						</h1>
 
-						<!-- Subtitle Matching Reference Mockup -->
+						<!-- Subtitle -->
 						<p class={`text-sm sm:text-base lg:text-lg text-slate-600 mb-8 max-w-xl font-normal ${lang === 'ml' ? 'leading-[1.85] sm:leading-[1.9]' : 'leading-relaxed'}`} style={lang === 'ml' ? "font-family: 'Anek Malayalam', sans-serif;" : ""}>
 							{lang === 'ml'
-								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളികളെ സംഘടിപ്പിക്കുന്നു'
-								: 'Organizing and protecting Kerala’s delivery, transport, and digital platform workers.'}
+								? 'കേരളത്തിലെ ഗിഗ് & പ്ലാറ്റ്ഫോം മേഖലയിൽ പണിയെടുക്കുന്നവർ തങ്ങളുടെ അവകാശ സംരക്ഷണത്തിനും അമിത ചൂഷണത്തിന് എതിരെയും ഒരുമിക്കുന്നു.'
+								: 'Gig and platform workers across Kerala unite to defend their rights and stand against unfair exploitation.'}
 						</p>
 
 						<!-- CTA Buttons Matching Reference Mockup -->
