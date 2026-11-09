@@ -109,7 +109,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'GigWorkers.Online · കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'GigWorkers.Online · Kerala State Gig & Platform Workers Union'}</title>
+	<title>{lang === 'ml' ? 'GigWorkersCitu.Online · കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'GigWorkersCitu.Online · Kerala State Gig & Platform Workers Union'}</title>
 </svelte:head>
 
 <!-- Frosted Glass Sticky Header -->
@@ -128,7 +128,7 @@
 			<div class="flex flex-col min-w-0">
 				<div class="flex items-center gap-1.5 sm:gap-2">
 					<span class="font-extrabold text-sm sm:text-lg text-slate-900 tracking-tight group-hover:text-primary transition-colors truncate">
-						GigWorkers<span class="text-primary">.Online</span>
+						GigWorkersCitu<span class="text-primary">.Online</span>
 					</span>
 					<span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-200 uppercase tracking-wide">
 						Kerala
@@ -627,7 +627,7 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-3">
 		<div class="flex items-center gap-2.5 text-white font-bold text-sm">
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-6 h-6 object-contain" />
-			<span>GigWorkers<span class="text-primary">.Online</span> · Kerala State Gig &amp; Platform Workers Union (affil. CITU)</span>
+			<span>GigWorkersCitu<span class="text-primary">.Online</span> · Kerala State Gig &amp; Platform Workers Union (affil. CITU)</span>
 		</div>
 		<p class={`text-xs text-slate-300 font-medium max-w-2xl ${lang === 'ml' ? 'leading-[1.9]' : 'leading-normal'}`}>
 			{lang === 'ml' 

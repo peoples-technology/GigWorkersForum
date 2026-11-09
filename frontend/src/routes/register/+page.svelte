@@ -350,7 +350,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'അംഗത്വ രജിസ്ട്രേഷൻ | GigWorkers.Online' : 'Member Registration | GigWorkers.Online'}</title>
+	<title>{lang === 'ml' ? 'അംഗത്വ രജിസ്ട്രേഷൻ | GigWorkersCitu.Online' : 'Member Registration | GigWorkersCitu.Online'}</title>
 </svelte:head>
 
 <!-- Header -->
@@ -367,7 +367,7 @@
 				}}
 			/>
 			<div class="min-w-0">
-				<span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 block group-hover:text-primary transition truncate">GigWorkers.Online</span>
+				<span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 block group-hover:text-primary transition truncate">GigWorkersCitu.Online</span>
 				<span class="text-[10px] sm:text-xs text-slate-500 font-medium block truncate">
 					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
 				</span>

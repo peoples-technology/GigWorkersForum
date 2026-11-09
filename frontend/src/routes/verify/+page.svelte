@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>{queryToken ? `അംഗത്വ പരിശോധന: ${queryToken} | GigWorkers.Online` : (lang === 'ml' ? 'പൊതു അംഗത്വ പരിശോധന | GigWorkers.Online' : 'Public Member Verification | GigWorkers.Online')}</title>
+	<title>{queryToken ? `അംഗത്വ പരിശോധന: ${queryToken} | GigWorkersCitu.Online` : (lang === 'ml' ? 'പൊതു അംഗത്വ പരിശോധന | GigWorkersCitu.Online' : 'Public Member Verification | GigWorkersCitu.Online')}</title>
 </svelte:head>
 
 {#if queryToken}
@@ -41,7 +41,7 @@
 				/>
 				<div class="flex flex-col min-w-0">
 					<div class="flex items-center gap-1.5 sm:gap-2">
-						<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black truncate">GigWorkers.Online</span>
+						<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-black truncate">GigWorkersCitu.Online</span>
 						<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] uppercase font-bold">
 							Trade Union
 						</span>
@@ -142,7 +142,7 @@
 	<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary flex flex-col items-center justify-center gap-2">
 		<div class="flex items-center gap-2">
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-4 h-4 object-contain" />
-			<span>GigWorkers.Online · Kerala State Gig &amp; Platform Workers Union (CITU)</span>
+			<span>GigWorkersCitu.Online · Kerala State Gig &amp; Platform Workers Union (CITU)</span>
 		</div>
 		<div class="text-[11px] text-secondary">
 			Reg. No: <strong>Tu19965</strong> · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: <a href="tel:9846063666" class="hover:underline text-primary font-semibold">9846063666</a>, <a href="tel:9447695655" class="hover:underline text-primary font-semibold">9447695655</a>

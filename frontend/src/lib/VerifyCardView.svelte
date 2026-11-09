@@ -611,7 +611,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? `അംഗത്വ പരിശോധന: ${member.id} | GigWorkers.Online` : `Member Verification: ${member.id} | GigWorkers.Online`}</title>
+	<title>{lang === 'ml' ? `അംഗത്വ പരിശോധന: ${member.id} | GigWorkersCitu.Online` : `Member Verification: ${member.id} | GigWorkersCitu.Online`}</title>
 </svelte:head>
 
 <!-- Sticky Header -->
@@ -629,7 +629,7 @@
 			/>
 			<div class="flex flex-col min-w-0">
 				<div class="flex items-center gap-1.5 sm:gap-2">
-					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-bold truncate">GigWorkers.Online</span>
+					<span class="text-sm sm:text-base tracking-tight text-slate-900 uppercase font-bold truncate">GigWorkersCitu.Online</span>
 					<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] uppercase font-bold">
 						Trade Union
 					</span>

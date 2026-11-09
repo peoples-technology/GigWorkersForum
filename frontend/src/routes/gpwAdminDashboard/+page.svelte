@@ -244,7 +244,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'അഡ്മിൻ കൺസോൾ | GigWorkers.Online' : 'Admin Console | GigWorkers.Online'}</title>
+	<title>{lang === 'ml' ? 'അഡ്മിൻ കൺസോൾ | GigWorkersCitu.Online' : 'Admin Console | GigWorkersCitu.Online'}</title>
 	<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
 	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
 </svelte:head>
@@ -267,7 +267,7 @@
 					alt="Kerala State Gig and Platform Workers Union (CITU) Official Logo"
 					class="w-16 h-16 object-contain mx-auto mb-3 drop-shadow-md"
 				/>
-				<h2 class="text-xl font-bold text-slate-900">GigWorkers.Online Admin</h2>
+				<h2 class="text-xl font-bold text-slate-900">GigWorkersCitu.Online Admin</h2>
 				<p class="text-xs text-slate-500 mt-1">State Executive & District Council Secure Console</p>
 			</div>
 
@@ -368,7 +368,7 @@
 							class="w-9 h-9 rounded-full object-contain drop-shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform"
 						/>
 						<div>
-							<div class="text-sm font-bold tracking-tight text-white leading-tight">GigWorkers.Online</div>
+							<div class="text-sm font-bold tracking-tight text-white leading-tight">GigWorkersCitu.Online</div>
 							<div class="text-[11px] text-slate-400 leading-tight mt-0.5">സംസ്ഥാന കമ്മിറ്റി / State HQ</div>
 							<div class="text-[10px] text-slate-500 leading-tight">Reg: Tu19965 · തമ്പാനൂർ, തിരുവനന്തപുരം</div>
 						</div>
