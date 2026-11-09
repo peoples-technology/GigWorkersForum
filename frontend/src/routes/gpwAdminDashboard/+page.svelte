@@ -351,6 +351,7 @@
 
 				</form>
 			{/if}
+			<p class="text-xs text-slate-400 mt-5 text-center font-medium">Initiative By DYFI Professional SubCommittee</p>
 		</div>
 	</div>
 {:else}
@@ -1028,6 +1029,9 @@
 					</div>
 				</div>
 			</div>
+			<footer class="py-4 text-center text-xs text-slate-400 font-medium border-t border-slate-200/80 mt-auto bg-white/50">
+				Initiative By DYFI Professional SubCommittee
+			</footer>
 		</div>
 	</div>
 {/if}

@@ -1145,6 +1145,6 @@
 				? 'രജിസ്ട്രേഷൻ നമ്പർ: Tu19965 · ഇ. ബാലാനന്ദ സ്മാരക ഓഫീസ്, സിഐടിയു സംസ്ഥാന കമ്മിറ്റി ഓഫീസ്, മേലെ തമ്പാനൂർ, തമ്പാനൂർ പി.ഒ. · ഫോൺ: 9846063666, 9447695655' 
 				: 'Reg. No: Tu19965 · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: 9846063666, 9447695655'}
 		</p>
-		<p class="text-slate-500 text-[11px]">Technical Platform developed with DYFI Professional Committee Kerala · Version 1.0 (2026)</p>
+		<p class="text-slate-400 text-xs font-medium">Initiative By DYFI Professional SubCommittee</p>
 	</div>
 </footer>

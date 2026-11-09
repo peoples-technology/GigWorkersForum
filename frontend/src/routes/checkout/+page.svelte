@@ -743,5 +743,8 @@
 		<div class="text-[11px] text-secondary mt-1">
 			Reg. No: <strong>Tu19965</strong> · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: <a href="tel:9846063666" class="hover:underline text-primary font-semibold">9846063666</a>, <a href="tel:9447695655" class="hover:underline text-primary font-semibold">9447695655</a>
 		</div>
+		<div class="text-xs text-secondary font-medium mt-1">
+			Initiative By DYFI Professional SubCommittee
+		</div>
 	</div>
 </footer>

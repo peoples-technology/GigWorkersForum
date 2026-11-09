@@ -1126,5 +1126,8 @@
 		<div class="text-[11px] text-slate-500 mt-0.5">
 			Statutory Labour Protection &amp; Dignity · Kerala Platform Workers Welfare Registry
 		</div>
+		<div class="text-xs text-slate-400 font-medium mt-1">
+			Initiative By DYFI Professional SubCommittee
+		</div>
 	</div>
 </footer>

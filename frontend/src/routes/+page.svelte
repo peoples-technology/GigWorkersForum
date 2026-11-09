@@ -370,7 +370,7 @@
 								</p>
 							</div>
 							<div>
-								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-400 leading-none">100%</p>
+								<p class="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-none">100%</p>
 								<p class="text-[11px] sm:text-xs text-zinc-400 font-semibold mt-1.5 uppercase tracking-wider">
 									{lang === 'ml' ? 'നിയമ സുരക്ഷ' : 'Legal Cover'}
 								</p>
@@ -650,6 +650,9 @@
 			<span>കോഴിക്കോട് (KKD)</span>
 			<span>•</span>
 			<span>തൃശ്ശൂർ (TSR)</span>
+		</div>
+		<div class="pt-2 text-xs text-slate-400 font-medium border-t border-slate-800/80 w-full max-w-md mt-1">
+			Initiative By DYFI Professional SubCommittee
 		</div>
 	</div>
 </footer>
