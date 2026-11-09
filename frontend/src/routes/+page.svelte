@@ -109,7 +109,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'GigWorkers.Online · കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'GigWorkers.Online · Kerala Gig & Platform Workers Union'}</title>
+	<title>{lang === 'ml' ? 'GigWorkers.Online · കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'GigWorkers.Online · Kerala State Gig & Platform Workers Union'}</title>
 </svelte:head>
 
 <!-- Frosted Glass Sticky Header -->
@@ -135,7 +135,7 @@
 					</span>
 				</div>
 				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider font-medium truncate">
-					{lang === 'ml' ? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
+					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
@@ -234,8 +234,8 @@
 					</span>
 					<span class="truncate font-medium text-white/95 text-xs">
 						{lang === 'ml' 
-							? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം തൊഴിലാളി യൂണിയൻ - രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
-							: 'Kerala Gig & Platform Workers Union - Reg No: Tu19965'}
+							? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ - രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
+							: 'Kerala State Gig & Platform Workers Union - Reg No: Tu19965'}
 					</span>
 				</div>
 				<div class="hidden sm:flex items-center gap-4 text-white/90 font-medium text-xs">
@@ -297,7 +297,7 @@
 
 						<!-- Top Pill Badge -->
 						<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/80 border border-red-800/50 text-red-200 text-xs font-semibold mb-4 backdrop-blur-md shadow-sm">
-							<span class="tracking-wide uppercase text-[11px] sm:text-xs font-bold">KERALA GIG &amp; PLATFORM WORKERS UNION</span>
+							<span class="tracking-wide uppercase text-[11px] sm:text-xs font-bold">KERALA STATE GIG &amp; PLATFORM WORKERS UNION</span>
 							<span class="text-red-400 text-[10px] font-normal">(CITU)</span>
 							<!-- Hammer & Sickle -->
 							<svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -627,7 +627,7 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center gap-3">
 		<div class="flex items-center gap-2.5 text-white font-bold text-sm">
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-6 h-6 object-contain" />
-			<span>GigWorkers<span class="text-primary">.Online</span> · Kerala Gig &amp; Platform Workers Union (affil. CITU)</span>
+			<span>GigWorkers<span class="text-primary">.Online</span> · Kerala State Gig &amp; Platform Workers Union (affil. CITU)</span>
 		</div>
 		<p class={`text-xs text-slate-300 font-medium max-w-2xl ${lang === 'ml' ? 'leading-[1.9]' : 'leading-normal'}`}>
 			{lang === 'ml' 

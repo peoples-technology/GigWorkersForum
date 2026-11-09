@@ -1113,7 +1113,7 @@
 		<div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
 			<div class="flex items-center gap-1.5 font-semibold text-white">
 				<img src="/gigLogo.png" alt="CITU Logo" class="w-4 h-4 object-contain" />
-				<span>Kerala Gig &amp; Platform Workers Union (CITU)</span>
+				<span>Kerala State Gig &amp; Platform Workers Union (CITU)</span>
 			</div>
 			<span>•</span>
 			<span>Reg. No: <strong class="text-white">Tu19965</strong></span>

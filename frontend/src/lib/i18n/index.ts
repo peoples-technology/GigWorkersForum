@@ -59,7 +59,7 @@ export const translations = {
 		helplineNumbers: '9846063666, 9447695655'
 	},
 	en: {
-		unionTitle: 'Kerala Gig & Platform Workers Union (CITU)',
+		unionTitle: 'Kerala State Gig & Platform Workers Union (CITU)',
 		unionShort: 'CITU Gig Workers Union',
 		tagline: 'Workers United! Ensuring Social Security & Dignity of Labour',
 		step1: 'Step 1: Mobile Phone Verification',

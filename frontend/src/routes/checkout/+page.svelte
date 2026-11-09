@@ -191,7 +191,7 @@
 			/>
 			<div class="flex flex-col min-w-0">
 				<span class="text-sm sm:text-lg text-slate-900 tracking-tight font-extrabold leading-tight truncate">GigWorkers<span class="text-primary">.Online</span></span>
-				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium truncate">Kerala Gig &amp; Platform Workers Union</span>
+				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider hidden sm:block font-medium truncate">Kerala State Gig &amp; Platform Workers Union</span>
 			</div>
 		</a>
 
@@ -635,7 +635,7 @@
 								<span class="px-2 py-0.5 rounded bg-surface-container font-mono font-bold">Mastercard</span>
 							</div>
 							<p class="text-[11px] text-secondary max-w-lg">
-								Kerala Gig and Platform Workers Union — GigWorkers.Online (Registration: Tu19965). All registration fees are deposited directly to the Union Welfare Reserve Account.
+								Kerala State Gig and Platform Workers Union — GigWorkers.Online (Registration: Tu19965). All registration fees are deposited directly to the Union Welfare Reserve Account.
 							</p>
 						</div>
 					</div>
@@ -733,7 +733,7 @@
 		<div class="flex flex-col sm:flex-row items-center justify-between w-full gap-3">
 			<div class="flex items-center gap-2">
 				<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-4 h-4 object-contain" />
-				<p>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</p>
+				<p>GigWorkers.Online · Kerala State Gig &amp; Platform Workers Union (CITU)</p>
 			</div>
 			<div class="flex items-center gap-2">
 				<Icon name="verified_user" class="text-[16px] text-primary" />

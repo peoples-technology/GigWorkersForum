@@ -369,7 +369,7 @@
 			<div class="min-w-0">
 				<span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 block group-hover:text-primary transition truncate">GigWorkers.Online</span>
 				<span class="text-[10px] sm:text-xs text-slate-500 font-medium block truncate">
-					{lang === 'ml' ? 'കേരള ഗിഗ് & പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ' : 'Kerala Gig & Platform Workers Union'}
+					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
@@ -1069,7 +1069,7 @@
 					</h3>
 					<div class="text-xs text-secondary leading-relaxed space-y-2 max-h-36 overflow-y-auto p-3 bg-surface-container-lowest rounded border border-surface-variant">
 						<p>
-							<strong>1. Union Constitution:</strong> I hereby declare that I am an active gig/platform worker in Kerala and willingly accept the constitution and discipline of the Kerala Gig & Platform Workers Union (affiliated to CITU).
+							<strong>1. Union Constitution:</strong> I hereby declare that I am an active gig/platform worker in Kerala and willingly accept the constitution and discipline of the Kerala State Gig & Platform Workers Union (affiliated to CITU).
 						</p>
 						<p>
 							<strong>2. Data Usage:</strong> I consent to the Union collecting and processing my details to maintain my digital membership card, organize grievance redressal with platform aggregators, and allocate my record to my district committee under DPDP Act provisions.
@@ -1138,7 +1138,7 @@
 	<div class="max-w-5xl mx-auto px-4 text-center text-xs flex flex-col items-center gap-2">
 		<div class="flex items-center gap-2 font-bold text-white">
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-5 h-5 object-contain" />
-			<span>Kerala Gig &amp; Platform Workers Union (affiliated to CITU)</span>
+			<span>Kerala State Gig &amp; Platform Workers Union (affiliated to CITU)</span>
 		</div>
 		<p class="text-slate-300 font-medium">
 			{lang === 'ml' 

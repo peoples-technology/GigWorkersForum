@@ -142,7 +142,7 @@
 	<footer class="w-full bg-surface-container-lowest border-t border-surface-variant py-6 mt-12 text-center text-xs text-secondary flex flex-col items-center justify-center gap-2">
 		<div class="flex items-center gap-2">
 			<img src="/gigLogo.png" alt="CITU Gig Workers Official Logo" class="w-4 h-4 object-contain" />
-			<span>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</span>
+			<span>GigWorkers.Online · Kerala State Gig &amp; Platform Workers Union (CITU)</span>
 		</div>
 		<div class="text-[11px] text-secondary">
 			Reg. No: <strong>Tu19965</strong> · E Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, Thampanoor P.O. · Ph: <a href="tel:9846063666" class="hover:underline text-primary font-semibold">9846063666</a>, <a href="tel:9447695655" class="hover:underline text-primary font-semibold">9447695655</a>
