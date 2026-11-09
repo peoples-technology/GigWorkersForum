@@ -228,10 +228,6 @@
 		<aside aria-label="Statutory Notice" class="w-full bg-[#990000] text-white border-b border-[#7d000d]">
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
 				<div class="flex items-center gap-2.5 min-w-0">
-					<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold text-[10px] uppercase tracking-wider shadow-xs flex-shrink-0">
-						<span class="text-amber-300">★</span>
-						<span>CITU AFFILIATED</span>
-					</span>
 					<span class="truncate font-medium text-white/95 text-xs">
 						{lang === 'ml' 
 							? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം വർക്കേഴ്സ് യൂണിയൻ - സിഐടിയു · രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
@@ -641,15 +637,6 @@
 			</span>
 			<span class="text-slate-600 hidden sm:inline">•</span>
 			<span>Statutory Labour Protection &amp; Civic Dignity · Copyright © 2026</span>
-		</div>
-		<div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-2">
-			<span>തിരുവനന്തപുരം (TVM)</span>
-			<span>•</span>
-			<span>കൊച്ചി (EKM)</span>
-			<span>•</span>
-			<span>കോഴിക്കോട് (KKD)</span>
-			<span>•</span>
-			<span>തൃശ്ശൂർ (TSR)</span>
 		</div>
 		<div class="pt-2 text-xs text-slate-400 font-medium border-t border-slate-800/80 w-full max-w-md mt-1">
 			Initiative By DYFI Professional SubCommittee
