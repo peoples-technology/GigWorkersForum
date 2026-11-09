@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import Icon from '$lib/Icon.svelte';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let activeStep = $state(1);
@@ -393,7 +394,7 @@
 			</div>
 
 			<a href="/" class="hidden sm:inline-flex text-xs font-bold text-slate-600 hover:text-primary transition items-center gap-1">
-				<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+				<Icon name="arrow_back" class="text-[16px]" />
 				<span>{lang === 'ml' ? 'ഹോം' : 'Home'}</span>
 			</a>
 		</div>
@@ -437,7 +438,7 @@
 			<div class="relative z-10 flex flex-col items-center">
 				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 1 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 1 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 1}
-						<span class="material-symbols-outlined text-[20px]">check</span>
+						<Icon name="check" class="text-[20px]" />
 					{:else}
 						1
 					{/if}
@@ -451,7 +452,7 @@
 			<div class="relative z-10 flex flex-col items-center">
 				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 2 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 2 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 2}
-						<span class="material-symbols-outlined text-[20px]">check</span>
+						<Icon name="check" class="text-[20px]" />
 					{:else}
 						2
 					{/if}
@@ -465,7 +466,7 @@
 			<div class="relative z-10 flex flex-col items-center">
 				<div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shadow-md ${activeStep === 3 ? 'bg-primary text-white border-primary ring-4 ring-red-100' : activeStep > 3 ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-300'}`}>
 					{#if activeStep > 3}
-						<span class="material-symbols-outlined text-[20px]">check</span>
+						<Icon name="check" class="text-[20px]" />
 					{:else}
 						3
 					{/if}
@@ -494,7 +495,7 @@
 			<section class="space-y-6">
 				<div>
 					<h2 class="text-xl font-bold text-on-surface flex items-center gap-2">
-						<span class="material-symbols-outlined text-primary">smartphone</span>
+						<Icon name="smartphone" class="text-primary" />
 						<span>{lang === 'ml' ? 'മൊബൈൽ നമ്പർ സ്ഥിരീകരിക്കുക' : 'Mobile Number Verification'}</span>
 					</h2>
 					<p class="text-sm text-secondary mt-1">
@@ -557,7 +558,7 @@
 
 							<!-- Helper hint for testing -->
 							<div class="p-2.5 rounded bg-surface-container text-xs text-secondary flex items-center gap-1.5">
-								<span class="material-symbols-outlined text-[16px] text-tertiary">info</span>
+								<Icon name="info" class="text-[16px] text-tertiary" />
 								<span>Test OTP: <strong>123456</strong> (or any 6 digits)</span>
 							</div>
 						</div>
@@ -570,7 +571,7 @@
 								onclick={sendOtp}
 								class="w-full py-3.5 px-4 crimson-gradient-btn text-white font-bold rounded-xl shadow-md text-sm transition flex items-center justify-center gap-2"
 							>
-								<span class="material-symbols-outlined text-[18px]">send</span>
+								<Icon name="send" class="text-[18px]" />
 								<span>{lang === 'ml' ? 'OTP അയക്കുക' : 'Send OTP'}</span>
 							</button>
 						{:else}
@@ -579,7 +580,7 @@
 								onclick={verifyOtp}
 								class="w-full py-3.5 px-4 crimson-gradient-btn text-white font-bold rounded-xl shadow-md text-sm transition flex items-center justify-center gap-2"
 							>
-								<span class="material-symbols-outlined text-[18px]">verified</span>
+								<Icon name="verified" class="text-[18px]" />
 								<span>{lang === 'ml' ? 'സ്ഥിരീകരിച്ച് തുടരുക' : 'Verify OTP & Continue'}</span>
 							</button>
 						{/if}
@@ -593,7 +594,7 @@
 			<section class="space-y-6">
 				<div>
 					<h2 class="text-xl font-bold text-on-surface flex items-center gap-2">
-						<span class="material-symbols-outlined text-primary">person</span>
+						<Icon name="person" class="text-primary" />
 						<span>{lang === 'ml' ? 'വ്യക്തിഗത വിവരങ്ങൾ' : 'Personal Information'}</span>
 					</h2>
 					<p class="text-sm text-secondary mt-1">
@@ -748,7 +749,7 @@
 			<section class="space-y-6">
 				<div>
 					<h2 class="text-xl font-bold text-on-surface flex items-center gap-2">
-						<span class="material-symbols-outlined text-primary">work</span>
+						<Icon name="work" class="text-primary" />
 						<span>{lang === 'ml' ? 'തൊഴിൽ മേഖല & തിരിച്ചറിയൽ രേഖ' : 'Work, Sector & Identity'}</span>
 					</h2>
 					<p class="text-sm text-secondary mt-1">
@@ -943,7 +944,7 @@
 			<section class="space-y-6">
 				<div>
 					<h2 class="text-xl font-bold text-on-surface flex items-center gap-2">
-						<span class="material-symbols-outlined text-primary">photo_camera</span>
+						<Icon name="photo_camera" class="text-primary" />
 						<span>{lang === 'ml' ? 'തത്സമയ ഫോട്ടോ (സെൽഫി)' : 'Live In-App Selfie Capture'}</span>
 					</h2>
 					<p class="text-sm text-secondary mt-1">
@@ -975,7 +976,7 @@
 					{:else if !cameraActive && !capturedPhoto}
 						<div class="text-center py-6">
 							<div class="w-16 h-16 rounded-full bg-primary-fixed text-primary mx-auto flex items-center justify-center mb-3">
-								<span class="material-symbols-outlined text-3xl">photo_camera</span>
+								<Icon name="photo_camera" class="text-3xl" />
 							</div>
 							<p class="text-sm font-semibold text-on-surface">
 								{lang === 'ml' ? 'ഫോൺ ക്യാമറ വഴി തത്സമയ ഫോട്ടോ എടുക്കുക' : 'Take a live photo using your phone camera'}
@@ -994,11 +995,11 @@
 								onclick={startCamera} 
 								class="px-4 py-2.5 bg-on-surface hover:bg-black text-on-primary text-xs font-semibold rounded-lg shadow-sm flex items-center gap-2"
 							>
-								<span class="material-symbols-outlined text-[16px]">videocam</span>
+								<Icon name="videocam" class="text-[16px]" />
 								<span>{lang === 'ml' ? 'ക്യാമറ തുറക്കുക' : 'Open Camera'}</span>
 							</button>
 							<label class="px-4 py-2.5 border border-surface-variant bg-surface-container-lowest text-secondary text-xs font-semibold rounded-lg hover:bg-surface-container flex items-center gap-1.5 cursor-pointer">
-								<span class="material-symbols-outlined text-[16px]">upload</span>
+								<Icon name="upload" class="text-[16px]" />
 								<span>{lang === 'ml' ? 'ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക' : 'Upload Photo'}</span>
 								<input type="file" accept="image/*" class="hidden" onchange={handleFileUpload} />
 							</label>
@@ -1008,7 +1009,7 @@
 								onclick={capturePhoto} 
 								class="px-5 py-2.5 bg-primary hover:bg-primary-container text-on-primary text-xs font-semibold rounded-lg shadow-sm flex items-center gap-2"
 							>
-								<span class="material-symbols-outlined text-[16px]">camera</span>
+								<Icon name="camera" class="text-[16px]" />
 								<span>{lang === 'ml' ? 'ഫോട്ടോ പകർത്തുക' : 'Capture Photo'}</span>
 							</button>
 							<button 
@@ -1019,7 +1020,7 @@
 								{lang === 'ml' ? 'റദ്ദാക്കുക' : 'Cancel'}
 							</button>
 							<label class="px-4 py-2.5 border border-surface-variant bg-surface-container-lowest text-secondary text-xs font-semibold rounded-lg hover:bg-surface-container flex items-center gap-1.5 cursor-pointer">
-								<span class="material-symbols-outlined text-[16px]">upload</span>
+								<Icon name="upload" class="text-[16px]" />
 								<span>{lang === 'ml' ? 'ഫോട്ടോ അപ്‌ലോഡ്' : 'Upload Photo'}</span>
 								<input type="file" accept="image/*" class="hidden" onchange={handleFileUpload} />
 							</label>
@@ -1029,7 +1030,7 @@
 								onclick={retakePhoto} 
 								class="px-4 py-2.5 border border-surface-variant bg-surface-container-lowest text-secondary text-xs font-semibold rounded-lg hover:bg-surface-container flex items-center gap-1.5"
 							>
-								<span class="material-symbols-outlined text-[16px]">refresh</span>
+								<Icon name="refresh" class="text-[16px]" />
 								<span>{lang === 'ml' ? 'വീണ്ടും എടുക്കുക' : 'Retake'}</span>
 							</button>
 						{/if}
@@ -1038,7 +1039,7 @@
 					{#if cameraActive}
 						<div class="text-[11px] text-secondary text-center max-w-sm space-y-1 bg-surface-container-lowest/80 p-2.5 rounded-lg border border-surface-variant/50 mt-1">
 							<p class="font-semibold text-on-surface flex items-center justify-center gap-1">
-								<span class="material-symbols-outlined text-[14px] text-amber-600">info</span>
+								<Icon name="info" class="text-[14px] text-amber-600" />
 								<span>{lang === 'ml' ? 'ക്യാമറ സ്ക്രീൻ കറുത്തു കാണുന്നുണ്ടോ?' : 'Camera screen completely black?'}</span>
 							</p>
 							<p class="leading-relaxed">
@@ -1063,7 +1064,7 @@
 				<!-- Statutory Consent & Declaration -->
 				<div class="bg-surface-container-low p-5 rounded-xl border border-surface-variant space-y-3">
 					<h3 class="text-xs font-bold uppercase tracking-wider text-on-surface flex items-center gap-1.5">
-						<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+						<Icon name="verified_user" class="text-[18px] text-primary" />
 						<span>{lang === 'ml' ? 'സത്യപ്രസ്താവനയും സ്വകാര്യതാ സമ്മതവും' : 'Union Declaration & Privacy Consent'}</span>
 					</h3>
 					<div class="text-xs text-secondary leading-relaxed space-y-2 max-h-36 overflow-y-auto p-3 bg-surface-container-lowest rounded border border-surface-variant">
@@ -1109,7 +1110,7 @@
 						class="px-7 py-3 crimson-gradient-btn text-white font-bold rounded-xl text-sm shadow-lg flex items-center gap-2 disabled:opacity-50"
 					>
 						<span>{lang === 'ml' ? 'പേയ്‌മെന്റിലേക്ക് പോകുക (₹100)' : 'Proceed to Payment (₹100)'}</span>
-						<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+						<Icon name="arrow_forward" class="text-[18px]" />
 					</button>
 				</div>
 			</section>
@@ -1119,14 +1120,14 @@
 	<!-- Support Help Card -->
 	<div class="mt-8 card-gloss rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-3 shadow-sm">
 		<div class="flex items-center gap-2">
-			<span class="material-symbols-outlined text-[20px] text-primary shrink-0">help</span>
+			<Icon name="help" class="text-[20px] text-primary shrink-0" />
 			<span>{lang === 'ml' ? 'രജിസ്ട്രേഷനിൽ സഹായം വേണമോ? യൂണിയൻ ഹെൽപ്പ്‌ലൈനുമായി ബന്ധപ്പെടുക:' : 'Need assistance with registration? Contact union helpline:'}</span>
 			<a href="tel:9846063666" class="text-primary font-bold hover:underline">9846063666</a> / 
 			<a href="tel:9447695655" class="text-primary font-bold hover:underline">9447695655</a>
 		</div>
 		<a href="/#quick-access-banner" class="text-primary font-bold hover:underline flex items-center gap-1 shrink-0">
 			<span>{lang === 'ml' ? '14 ജില്ലാ ഹെൽപ്പ്‌ലൈനുകൾ' : 'View 14 District Helplines'}</span>
-			<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+			<Icon name="chevron_right" class="text-[16px]" />
 		</a>
 	</div>
 </main>

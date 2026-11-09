@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import VerifyCardView from '$lib/VerifyCardView.svelte';
+	import Icon from '$lib/Icon.svelte';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let searchInput = $state('');
@@ -79,7 +80,7 @@
 	<main class="w-full pt-28 hero-gradient-mesh min-h-[calc(100vh-80px)] flex flex-col items-center px-4">
 		<div class="max-w-lg w-full card-gloss rounded-3xl shadow-2xl border border-slate-200/90 p-6 sm:p-9 text-center">
 			<div class="w-16 h-16 rounded-2xl bg-red-100 text-primary flex items-center justify-center mx-auto mb-4 shadow-sm">
-				<span class="material-symbols-outlined text-3xl">qr_code_scanner</span>
+				<Icon name="qr_code_scanner" class="text-3xl" />
 			</div>
 
 			<h1 class="text-xl sm:text-2xl font-black text-slate-900">
@@ -94,7 +95,7 @@
 			<!-- Search Input Form -->
 			<form onsubmit={(e) => { e.preventDefault(); handleLookup(); }} class="mt-6 flex flex-col gap-3">
 				<div class="relative flex items-center">
-					<span class="material-symbols-outlined absolute left-3.5 text-slate-400 text-[20px]">badge</span>
+					<Icon name="badge" class="absolute left-3.5 text-slate-400 text-[20px]" />
 					<input 
 						type="text" 
 						bind:value={searchInput}
@@ -107,7 +108,7 @@
 					type="submit" 
 					class="w-full py-3.5 rounded-xl crimson-gradient-btn text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"
 				>
-					<span class="material-symbols-outlined text-[18px]">verified</span>
+					<Icon name="verified" class="text-[18px]" />
 					<span>{lang === 'ml' ? 'പരിശോധിക്കുക' : 'Verify Credentials'}</span>
 				</button>
 			</form>
@@ -132,7 +133,7 @@
 
 			<!-- DPDP Notice -->
 			<div class="mt-6 p-3 rounded-lg bg-surface-container-low text-[11px] text-secondary text-left flex items-start gap-2 border border-surface-variant">
-				<span class="material-symbols-outlined text-[15px] shrink-0 text-secondary mt-0.5">privacy_tip</span>
+				<Icon name="privacy_tip" class="text-[15px] shrink-0 text-secondary mt-0.5" />
 				<span><strong>DPDP Act 2023 Compliant:</strong> Zero personal contact details disclosed. Public verification validates union accreditation only.</span>
 			</div>
 		</div>

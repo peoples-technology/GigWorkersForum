@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Icon from '$lib/Icon.svelte';
 
 	onMount(() => {
 		checkSession();
@@ -272,7 +273,7 @@
 
 			{#if authError}
 				<div class="mb-4 p-3 bg-red-100 border border-red-300 text-red-800 rounded text-xs flex items-center gap-2">
-					<span class="material-symbols-outlined text-[16px]">error</span>
+					<Icon name="error" class="text-[16px]" />
 					<span>{authError}</span>
 				</div>
 			{/if}
@@ -305,11 +306,11 @@
 						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2 disabled:opacity-60"
 					>
 						{#if authSubmitting}
-							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+							<Icon name="progress_activity" class="animate-spin text-[18px]" />
 							<span>Verifying…</span>
 						{:else}
 							<span>Continue to 2FA</span>
-							<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+							<Icon name="arrow_forward" class="text-[18px]" />
 						{/if}
 					</button>
 
@@ -318,7 +319,7 @@
 			{:else}
 				<form class="space-y-4" onsubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 					<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 flex items-center gap-2">
-						<span class="material-symbols-outlined text-[16px]">lock</span>
+						<Icon name="lock" class="text-[16px]" />
 						<span>Step 2: Enter 2FA TOTP hardware or authenticator code</span>
 					</div>
 
@@ -339,10 +340,10 @@
 						class="w-full py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-xl text-sm shadow transition flex items-center justify-center gap-2 disabled:opacity-60"
 					>
 						{#if authSubmitting}
-							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+							<Icon name="progress_activity" class="animate-spin text-[18px]" />
 							<span>Authenticating…</span>
 						{:else}
-							<span class="material-symbols-outlined text-[18px]">verified_user</span>
+							<Icon name="verified_user" class="text-[18px]" />
 							<span>Verify & Authenticate</span>
 						{/if}
 					</button>
@@ -375,7 +376,7 @@
 
 					<div class="mt-4 p-2.5 rounded bg-slate-800/80 border border-slate-700/60 flex items-center gap-2.5">
 						<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-slate-300">
-							<span class="material-symbols-outlined text-[18px]">badge</span>
+							<Icon name="badge" class="text-[18px]" />
 						</div>
 						<div class="overflow-hidden">
 							<div class="text-xs font-semibold text-slate-200 truncate">{sessionName || 'Com. P. K. Sasidharan'}</div>
@@ -392,7 +393,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'overview' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">dashboard</span>
+							<Icon name="dashboard" class="text-[18px]" />
 							<span>ഡാഷ്‌ബോർഡ് / Overview</span>
 						</div>
 					</button>
@@ -403,7 +404,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'members' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">group</span>
+							<Icon name="group" class="text-[18px]" />
 							<span>അംഗങ്ങൾ / Members</span>
 						</div>
 						<span class="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">42.8k</span>
@@ -415,7 +416,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'dues' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">payments</span>
+							<Icon name="payments" class="text-[18px]" />
 							<span>വരിസംഖ്യ / Dues & Fees</span>
 						</div>
 					</button>
@@ -426,7 +427,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'districts' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">account_balance</span>
+							<Icon name="account_balance" class="text-[18px]" />
 							<span>ജില്ലകൾ / District Units</span>
 						</div>
 						<span class="text-[10px] text-slate-400">14</span>
@@ -438,7 +439,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'grievances' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">support_agent</span>
+							<Icon name="support_agent" class="text-[18px]" />
 							<span>പരാതികൾ / Grievances</span>
 						</div>
 						<span class="text-[10px] px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-bold">142</span>
@@ -450,7 +451,7 @@
 						class="w-full flex items-center justify-between px-3 py-2 rounded text-xs text-amber-300 hover:bg-slate-800 transition-colors"
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">upload_file</span>
+							<Icon name="upload_file" class="text-[18px]" />
 							<span>പേപ്പർ ഇറക്കുമതി / Bulk Import</span>
 						</div>
 					</button>
@@ -461,7 +462,7 @@
 						class={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors ${currentNav === 'audit' ? 'bg-primary-container text-on-primary font-semibold shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
 					>
 						<div class="flex items-center gap-2.5">
-							<span class="material-symbols-outlined text-[18px]">history</span>
+							<Icon name="history" class="text-[18px]" />
 							<span>ഓഡിറ്റ് ലോഗ് / Audit Log</span>
 						</div>
 					</button>
@@ -472,7 +473,7 @@
 			<div class="p-4 border-t border-slate-800 flex flex-col gap-2">
 				<div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-slate-900 border border-emerald-900/40 text-emerald-400 text-xs">
 					<div class="flex items-center gap-1.5 min-w-0">
-						<span class="material-symbols-outlined text-[16px] flex-shrink-0">verified_user</span>
+						<Icon name="verified_user" class="text-[16px] flex-shrink-0" />
 						<span class="text-[11px] font-medium truncate">{sessionRole || '2FA Active'}</span>
 					</div>
 					<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
@@ -483,7 +484,7 @@
 					onclick={handleLogout}
 					class="flex items-center gap-2 px-2.5 py-2 text-slate-400 hover:text-red-400 text-xs transition-colors"
 				>
-					<span class="material-symbols-outlined text-[18px]">logout</span>
+					<Icon name="logout" class="text-[18px]" />
 					<span>ലോഗ് ഔട്ട് / Sign Out</span>
 				</button>
 			</div>
@@ -496,7 +497,7 @@
 				<!-- Search & District Filter -->
 				<div class="flex items-center gap-3 flex-1 max-w-2xl">
 					<div class="relative w-full max-w-md">
-						<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+						<Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]" />
 						<input 
 							type="text" 
 							bind:value={searchQuery}
@@ -526,7 +527,7 @@
 						onclick={exportCSV}
 						class="h-9 px-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs"
 					>
-						<span class="material-symbols-outlined text-[18px] text-slate-500">download</span>
+						<Icon name="download" class="text-[18px] text-slate-500" />
 						<span>CSV എക്സ്പോർട്ട്</span>
 					</button>
 
@@ -550,13 +551,13 @@
 
 					<!-- Notification Bell -->
 					<div class="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer">
-						<span class="material-symbols-outlined text-[22px]">notifications</span>
+						<Icon name="notifications" class="text-[22px]" />
 						<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-primary text-white rounded-full text-[10px] font-bold flex items-center justify-center leading-none">3</span>
 					</div>
 
 					<!-- Admin Profile Avatar -->
 					<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center text-white shadow-xs">
-						<span class="material-symbols-outlined text-[18px]">person</span>
+						<Icon name="person" class="text-[18px]" />
 					</div>
 				</div>
 			</header>
@@ -568,7 +569,7 @@
 					<div>
 						<div class="flex items-center gap-1.5 text-slate-500 text-xs font-medium">
 							<span>സംസ്ഥാന ആസ്ഥാനം</span>
-							<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+							<Icon name="chevron_right" class="text-[14px]" />
 							<span class="text-slate-900 font-bold">State Executive Overview</span>
 						</div>
 						<div class="flex items-center gap-2.5 mt-1">
@@ -589,7 +590,7 @@
 							onclick={() => showImportModal = true}
 							class="h-9 px-4 crimson-gradient-btn text-white rounded-xl text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
 						>
-							<span class="material-symbols-outlined text-[18px]">upload_file</span>
+							<Icon name="upload_file" class="text-[18px]" />
 							<span>{lang === 'ml' ? 'പേപ്പർ ഫോമുകൾ ചേർക്കുക' : 'Bulk Paper Import'}</span>
 						</button>
 						<a 
@@ -597,7 +598,7 @@
 							target="_blank"
 							class="h-9 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all"
 						>
-							<span class="material-symbols-outlined text-[18px] text-slate-500">person_add</span>
+							<Icon name="person_add" class="text-[18px] text-slate-500" />
 							<span>{lang === 'ml' ? 'പുതിയ അപേക്ഷ' : 'New Enrollment'}</span>
 						</a>
 					</div>
@@ -613,13 +614,13 @@
 								<span class="text-[11px] text-slate-400">Total Registered Members</span>
 							</div>
 							<div class="w-10 h-10 rounded-xl bg-red-100 text-primary flex items-center justify-center shadow-xs">
-								<span class="material-symbols-outlined text-[22px]">groups</span>
+								<Icon name="groups" class="text-[22px]" />
 							</div>
 						</div>
 						<div class="mt-4">
 							<div class="text-3xl font-black text-slate-900">42,850</div>
 							<div class="flex items-center gap-1 text-emerald-700 text-xs mt-1">
-								<span class="material-symbols-outlined text-[16px]">trending_up</span>
+								<Icon name="trending_up" class="text-[16px]" />
 								<span class="font-bold">+184 today</span>
 								<span class="text-slate-500">· +4.2% this month</span>
 							</div>
@@ -637,7 +638,7 @@
 								<span class="text-[11px] text-slate-400">Active Dues Compliance</span>
 							</div>
 							<div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shadow-xs">
-								<span class="material-symbols-outlined text-[22px]">verified</span>
+								<Icon name="verified" class="text-[22px]" />
 							</div>
 						</div>
 						<div class="mt-4">
@@ -660,7 +661,7 @@
 								<span class="text-[11px] text-slate-400">Collections (Oct 2026)</span>
 							</div>
 							<div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shadow-xs">
-								<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+								<Icon name="account_balance_wallet" class="text-[22px]" />
 							</div>
 						</div>
 						<div class="mt-4">
@@ -682,7 +683,7 @@
 								<span class="text-[11px] text-slate-400">Disputes &amp; Conciliations</span>
 							</div>
 							<div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center shadow-xs">
-								<span class="material-symbols-outlined text-[22px]">gavel</span>
+								<Icon name="gavel" class="text-[22px]" />
 							</div>
 						</div>
 						<div class="mt-4">
@@ -783,7 +784,7 @@
 						</div>
 
 						<div class="p-2.5 bg-surface-container rounded-lg flex items-center gap-2 text-secondary text-xs mt-2">
-							<span class="material-symbols-outlined text-[18px] text-tertiary">cloud_sync</span>
+							<Icon name="cloud_sync" class="text-[18px] text-tertiary" />
 							<span>Automated biometric sync with Kerala Gig Workers Welfare Board (KGWWB) database API.</span>
 						</div>
 					</div>
@@ -880,7 +881,7 @@
 							<span>മൊത്തം 14 ജില്ലകളിലായി 142 കൺസിലിയേഷൻ പരാതികൾ പ്രക്രിയയിലാണ്.</span>
 							<button type="button" onclick={() => selectedDistrict = 'All'} class="text-primary font-bold hover:underline flex items-center gap-1">
 								<span>14 ജില്ലകളും കാണുക</span>
-								<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+								<Icon name="arrow_forward" class="text-[16px]" />
 							</button>
 						</div>
 					</div>
@@ -973,12 +974,12 @@
 										<td class="py-3.5 px-4">
 											{#if member.status === 'active'}
 												<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-													<span class="material-symbols-outlined text-[13px]">check_circle</span>
+													<Icon name="check_circle" class="text-[13px]" />
 													സജീവം / Active
 												</span>
 											{:else}
 												<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold">
-													<span class="material-symbols-outlined text-[13px]">hourglass_empty</span>
+													<Icon name="hourglass_empty" class="text-[13px]" />
 													പെൻഡിംഗ് / Pending
 												</span>
 											{/if}
@@ -989,7 +990,7 @@
 													href={`/verify/${member.id}`} 
 													class="px-2.5 py-1 rounded bg-surface-container text-on-surface font-semibold hover:bg-surface-container-high transition-colors flex items-center gap-1 text-[11px]"
 												>
-													<span class="material-symbols-outlined text-[15px]">badge</span>
+													<Icon name="badge" class="text-[15px]" />
 													<span>ഐഡി കാർഡ്</span>
 												</a>
 												<button 
@@ -1038,7 +1039,7 @@
 			<div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
 				<div class="flex items-center gap-2.5">
 					<div class="w-9 h-9 rounded-xl bg-red-50 text-primary flex items-center justify-center">
-						<span class="material-symbols-outlined text-2xl">upload_file</span>
+						<Icon name="upload_file" class="text-2xl" />
 					</div>
 					<div>
 						<h3 class="text-base font-bold text-slate-900">പേപ്പർ ഫോമുകൾ ബൾക്ക് ഇംപോർട്ട് (CSV)</h3>
@@ -1051,7 +1052,7 @@
 					class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors"
 					aria-label="Close modal"
 				>
-					<span class="material-symbols-outlined text-[20px]">close</span>
+					<Icon name="close" class="text-[20px]" />
 				</button>
 			</div>
 
@@ -1087,7 +1088,7 @@
 
 				<div class="p-6 border-2 border-dashed border-slate-300 rounded-2xl text-center bg-slate-50 hover:bg-slate-100/70 transition-colors">
 					<div class="w-12 h-12 rounded-full bg-red-50 text-primary mx-auto flex items-center justify-center mb-2 shadow-xs">
-						<span class="material-symbols-outlined text-2xl">file_upload</span>
+						<Icon name="file_upload" class="text-2xl" />
 					</div>
 					<div class="font-bold text-slate-900 text-sm">CSV ഫയൽ തിരഞ്ഞെടുക്കുക</div>
 					<div class="text-[11px] text-slate-500 mt-1">Columns: FullName, Phone, DOB, Gender, Platform, Last4ID</div>
@@ -1130,7 +1131,7 @@
 			<div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
 				<div class="flex items-center gap-2.5">
 					<div class="w-9 h-9 rounded-xl bg-red-50 text-primary flex items-center justify-center">
-						<span class="material-symbols-outlined text-2xl">badge</span>
+						<Icon name="badge" class="text-2xl" />
 					</div>
 					<div>
 						<h3 class="text-base font-bold text-slate-900">അംഗത്വ വിവരങ്ങൾ</h3>
@@ -1143,7 +1144,7 @@
 					class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 flex items-center justify-center transition-colors"
 					aria-label="Close modal"
 				>
-					<span class="material-symbols-outlined text-[20px]">close</span>
+					<Icon name="close" class="text-[20px]" />
 				</button>
 			</div>
 

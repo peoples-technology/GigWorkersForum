@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import Icon from '$lib/Icon.svelte';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let activeTab = $state<'upi' | 'cards' | 'nb'>('upi');
@@ -214,7 +215,7 @@
 		<!-- Security Pill & Language Switcher -->
 		<div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
 			<div class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
-				<span class="material-symbols-outlined text-[16px] text-emerald-700">lock</span>
+				<Icon name="lock" class="text-[16px] text-emerald-700" />
 				<span class="tracking-wide">256-Bit SSL</span>
 			</div>
 
@@ -244,7 +245,7 @@
 		<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
 			<div class="flex flex-col gap-1">
 				<a href="/register" class="inline-flex items-center gap-1 text-xs text-secondary hover:text-primary transition-colors group w-max">
-					<span class="material-symbols-outlined text-[16px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+					<Icon name="arrow_back" class="text-[16px] group-hover:-translate-x-0.5 transition-transform" />
 					<span class="underline underline-offset-4">{lang === 'ml' ? 'മുൻപത്തെ പേജ് / തിരികെ ഫോമിലേക്ക്' : 'Back to registration form'}</span>
 				</a>
 				<h1 class="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight mt-1">
@@ -273,13 +274,13 @@
 				<section class="card-gloss rounded-2xl p-6 shadow-md border border-slate-200/90 relative overflow-hidden">
 					<div class="flex items-center justify-between pb-3.5 mb-3.5 border-b border-slate-200">
 						<div class="flex items-center gap-2">
-							<span class="material-symbols-outlined text-primary text-[22px]">badge</span>
+							<Icon name="badge" class="text-primary text-[22px]" />
 							<h2 class="text-sm font-bold text-slate-900">
 								{lang === 'ml' ? 'അപേക്ഷകന്റെ വിവരങ്ങൾ' : 'Applicant Details'}
 							</h2>
 						</div>
 						<span class="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-emerald-800 text-[11px] font-bold shadow-2xs">
-							<span class="material-symbols-outlined text-[15px]">verified</span>
+							<Icon name="verified" class="text-[15px]" />
 							<span>{lang === 'ml' ? 'പരിശോധിച്ചു' : 'Verified'}</span>
 						</span>
 					</div>
@@ -295,7 +296,7 @@
 								}}
 							/>
 							<div class="absolute -bottom-1 -right-1 bg-emerald-600 text-white rounded-full p-0.5 shadow-sm">
-								<span class="material-symbols-outlined text-[15px] block">check_circle</span>
+								<Icon name="check_circle" class="text-[15px] block" />
 							</div>
 						</div>
 
@@ -308,11 +309,11 @@
 								<span class="text-slate-500 text-xs">· Kerala Unit</span>
 							</div>
 							<div class="flex items-center gap-1 text-xs text-slate-600 mt-1">
-								<span class="material-symbols-outlined text-[15px] text-slate-400">location_on</span>
+								<Icon name="location_on" class="text-[15px] text-slate-400" />
 								<span class="truncate">{memberDistrict}</span>
 							</div>
 							<div class="flex items-center gap-1 text-xs text-slate-600 mt-0.5">
-								<span class="material-symbols-outlined text-[15px] text-primary">two_wheeler</span>
+								<Icon name="two_wheeler" class="text-[15px] text-primary" />
 								<span class="font-semibold text-slate-800 truncate">{memberSector}</span>
 							</div>
 						</div>
@@ -323,7 +324,7 @@
 				<section class="card-gloss rounded-2xl p-6 shadow-md border border-slate-200/90">
 					<div class="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-200">
 						<div class="flex items-center gap-2">
-							<span class="material-symbols-outlined text-slate-700 text-[22px]">receipt_long</span>
+							<Icon name="receipt_long" class="text-slate-700 text-[22px]" />
 							<h2 class="text-sm font-bold text-slate-900">
 								{lang === 'ml' ? 'വരിസംഖ്യ വിവരങ്ങൾ' : 'Itemized Fee Breakdown'}
 							</h2>
@@ -350,7 +351,7 @@
 
 						<!-- Benefit Callout -->
 						<div class="bg-gradient-to-r from-red-50 to-amber-50 rounded-xl p-3.5 flex items-start gap-3 mt-2 border border-red-200/60 shadow-xs">
-							<span class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5">security</span>
+							<Icon name="security" class="text-primary text-[22px] flex-shrink-0 mt-0.5" />
 							<div class="flex flex-col text-xs">
 								<span class="font-bold text-slate-900">
 									{lang === 'ml' ? 'ഡിജിറ്റൽ ഐഡി കാർഡ് & ആനുകൂല്യങ്ങൾ' : 'Digital ID Card & Legal Cell Benefits'}
@@ -379,7 +380,7 @@
 
 				<!-- Union Guarantee Panel -->
 				<div class="bg-surface-container-low rounded-xl p-4 border border-surface-variant flex items-start gap-3">
-					<span class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5">verified_user</span>
+					<Icon name="verified_user" class="text-primary text-[22px] flex-shrink-0 mt-0.5" />
 					<div class="flex flex-col text-xs">
 						<span class="font-bold text-on-surface">
 							{lang === 'ml' ? 'നിയമാനുസൃത ട്രേഡ് യൂണിയൻ രസീത്' : 'Official Trade Union Receipt'}
@@ -403,7 +404,7 @@
 					<div class="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-surface-container-lowest border-b border-surface-variant">
 						<div class="flex flex-col">
 							<div class="flex items-center gap-1.5">
-								<span class="material-symbols-outlined text-primary text-[22px]">lock</span>
+								<Icon name="lock" class="text-primary text-[22px]" />
 								<h2 class="text-lg font-bold text-on-surface">
 									{lang === 'ml' ? 'സുരക്ഷിത പേയ്മെന്റ് ഗേറ്റ്‌വേ' : 'Secure Payment Gateway'}
 								</h2>
@@ -413,7 +414,7 @@
 							</span>
 						</div>
 						<div class="flex items-center gap-1.5 bg-surface-container px-3 py-1 rounded-full text-xs font-semibold text-secondary">
-							<span class="material-symbols-outlined text-tertiary text-[16px]">verified</span>
+							<Icon name="verified" class="text-tertiary text-[16px]" />
 							<span>256-Bit SSL</span>
 						</div>
 					</div>
@@ -426,7 +427,7 @@
 								onclick={() => activeTab = 'upi'}
 								class={`py-2 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${activeTab === 'upi' ? 'bg-surface-container-lowest text-on-surface shadow-sm' : 'text-secondary hover:text-on-surface'}`}
 							>
-								<span class="material-symbols-outlined text-[18px] text-primary">qr_code_2</span>
+								<Icon name="qr_code_2" class="text-[18px] text-primary" />
 								<span>UPI</span>
 							</button>
 
@@ -435,7 +436,7 @@
 								onclick={() => activeTab = 'cards'}
 								class={`py-2 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${activeTab === 'cards' ? 'bg-surface-container-lowest text-on-surface shadow-sm' : 'text-secondary hover:text-on-surface'}`}
 							>
-								<span class="material-symbols-outlined text-[18px]">credit_card</span>
+								<Icon name="credit_card" class="text-[18px]" />
 								<span>Cards</span>
 							</button>
 
@@ -444,7 +445,7 @@
 								onclick={() => activeTab = 'nb'}
 								class={`py-2 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${activeTab === 'nb' ? 'bg-surface-container-lowest text-on-surface shadow-sm' : 'text-secondary hover:text-on-surface'}`}
 							>
-								<span class="material-symbols-outlined text-[18px]">account_balance</span>
+								<Icon name="account_balance" class="text-[18px]" />
 								<span>Net Banking</span>
 							</button>
 						</div>
@@ -459,7 +460,7 @@
 									<label for="upi-vpa-input" class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-secondary mb-1">
 										<span>{lang === 'ml' ? 'UPI ID നൽകുക' : 'Enter UPI ID / VPA'}</span>
 										<span class="text-tertiary font-semibold flex items-center gap-1">
-											<span class="material-symbols-outlined text-[14px]">check_circle</span> Verified
+											<Icon name="check_circle" class="text-[14px]" /> Verified
 										</span>
 									</label>
 									<div class="relative flex items-center">
@@ -488,7 +489,7 @@
 											onclick={() => selectedApp = 'gpay'}
 											class={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all text-center ${selectedApp === 'gpay' ? 'border-primary bg-primary-fixed/30 ring-1 ring-primary' : 'border-surface-variant bg-surface-container hover:bg-surface-container-high'}`}
 										>
-											<span class="material-symbols-outlined text-primary text-[24px] mb-1">payments</span>
+											<Icon name="payments" class="text-primary text-[24px] mb-1" />
 											<span class="text-xs font-bold text-on-surface">Google Pay</span>
 											<span class="text-[10px] text-primary font-medium">{selectedApp === 'gpay' ? 'Selected' : 'Instant'}</span>
 										</button>
@@ -499,7 +500,7 @@
 											onclick={() => selectedApp = 'phonepe'}
 											class={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all text-center ${selectedApp === 'phonepe' ? 'border-primary bg-primary-fixed/30 ring-1 ring-primary' : 'border-surface-variant bg-surface-container hover:bg-surface-container-high'}`}
 										>
-											<span class="material-symbols-outlined text-secondary text-[24px] mb-1">send_to_mobile</span>
+											<Icon name="send_to_mobile" class="text-secondary text-[24px] mb-1" />
 											<span class="text-xs font-bold text-on-surface">PhonePe</span>
 											<span class="text-[10px] text-secondary font-medium">{selectedApp === 'phonepe' ? 'Selected' : 'Instant'}</span>
 										</button>
@@ -510,7 +511,7 @@
 											onclick={() => selectedApp = 'paytm'}
 											class={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all text-center ${selectedApp === 'paytm' ? 'border-primary bg-primary-fixed/30 ring-1 ring-primary' : 'border-surface-variant bg-surface-container hover:bg-surface-container-high'}`}
 										>
-											<span class="material-symbols-outlined text-secondary text-[24px] mb-1">account_balance_wallet</span>
+											<Icon name="account_balance_wallet" class="text-secondary text-[24px] mb-1" />
 											<span class="text-xs font-bold text-on-surface">Paytm UPI</span>
 											<span class="text-[10px] text-secondary font-medium">{selectedApp === 'paytm' ? 'Selected' : 'Instant'}</span>
 										</button>
@@ -521,7 +522,7 @@
 											onclick={() => selectedApp = 'bhim'}
 											class={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all text-center ${selectedApp === 'bhim' ? 'border-primary bg-primary-fixed/30 ring-1 ring-primary' : 'border-surface-variant bg-surface-container hover:bg-surface-container-high'}`}
 										>
-											<span class="material-symbols-outlined text-secondary text-[24px] mb-1">currency_rupee</span>
+											<Icon name="currency_rupee" class="text-secondary text-[24px] mb-1" />
 											<span class="text-xs font-bold text-on-surface">BHIM Gov</span>
 											<span class="text-[10px] text-secondary font-medium">{selectedApp === 'bhim' ? 'Selected' : 'NPCI Direct'}</span>
 										</button>
@@ -607,19 +608,19 @@
 								class="w-full min-h-[56px] py-4 px-6 rounded-2xl crimson-gradient-btn text-white text-base font-extrabold shadow-xl flex items-center justify-center gap-2.5 active:scale-[0.99] disabled:opacity-60 transition-all cursor-pointer"
 							>
 								{#if isProcessing}
-									<span class="material-symbols-outlined animate-spin text-[22px]">progress_activity</span>
+									<Icon name="progress_activity" class="animate-spin text-[22px]" />
 									<span>{lang === 'ml' ? 'പ്രോസസ്സ് ചെയ്യുന്നു...' : 'Processing Payment...'}</span>
 								{:else}
-									<span class="material-symbols-outlined text-[22px]">lock</span>
+									<Icon name="lock" class="text-[22px]" />
 									<span>{lang === 'ml' ? '₹100 അടയ്ക്കുക / അംഗത്വം ആക്റ്റീവ് ചെയ്യുക' : 'Pay ₹100 & Activate Membership'}</span>
-									<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+									<Icon name="arrow_forward" class="text-[20px]" />
 								{/if}
 							</button>
 
 							<div class="flex items-center justify-between text-secondary text-[11px] px-1">
 								<span>GSTIN: 32AABTK1140P1ZT</span>
 								<span class="flex items-center gap-1 text-primary font-medium">
-									<span class="material-symbols-outlined text-[14px]">security</span>
+									<Icon name="security" class="text-[14px]" />
 									100% Refundable Guarantee
 								</span>
 							</div>
@@ -644,7 +645,7 @@
 				<div class="mt-4 p-4 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 					<div class="flex items-center gap-3">
 						<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
-							<span class="material-symbols-outlined text-[20px]">support_agent</span>
+							<Icon name="support_agent" class="text-[20px]" />
 						</div>
 						<div class="flex flex-col text-xs">
 							<span class="font-bold text-on-surface">
@@ -655,7 +656,7 @@
 					</div>
 					<a href="tel:9846063666" class="px-3.5 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-semibold flex items-center gap-1">
 						<span>Call Helpline</span>
-						<span class="material-symbols-outlined text-[15px]">call</span>
+						<Icon name="call" class="text-[15px]" />
 					</a>
 				</div>
 			</div>
@@ -669,7 +670,7 @@
 		<div class="bg-white max-w-md w-full rounded-2xl shadow-2xl border border-slate-200 p-6 sm:p-8 flex flex-col items-center text-center animate-in fade-in zoom-in-95 duration-200 relative z-10">
 			<!-- Success Badge -->
 			<div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 shadow-inner">
-				<span class="material-symbols-outlined text-4xl">check_circle</span>
+				<Icon name="check_circle" class="text-4xl" />
 			</div>
 
 			<h3 class="text-xl font-bold text-slate-900">
@@ -709,7 +710,7 @@
 					href={`/verify/${generatedMemberId}`} 
 					class="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-container text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition"
 				>
-					<span class="material-symbols-outlined text-[18px]">badge</span>
+					<Icon name="badge" class="text-[18px]" />
 					<span>{lang === 'ml' ? 'ഡിജിറ്റൽ ഐഡി കാർഡ് കാണുക' : 'View Digital ID Card'}</span>
 				</a>
 
@@ -718,7 +719,7 @@
 					onclick={() => window.print()}
 					class="w-full py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 flex items-center justify-center gap-1.5 transition"
 				>
-					<span class="material-symbols-outlined text-[16px]">print</span>
+					<Icon name="print" class="text-[16px]" />
 					<span>{lang === 'ml' ? 'രസീത് പ്രിന്റ് ചെയ്യുക' : 'Print Form-II Receipt'}</span>
 				</button>
 			</div>
@@ -735,7 +736,7 @@
 				<p>GigWorkers.Online · Kerala Gig &amp; Platform Workers Union (CITU)</p>
 			</div>
 			<div class="flex items-center gap-2">
-				<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+				<Icon name="verified_user" class="text-[16px] text-primary" />
 				<span class="font-semibold">Secure Payment Gateway</span>
 			</div>
 		</div>

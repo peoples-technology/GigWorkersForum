@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Icon from '$lib/Icon.svelte';
 
 	let lang = $state<'ml' | 'en'>('ml');
 	let mobileMenuOpen = $state(false);
@@ -177,7 +178,7 @@
 				href="/register" 
 				class="hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl crimson-gradient-btn text-white text-xs font-bold tracking-wide shadow-md"
 			>
-				<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+				<Icon name="how_to_reg" class="text-[16px]" />
 				<span>{lang === 'ml' ? 'അംഗമാകുക (₹100)' : 'Join Union (₹100)'}</span>
 			</a>
 
@@ -188,7 +189,7 @@
 				class="lg:hidden p-1.5 sm:p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
 				aria-label="Toggle menu"
 			>
-				<span class="material-symbols-outlined text-2xl">{mobileMenuOpen ? 'close' : 'menu'}</span>
+				<Icon name={mobileMenuOpen ? 'close' : 'menu'} class="text-2xl" />
 			</button>
 		</div>
 	</div>
@@ -239,12 +240,12 @@
 				</div>
 				<div class="hidden sm:flex items-center gap-4 text-white/90 font-medium text-xs">
 					<a href="tel:9846063666" class="flex items-center gap-1.5 hover:text-white hover:underline transition">
-						<span class="material-symbols-outlined text-[15px] text-amber-300">call</span>
+						<Icon name="call" class="text-[15px] text-amber-300" />
 						<span>Ph: 9846063666, 9447695655</span>
 					</a>
 					<span class="text-white/40">•</span>
 					<span class="flex items-center gap-1.5">
-						<span class="material-symbols-outlined text-[15px] text-blue-200">location_on</span>
+						<Icon name="location_on" class="text-[15px] text-blue-200" />
 						<span>{lang === 'ml' ? 'മേലെ തമ്പാനൂർ, തിരുവനന്തപുരം' : 'Mele Thampanoor, TVM'}</span>
 					</span>
 				</div>
@@ -338,14 +339,14 @@
 								<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗമാകുക</span>
 								<span class="opacity-40">|</span>
 								<span class="uppercase tracking-wider text-xs font-black">JOIN THE UNION</span>
-								<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+								<Icon name="arrow_forward" class="text-[18px]" />
 							</a>
 
 							<a
 								href="#quick-access-banner"
 								class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-medium border border-white/20 transition-all flex items-center justify-center gap-2 text-sm shadow-sm"
 							>
-								<span class="material-symbols-outlined text-[18px] text-zinc-300">download</span>
+								<Icon name="download" class="text-[18px] text-zinc-300" />
 								{#if lang === 'ml'}
 									<span style="font-family: 'Anek Malayalam', sans-serif;">അംഗത്വ കാർഡ് ഡൗൺലോഡ് ചെയ്യുക</span>
 								{:else}
@@ -413,7 +414,7 @@
 						<div class="h-1 w-full bg-primary absolute top-0 left-0"></div>
 						<div>
 							<div class="w-14 h-14 rounded-2xl bg-red-100 text-primary flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
-								<span class="material-symbols-outlined text-[30px]">phonelink_lock</span>
+								<Icon name="phonelink_lock" class="text-[30px]" />
 							</div>
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സ്വയം രജിസ്ട്രേഷൻ' : 'Instant Registration'}
@@ -426,7 +427,7 @@
 						</div>
 						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-primary text-xs font-bold">
 							<span>{lang === 'ml' ? '2 മിനിറ്റിനകം ആക്റ്റീവ്' : 'Active in 2 minutes'}</span>
-							<span class="material-symbols-outlined text-[18px]">check_circle</span>
+							<Icon name="check_circle" class="text-[18px]" />
 						</div>
 					</article>
 
@@ -435,7 +436,7 @@
 						<div class="h-1 w-full bg-blue-600 absolute top-0 left-0"></div>
 						<div>
 							<div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
-								<span class="material-symbols-outlined text-[30px]">badge</span>
+								<Icon name="badge" class="text-[30px]" />
 							</div>
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'ഡിജിറ്റൽ അംഗത്വ കാർഡ്' : 'Digital Membership ID Card'}
@@ -448,7 +449,7 @@
 						</div>
 						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-blue-700 text-xs font-bold">
 							<span>{lang === 'ml' ? 'QR-സ്ഥിരീകരിച്ച ഐഡി' : 'Cryptographic QR Seal'}</span>
-							<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+							<Icon name="qr_code_scanner" class="text-[18px]" />
 						</div>
 					</article>
 
@@ -457,7 +458,7 @@
 						<div class="h-1 w-full bg-amber-600 absolute top-0 left-0"></div>
 						<div>
 							<div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
-								<span class="material-symbols-outlined text-[30px]">support</span>
+								<Icon name="support" class="text-[30px]" />
 							</div>
 							<h3 class="text-lg font-bold text-slate-900 mb-2.5">
 								{lang === 'ml' ? 'സഹായം & പരാതി പരിഹാരം' : 'Helpline & Grievance'}
@@ -470,7 +471,7 @@
 						</div>
 						<div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-amber-800 text-xs font-bold">
 							<span>{lang === 'ml' ? '24/7 നിയമ സഹായം' : '24/7 Legal Assistance'}</span>
-							<span class="material-symbols-outlined text-[18px]">call</span>
+							<Icon name="call" class="text-[18px]" />
 						</div>
 					</article>
 				</div>
@@ -488,7 +489,7 @@
 						<!-- Text Lockup -->
 						<div class="lg:col-span-5">
 							<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/40 text-red-300 border border-red-500/30 text-[11px] sm:text-xs font-bold mb-3 sm:mb-4">
-								<span class="material-symbols-outlined text-[15px] sm:text-[16px]">badge</span>
+								<Icon name="badge" class="text-[15px] sm:text-[16px]" />
 								<span>{lang === 'ml' ? 'നിലവിലുള്ള അംഗങ്ങൾക്കായി · Portal Access' : 'Existing Members · Quick Access'}</span>
 							</div>
 							<h3 class="text-xl sm:text-3xl font-black text-white">
@@ -516,7 +517,7 @@
 									onclick={() => { accessMode = 'id'; statusMessage = ''; }}
 									class={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${accessMode === 'id' ? 'bg-primary text-white shadow-sm ring-1 ring-red-400/30' : 'text-slate-400 hover:text-white'}`}
 								>
-									<span class="material-symbols-outlined text-[16px]">badge</span>
+									<Icon name="badge" class="text-[16px]" />
 									<span>{lang === 'ml' ? '1. അംഗത്വ നമ്പർ' : '1. Enter Membership ID'}</span>
 								</button>
 								<button
@@ -524,7 +525,7 @@
 									onclick={() => { accessMode = 'otp'; statusMessage = ''; }}
 									class={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${accessMode === 'otp' ? 'bg-amber-900/60 text-amber-200 border border-amber-600/40' : 'text-slate-400 hover:text-white'}`}
 								>
-									<span class="material-symbols-outlined text-[16px]">lock</span>
+									<Icon name="lock" class="text-[16px]" />
 									<span>{lang === 'ml' ? '2. മൊബൈൽ OTP' : '2. Mobile OTP'}</span>
 									<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold uppercase tracking-wider">Locked</span>
 								</button>
@@ -550,7 +551,7 @@
 										class="px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl crimson-gradient-btn text-white text-sm font-bold whitespace-nowrap flex items-center justify-center gap-2 shadow-lg flex-shrink-0 transition active:scale-95" 
 										type="submit"
 									>
-										<span class="material-symbols-outlined text-[18px]">badge</span>
+										<Icon name="badge" class="text-[18px]" />
 										<span>{lang === 'ml' ? 'കാർഡ് ഡൗൺലോഡ്' : 'Download Card'}</span>
 									</button>
 								</form>
@@ -560,7 +561,7 @@
 								<div class="space-y-3 w-full">
 									<!-- Locked notification notice -->
 									<div class="p-3.5 rounded-xl bg-amber-950/70 border border-amber-500/40 text-amber-200 text-xs flex items-start gap-2.5">
-										<span class="material-symbols-outlined text-amber-400 text-[18px] shrink-0 mt-0.5">lock</span>
+										<Icon name="lock" class="text-amber-400 text-[18px] shrink-0 mt-0.5" />
 										<div class="space-y-1 text-left">
 											<p class="font-bold text-amber-300">
 												{lang === 'ml' ? 'മൊബൈൽ OTP വെരിഫിക്കേഷൻ താൽക്കാലികമായി ലോക്ക് ചെയ്തിരിക്കുന്നു' : 'Mobile OTP Verification is Currently Locked'}
@@ -591,7 +592,7 @@
 											class="px-5 py-3 sm:py-3.5 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 cursor-not-allowed flex-shrink-0" 
 											type="submit"
 										>
-											<span class="material-symbols-outlined text-[16px]">lock</span>
+											<Icon name="lock" class="text-[16px]" />
 											<span>{lang === 'ml' ? 'Send OTP (ലോക്ക്ഡ്)' : 'Send OTP (Locked)'}</span>
 										</button>
 									</form>
@@ -601,7 +602,7 @@
 										onclick={() => { accessMode = 'id'; statusMessage = ''; }} 
 										class="text-xs text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-1 pt-0.5"
 									>
-										<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+										<Icon name="arrow_back" class="text-[14px]" />
 										<span>{lang === 'ml' ? 'അംഗത്വ നമ്പർ ഉപയോഗിക്കാൻ Option 1 ലേക്ക് മാറുക' : 'Switch back to Option 1: Enter Membership ID'}</span>
 									</button>
 								</div>
@@ -609,7 +610,7 @@
 
 							{#if statusMessage}
 								<div class={`mt-2 text-xs flex items-center gap-2 p-2.5 rounded-lg ${statusType === 'error' ? 'bg-red-950/80 text-red-200 border border-red-800' : statusType === 'success' ? 'bg-emerald-950/80 text-emerald-200 border border-emerald-800' : 'bg-amber-950/80 text-amber-200 border border-amber-800'}`}>
-									<span class="material-symbols-outlined text-[16px] flex-shrink-0">{statusType === 'error' ? 'error' : statusType === 'success' ? 'check_circle' : 'info'}</span>
+									<Icon name={statusType === 'error' ? 'error' : statusType === 'success' ? 'check_circle' : 'info'} class="text-[16px] shrink-0" />
 									<span class="font-medium break-words">{statusMessage}</span>
 								</div>
 							{/if}
@@ -635,7 +636,7 @@
 		</p>
 		<div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-400">
 			<span class="flex items-center gap-1.5">
-				<span class="material-symbols-outlined text-[15px] text-amber-400">call</span>
+				<Icon name="call" class="text-[15px] text-amber-400" />
 				<span>{lang === 'ml' ? 'ഫോൺ' : 'Ph'}: <a href="tel:9846063666" class="text-slate-200 hover:text-white hover:underline font-semibold">9846063666</a>, <a href="tel:9447695655" class="text-slate-200 hover:text-white hover:underline font-semibold">9447695655</a></span>
 			</span>
 			<span class="text-slate-600 hidden sm:inline">•</span>

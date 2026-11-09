@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { downloadCardPdf } from '$lib/cardPdf';
+	import Icon from '$lib/Icon.svelte';
 
 	let { token = '' }: { token?: string } = $props();
 
@@ -642,7 +643,7 @@
 		<!-- Language Switcher & Official Gateway Badge -->
 		<div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
 			<div class="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs">
-				<span class="material-symbols-outlined text-primary text-[16px]">verified_user</span>
+				<Icon name="verified_user" class="text-primary text-[16px]" />
 				<span class="font-semibold text-slate-800">Official Gateway</span>
 			</div>
 
@@ -664,7 +665,7 @@
 			</div>
 
 			<a href="/" class="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-primary transition items-center gap-1">
-				<span class="material-symbols-outlined text-[16px]">home</span>
+				<Icon name="home" class="text-[16px]" />
 				<span>Home</span>
 			</a>
 		</div>
@@ -681,7 +682,7 @@
 			<!-- Metadata Tag Header -->
 			<div class="w-full flex items-center justify-between pb-3 px-1 text-slate-500 text-xs print:hidden">
 				<div class="flex items-center gap-1.5 font-bold">
-					<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
+					<Icon name="verified" class="text-[18px] text-primary" />
 					<span class="uppercase tracking-wider">Public Verification Protocol • v2.4</span>
 				</div>
 				<div class="flex items-center gap-1.5 font-bold text-emerald-700">
@@ -694,7 +695,7 @@
 			<div class="w-full max-w-[640px] mb-8 flex flex-col items-center">
 				<div class="w-full flex items-center justify-between pb-2 px-1 text-slate-600 text-xs font-bold print:hidden">
 					<div class="flex items-center gap-1.5 text-primary">
-						<span class="material-symbols-outlined text-[18px]">badge</span>
+						<Icon name="badge" class="text-[18px]" />
 						<span class="uppercase tracking-wider">{lang === 'ml' ? 'ഡിജിറ്റൽ യൂണിയൻ അംഗത്വ കാർഡ്' : 'Official Union Digital ID Card'}</span>
 					</div>
 					<div class="flex items-center gap-2">
@@ -812,7 +813,7 @@
 					<!-- Card Footer: Headquarters & Statutory Information -->
 					<div class="bg-slate-900 text-slate-300 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between text-[10px] sm:text-[11px] border-t border-slate-800 gap-2">
 						<div class="flex items-center gap-1.5">
-							<span class="material-symbols-outlined text-[14px] text-amber-400">location_on</span>
+							<Icon name="location_on" class="text-[14px] text-amber-400" />
 							<span>E. Balananda Smaraka Office, CITU State Committee Office, Mele Thampanoor, TVM</span>
 						</div>
 						<div class="flex items-center gap-2">
@@ -830,10 +831,10 @@
 						class="flex-1 sm:flex-none px-5 py-3 rounded-xl crimson-gradient-btn text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 min-w-[190px]"
 					>
 						{#if isDownloading}
-							<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+							<Icon name="progress_activity" class="animate-spin text-[18px]" />
 							<span>{lang === 'ml' ? 'തയ്യാറാക്കുന്നു...' : 'Rendering...'}</span>
 						{:else}
-							<span class="material-symbols-outlined text-[18px]">image</span>
+							<Icon name="image" class="text-[18px]" />
 							<span>{lang === 'ml' ? 'ഇമേജ് ഡൗൺലോഡ് (PNG)' : 'Download Image (PNG)'}</span>
 						{/if}
 					</button>
@@ -844,7 +845,7 @@
 						disabled={isDownloading}
 						class="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-red-800 hover:bg-red-900 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 min-w-[190px]"
 					>
-						<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+						<Icon name="picture_as_pdf" class="text-[18px]" />
 						<span>{lang === 'ml' ? 'പി.ഡി.എഫ് ഡൗൺലോഡ് (PDF)' : 'Download Card (PDF)'}</span>
 					</button>
 
@@ -853,7 +854,7 @@
 						onclick={() => window.print()}
 						class="w-full sm:w-auto px-5 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-2"
 					>
-						<span class="material-symbols-outlined text-[18px]">print</span>
+						<Icon name="print" class="text-[18px]" />
 						<span>{lang === 'ml' ? 'പ്രിന്റ് ചെയ്യുക' : 'Print / Save PDF'}</span>
 					</button>
 				</div>
@@ -867,7 +868,7 @@
 				<!-- Verified Banner Section -->
 				<div class="bg-gradient-to-b from-emerald-50 to-emerald-100/40 px-6 py-6 flex flex-col items-center text-center border-b border-emerald-100">
 					<div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-700/20 mb-2.5">
-						<span class="material-symbols-outlined text-[34px]">check_circle</span>
+						<Icon name="check_circle" class="text-[34px]" />
 					</div>
 					<h1 class="text-xl sm:text-2xl font-black text-emerald-950 tracking-tight font-['Anek_Malayalam']">
 						{lang === 'ml' ? 'സാധുവായ അംഗത്വം' : 'VERIFIED ACTIVE MEMBER'}
@@ -880,7 +881,7 @@
 
 					<!-- Dynamic Token Hash Pill -->
 					<div class="mt-3.5 inline-flex items-center gap-2 px-3.5 py-1 bg-white rounded-full shadow-xs text-emerald-900 font-mono text-xs border border-emerald-200 font-bold">
-						<span class="material-symbols-outlined text-[15px] text-emerald-700">fingerprint</span>
+						<Icon name="fingerprint" class="text-[15px] text-emerald-700" />
 						<span>Token:</span>
 						<span class="text-slate-600">{member.tokenHash}</span>
 						<span>•</span>
@@ -901,7 +902,7 @@
 							}}
 						/>
 						<div class="absolute -bottom-2 -right-2 bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-							<span class="material-symbols-outlined text-[18px]">verified</span>
+							<Icon name="verified" class="text-[18px]" />
 						</div>
 					</div>
 
@@ -926,7 +927,7 @@
 							{#if copied}
 								<span class="text-[10px] text-emerald-700 font-bold">COPIED</span>
 							{:else}
-								<span class="material-symbols-outlined text-[15px]">content_copy</span>
+								<Icon name="content_copy" class="text-[15px]" />
 							{/if}
 						</button>
 					</div>
@@ -1024,7 +1025,7 @@
 							<span class="text-[10px] text-slate-400">Realtime Scan Timestamp</span>
 						</div>
 						<div class="flex items-center gap-1 font-mono text-slate-700 font-medium">
-							<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+							<Icon name="schedule" class="text-[16px] text-primary" />
 							<span>{currentTimestamp}</span>
 						</div>
 					</div>
@@ -1034,7 +1035,7 @@
 				<div class="mt-5 mx-4 sm:mx-6 p-4 rounded-xl bg-slate-50 flex items-center justify-between gap-4 border border-slate-200">
 					<div class="flex items-center gap-3">
 						<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0 shadow-sm">
-							<span class="material-symbols-outlined text-[20px]">shield_with_heart</span>
+							<Icon name="shield_with_heart" class="text-[20px]" />
 						</div>
 						<div class="flex flex-col text-left text-xs">
 							<span class="font-bold text-slate-900">Kerala Gig Workers Welfare Board (KGWWB)</span>
@@ -1057,7 +1058,7 @@
 				<!-- Card Official Footer -->
 				<div class="mt-5 px-6 py-3 bg-slate-100 flex flex-wrap items-center justify-between text-slate-600 text-xs gap-y-1">
 					<div class="flex items-center gap-1">
-						<span class="material-symbols-outlined text-[15px] text-primary">policy</span>
+						<Icon name="policy" class="text-[15px] text-primary" />
 						<span>Reg. Trade Union No: <strong class="text-slate-900">Tu19965</strong></span>
 					</div>
 					<div>Govt. of Kerala Labour Dept. Recognized</div>
@@ -1067,7 +1068,7 @@
 			<!-- Security & DPDP Compliance Statement -->
 			<div class="w-full max-w-xl mx-auto mt-6 flex flex-col items-center text-center gap-2 px-2 print:hidden">
 				<div class="flex items-center gap-1.5 text-slate-800 font-semibold text-sm">
-					<span class="material-symbols-outlined text-[20px] text-emerald-700">lock</span>
+					<Icon name="lock" class="text-[20px] text-emerald-700" />
 					<span>{lang === 'ml' ? 'ക്രിപ്റ്റോഗ്രാഫിക് ടോക്കൺ വഴി പരിശോധിച്ചു' : 'Cryptographically Verified'}</span>
 				</div>
 				<p class="text-xs text-slate-500 leading-relaxed">
@@ -1077,7 +1078,7 @@
 				</p>
 
 				<div class="mt-2 p-3 rounded-lg bg-slate-50 max-w-lg text-left flex items-start gap-2 text-slate-500 text-[11px] border border-slate-200">
-					<span class="material-symbols-outlined text-[16px] text-slate-500 shrink-0 mt-0.5">privacy_tip</span>
+					<Icon name="privacy_tip" class="text-[16px] text-slate-500 shrink-0 mt-0.5" />
 					<span>
 						<strong>DPDP Act 2023 Compliant:</strong> Personal phone number, residential address, aadhaar reference, and bank remittance tokens are strictly redacted on public verification surfaces to prevent harassment.
 					</span>
@@ -1086,12 +1087,12 @@
 				<!-- Helpline Strip -->
 				<div class="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500">
 					<span class="flex items-center gap-1">
-						<span class="material-symbols-outlined text-[15px] text-primary">call</span>
+						<Icon name="call" class="text-[15px] text-primary" />
 						<span>{lang === 'ml' ? 'ഹെൽപ്പ്‌ലൈൻ' : 'Helpline'}: <a class="text-primary font-semibold hover:underline" href="tel:9846063666">9846063666</a>, <a class="text-primary font-semibold hover:underline" href="tel:9447695655">9447695655</a></span>
 					</span>
 					<span>•</span>
 					<span class="flex items-center gap-1">
-						<span class="material-symbols-outlined text-[15px] text-primary">mail</span>
+						<Icon name="mail" class="text-[15px] text-primary" />
 						<a class="text-primary font-semibold hover:underline" href="mailto:helpdesk@ksgpwu.citu.in">helpdesk@ksgpwu.citu.in</a>
 					</span>
 				</div>
