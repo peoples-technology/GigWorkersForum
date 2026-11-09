@@ -109,7 +109,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'ml' ? 'GigWorkersCitu.Online · കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'GigWorkersCitu.Online · Kerala State Gig & Platform Workers Union'}</title>
+	<title>{lang === 'ml' ? 'GigWorkersCitu.Online · കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം വർക്കേഴ്സ് യൂണിയൻ - സിഐടിയു' : 'GigWorkersCitu.Online · Kerala State Gig & Platform Workers Union'}</title>
 </svelte:head>
 
 <!-- Frosted Glass Sticky Header -->
@@ -135,7 +135,7 @@
 					</span>
 				</div>
 				<span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wider font-medium truncate">
-					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ' : 'Kerala State Gig & Platform Workers Union'}
+					{lang === 'ml' ? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം വർക്കേഴ്സ് യൂണിയൻ - സിഐടിയു' : 'Kerala State Gig & Platform Workers Union'}
 				</span>
 			</div>
 		</a>
@@ -234,7 +234,7 @@
 					</span>
 					<span class="truncate font-medium text-white/95 text-xs">
 						{lang === 'ml' 
-							? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം തൊഴിലാളി യൂണിയൻ - രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
+							? 'കേരള സ്റ്റേറ്റ് ഗിഗ് & പ്ലാറ്റ്ഫോം വർക്കേഴ്സ് യൂണിയൻ - സിഐടിയു · രജിസ്ട്രേഷൻ നമ്പർ: Tu19965' 
 							: 'Kerala State Gig & Platform Workers Union - Reg No: Tu19965'}
 					</span>
 				</div>

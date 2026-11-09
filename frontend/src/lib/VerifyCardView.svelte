@@ -723,7 +723,7 @@
 							</div>
 							<div class="flex flex-col min-w-0 text-left">
 								<h3 class="text-xs sm:text-sm font-black tracking-tight leading-tight uppercase font-['Anek_Malayalam']">
-									കേരള സ്റ്റേറ്റ് ഗിഗ് &amp; പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ (സി.ഐ.ടി.യു)
+									കേരള സ്റ്റേറ്റ് ഗിഗ് &amp; പ്ലാറ്റ്‌ഫോം വർക്കേഴ്സ് യൂണിയൻ - സിഐടിയു
 								</h3>
 								<p class="text-[10px] sm:text-xs text-amber-200 font-semibold tracking-wide mt-0.5">
 									KERALA STATE GIG &amp; PLATFORM WORKERS UNION (CITU)
